@@ -1,0 +1,14 @@
+<header class="listHeader">
+    <nav>
+        <span class="logo"></span>
+        <span class="title"><a href="/<%= listH1 %>"><%= txt.headerTxt.title %></a></span>
+        <span class="arrow"></span>
+        <% if (locals.txt.headerTxt.h3){ %>
+        <span><a href="/<%= listH1 %>/<%= prevRenderType %>/0/0"><%= txt.headerTxt.h2 %></a></span>
+        <span class="arrow"></span>
+        <% } else{ %>
+        <span><%= txt.headerTxt.h2 %></span>
+        <% } %>
+        <span class="h3Title"><%= locals.txt.headerTxt.h3 == 1 ? "" : locals.txt.headerTxt.h3 %></span>
+    </nav>
+</header>

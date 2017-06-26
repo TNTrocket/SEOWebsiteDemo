@@ -1,0 +1,54 @@
+<section class="search">
+    <div class="searchTopArea">
+        <div class="searchSum">
+            选择<%= listTxt.queryType.sumTxt %>： <span class="searchSumType"><%= locals.queryName%></span>
+            <span class="text">共<span class="number">38569</span>条 ></span>
+        </div>
+        <div class="searchHideBox">
+            <div class="searchCondition">
+                <% listTxt.queryType.queryItem.forEach(function(result){%>
+                <div class="searchConditionItem">
+                    <div class="txt"><%= result.type %></div>
+                    <div class="item">
+                        <ul>
+                            <% result.item.forEach(function(item,index){%>
+                            <li><a data-queryitem="<%= item %>"><%= item %></a></li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                </div>
+                <% }) %>
+                <!--<div class="more moreGrade"><span class="moreGradeTxt">更多</span><i></i></div>-->
+            </div>
+            <div class="searchButton">
+                点击查询
+            </div>
+        </div>
+    </div>
+    <div class="contentList">
+        <div>
+            <% if (list.length > 0 ) {%>
+            <% list.forEach(function(item){ %>
+            <a href="/information/article/<%= item.id %>">
+            <section>
+                <div class="newsCover">
+                    <!--<img src="/img/width@2x.png"/>-->
+                    <img src="<%= item.url || '/img/newLogo.png'%>"/>
+                </div>
+                <div class="newsTxt">
+                    <span class="newsTitle"><%= item.title %> </span>
+                    <span class="newsTime"></span>
+                </div>
+            </section>
+            </a>
+            <% }) %>
+            <% }else {%>
+            <div class="noData">没有数据</div>
+            <% } %>
+        </div>
+    </div>
+    <div class="newsButton">
+        <div class="prev"><a href="<%= page.offset - 8 < 0 ? 0 : page.offset - 8 %>">上一页</a></div>
+        <div class="next"><a href="<%= page.offset + 8 %>">下一页</a></div>
+    </div>
+</section>

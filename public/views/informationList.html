@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link href="/build/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" media="only screen and (min-width: 414px)" href="/build/pc.css"/>
+</head>
+<% var render = locals.informationList.renderType %>
+<%
+ var queryName
+ if( locals.typeName == 0){
+ queryName = "不限"
+}else {
+ if( locals.diction){
+  queryName = diction[typeName].name
+ }
+}
+ var config = {
+  target  : informationList.listH1,
+  current: render
+}
+ %>
+<body data-pagetype="informationList" id="pageType" data-rendertype="<%= render %>" >
+<div class="informationList">
+    <%- include("./componentViews/information/listHeader.html",{txt : locals.informationList[render], listH1 : informationList.listH1,prevRenderType:informationList.prevRenderType} ) %>
+    <% if( render === 'article'){ %>
+    <article class="listContentArticle">
+        <h3><%= article.a_content_title %></h3>
+        <p class="tip1"><%= article.a_createtime %></p>
+        <p class="content">
+            <%- article.a_content %>
+        </p>
+    </article>
+    <div class="imgInfoBanner">
+        <% article.threeTitles.forEach(function(item){ %>
+        <a href="/information/article/<%= item.id %>">
+        <div class="imgBannerPic">
+            <img src="/img/banner1.png">
+            <div class="w-f-txt"><%= item.title %></div>
+            <span class="w-f-txtBg"></span>
+        </div>
+        </a>
+        <%  }) %>
+    </div>
+    <% }else if( render === 'schoolDetail'){ %>
+    <div class="schoolDetailContent">
+        <%- include("./componentViews/information/schoolDetail.html") %>
+    </div>
+    <% }else{ %>
+    <%- include("./componentViews/information/queryCondition.html",{listTxt:locals.informationList[render],list:list,page:page,queryName:queryName})%>
+     <% } %>
+
+    <div class="QRcodeArea eachListTitle">
+        <div>
+            <span class="icon"></span>
+            <span class="txt">选师无忧微信号</span>
+        </div>
+        <div class="QRcode">
+            <img src="/img/qrCode.png"/>
+        </div>
+        <p class="QRTxt">关注选师无忧公众账号，快速提升学习成绩</p>
+    </div>
+    <div class="hotArticle eachListTitle">
+        <div>
+            <span class="icon"></span>
+            <span class="txt">热门推荐</span>
+        </div>
+        <% if( render === 'article'){ %>
+        <%- include('./componentViews/common/list.html',{ dataList:article.hotInfos,config:config,type : "article"}) %>
+        <% } else { %>
+        <%- include('./componentViews/common/list.html',{ dataList:hotInfos,config:config,type : "article"}) %>
+        <% } %>
+    </div>
+    <div class="lastNews eachListTitle">
+        <div>
+            <span class="icon"></span>
+            <span class="txt">最新资料</span>
+        </div>
+        <%- include('./componentViews/common/list.html',{dataList:materials,config:config,type:"article"}) %>
+    </div>
+    <div class="teacherRecommended eachListTitle">
+        <div>
+            <span class="icon"></span>
+            <span class="txt">名师推荐</span>
+        </div>
+        <%- include('./componentViews/information/recommendTeacher.html') %>
+    </div>
+    <%- include('./componentViews/information/advertiseBrand.html') %>
+    <%- include('./componentViews/information/evaluateList.html') %>
+    <%- include('./componentViews/information/familyEducationCase.html') %>
+    <%- include('./componentViews/common/footer.html') %>
+</div>
+<script src="/build/main.js"></script>
+</body>
+</html>

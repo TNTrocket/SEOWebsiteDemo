@@ -1,0 +1,366 @@
+.information{
+  .hotInformation{
+    position: relative;
+    padding: 15px 0 15px 20px;
+    .listTxt{
+      width: 90%!important;
+    }
+    .icon{
+      width: 46px;
+      height: 46px;
+      .backgroundPic("hotInfo.png");
+    }
+  }
+  .moreInfo{
+    position: absolute;
+    bottom: 0;
+    right: 15px;
+  }
+  .viewMore{
+    text-align: center;
+    color:@blueFontColor;
+    background: #EBF8FF;
+    width: 700px;
+    height: 70px;
+    margin: 30px auto 0 auto;
+    line-height: 70px;
+    border-radius: 8px;
+    .fontSize(14px);
+    &.hotInfo{
+     position: relative;
+      right: 10px;
+    }
+  }
+  .worryFreeInfo{
+    position: relative;
+    .iconBox{
+      padding: 30px 20px 0 20px;
+    }
+    .icon{
+      width: 46px;
+      height: 46px;
+      .backgroundPic("hotInfo.png");
+    }
+    .worryFreeInfoContentBox{
+      background: #ffffff;
+      border-bottom: 1px solid @line-border-color;/*no*/
+      padding-bottom: 30px;
+      margin-bottom: 30px;
+      .worryFreeInfoContent {
+        .pageSide1,.pageSide2,.pageSide3,.pageSide4,.pageSide5{
+          .sideList{
+            padding: 20px 0 20px 20px;
+            overflow: hidden;
+            align-items: center;
+            display: flex;
+            position: relative;
+            border-bottom: 1px solid @line-border-color; /*no*/
+            >div{
+              float: left;
+            }
+            .w_f_i_pic{
+              width: 20%;
+              img{
+                max-width: 100% ;
+              }
+            }
+            .w_f_i_txt{
+              padding:0 35px 0 20px;
+              width: 80%;
+              .date{
+                position: absolute;
+                right: 20px;
+                bottom: 30px;
+                .fontSize(14px);
+                color:#999999;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .dataDownload{
+     padding: 15px 0 30px 0;
+    .icon{
+      width: 46px;
+      height: 46px;
+      .backgroundPic("download.png");
+    }
+    .downloadList{
+      span{
+        margin-left: 15px;
+      }
+    }
+  }
+  .parentsQA{
+    padding: 30px 0 10px 0;
+    border-bottom: 1px solid @line-border-color;/*no*/
+    .icon{
+      width: 46px;
+      height: 46px;
+      .backgroundPic("qa.png");
+    }
+    .commonListTitle{
+      li{
+        &:last-child{
+          border: 0;
+        }
+      }
+    }
+  }
+  .recommendTeacher{
+    margin-bottom: 30px ;
+    margin-top: 30px;
+    border-top: 1px solid @line-border-color;/*no*/
+    border-bottom:1px solid @line-border-color ; /*no*/
+    padding: 30px 0 0 20px;
+    .icon{
+      width: 46px;
+      height: 46px;
+      .backgroundPic("teacherIcon.png");
+    }
+  }
+  .evaluate {
+    display: none;
+    background: #ffffff;
+    padding: 30px 0 0 20px;
+    .icon{
+      width: 46px;
+      height: 46px;
+      .backgroundPic("evaluate.png");
+    }
+  }
+}
+.slideWarpper{
+  width: 500%;
+  position: relative;
+  left:0;
+  display: flex;
+  .pageSide1,.pageSide2,.pageSide3,.pageSide4,.pageSide5{
+    //float: left;
+    flex: 1;
+    overflow: hidden;
+    &.textList{
+     padding: 0 20px;
+    }
+  }
+}
+.marginLeft20{
+  margin-left: 20px;
+}
+.activeBorder{
+  border-bottom: 3px solid @blueFontColor;
+}
+
+.teacherList{
+  margin-top: 10px;
+  font-size: 0;
+  section{
+    height: 180px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    border-bottom:1px solid @line-border-color ; /*no*/
+    display: flex;
+    align-items: center;
+    &:last-child{
+      border: 0;
+    }
+    >div{
+      display: inline-block;
+    }
+    .t_r_cover{
+      vertical-align: middle;
+      width: 120px;
+      height: 120px;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .t_r_txt{
+      padding: 0 10px 0 20px;
+      vertical-align: middle;
+      .fontSize(13px);
+      width: 80%;
+      .introduce{
+        color:#999999;
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+.advertiseBrand{
+  background: #ffffff;
+  border-top:1px solid @line-border-color;
+  padding:20px 20px 0 20px;
+  text-align: center;
+  overflow: hidden;
+  h1{
+    .fontSize(18px);
+    color:#333333;
+  }
+  h2{
+    color:@blueFontColor;
+    .fontSize(16px);
+    padding: 28px 0;
+  }
+  article{
+    text-align:justify;
+    line-height: 23px; /*no*/
+    .fontSize(14px);
+  }
+  p{
+    text-align: left;
+    margin-top: 40px;
+    .fontSize(14px);
+  }
+  //span{
+  //  .fontSize(13px);
+  //  color: @blueFontColor;
+  //  float: right;
+  //}
+}
+.viewMoreEvaluate{
+  background: #ffffff;
+  color: @blueFontColor;
+  .fontSize(14px);
+  text-align: center;
+  padding-top: 30px;
+  .viewMoreEvaluateBtn{
+    margin: 0 auto;
+    width: 180px;
+  }
+  i{
+    margin-left: 5px;
+    .backgroundPic("arrow_bot.png");
+    display: inline-block;
+    width: 24px;
+    height: 19px;
+  }
+}
+.packUpEvaluate{
+  display: none;
+  background: #ffffff;
+  color: @blueFontColor;
+  .fontSize(14px);
+  text-align: center;
+  padding-top: 30px;
+  .packUpBtn{
+    margin: 0 auto;
+    width: 180px;
+  }
+  i{
+    .backgroundPic("pickUp.png");
+    display: inline-block;
+    width: 24px;
+    height: 19px;
+    margin-left: 5px;
+  }
+}
+.familyEducationBox{
+  padding: 0 20px 0 20px;
+  background: #ffffff;
+  ul {
+    display: flex;
+    margin-left: -1px; /*no*/
+    flex-wrap: wrap;
+    li {
+      .fontSize(14px);
+      flex-basis: 33%;
+      float: left;
+      text-align: left;
+      padding: 20px 0 10px 0;
+      color: #1A1A1A;
+      a {
+        display: block;
+        border-left: 1px solid #1A1A1A; /*no*/
+        line-height: 1;
+        padding: 0 0 0 20px;
+        white-space: nowrap;
+      }
+    }
+    &.news {
+      li {
+        .fontSize(14px);
+        flex-basis: 25%;
+      }
+    }
+  }
+  .familyEducationArea,.familyEducationSubject,.familyEducationType,.familyEducationNews{
+    overflow: hidden;
+    padding-top: 20px;
+    ul{
+      margin-top: 10px;
+    }
+    .icon{
+      width: 46px;
+      height: 46px;
+    }
+  }
+  .familyEducationArea{
+    padding-top: 30px;
+    .icon{
+      .backgroundPic("teachArea.png");
+    }
+  }
+  .familyEducationSubject{
+    .icon{
+      .backgroundPic("teachSubject.png");
+    }
+  }
+  .familyEducationType{
+    .icon{
+      .backgroundPic("teachType.png");
+    }
+  }
+  .familyEducationNews{
+    .icon{
+      .backgroundPic("familyEducationNews.png");
+    }
+  }
+}
+.imgInfoBanner{
+  background: #ffffff;
+  border-top: 1px solid @line-border-color;/*no*/
+  padding: 0 0 20px 0;
+  a{
+    display: block;
+  }
+  .imgBannerPic{
+    width: 710px;
+    height: 168px;
+    margin: 0 auto;
+    padding-top: 30px;
+    position: relative;
+    img{
+      width: 100%;
+      height: 100%;
+    }
+    .w-f-txtBg{
+      background: #000;
+      opacity: 0.5;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 64px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+    .w-f-txt{
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 64px;
+      line-height: 64px;
+      color:#ffffff;
+      z-index: 3;
+      .fontSize(14px);
+      text-align: center;
+      span{
+        opacity: 1;
+      }
+    }
+  }
+}
