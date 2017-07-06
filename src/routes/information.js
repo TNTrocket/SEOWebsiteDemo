@@ -2,6 +2,7 @@ const router = require('koa-router')();
 const dictionCtrl = require('../controllers/dictionaryCtrl');
 const articleCtrl = require('../controllers/articleCtrl');
 const informationList = dictionCtrl.informationList;
+const schoolInfoCtrl = require('../controllers/schoolInfoCtrl');
 const assert = require('assert');
 
 router.get('/', async(ctx, next) => {
@@ -11,91 +12,89 @@ router.get('/', async(ctx, next) => {
     }
   })
 });
-router.get('/parentsQaList', async(ctx, next) => {
-  let obj = {};
-  Object.assign(obj, informationList, { renderType: "parentsQaList" });
-  return await ctx.render("informationList", obj)
+
+router.get('/parentsQaList/:grade/:offset', async(ctx, next) => {
+  let { grade, offset = 0 } =ctx.params;
+
+  offset = parseInt(offset);
+
+  if (grade != 'unlimit') {
+    assert(dictionCtrl.gradeEnumeration[grade].code, '年级参数有误');
+    grade = dictionCtrl.gradeEnumeration[grade].code;
+  }
+
+  let params = { grade, offset };
+
+  let data = await articleCtrl.getParentQuestions(params);
+
+  informationList.prevRenderType = informationList.renderType;
+  informationList.renderType = 'parentsQaList';
+  data.informationList = informationList;
+  console.log('/parentsQaList/:grade/:offset--data====', data);
+
+
+  return await ctx.render("informationList", data)
 });
 router.get('/commonList', async(ctx, next) => {
   return await ctx.render("informationList", informationList)
 });
-
 
 //无忧资讯
 router.get('/studyNewsList/:type/:offset', async(ctx, next) => {
   let { type, offset, limit = 8 } =ctx.params;
   let typeName = type;
   assert(dictionCtrl.careFreeInfo[type], '404 文章类型不正确');
-  type = dictionCtrl.careFreeInfo[type].code;
+  type = dictionCtrl.careFreeInfo[type].id;
 
-  if (type == 0) {
-    type = [
-      dictionCtrl.careFreeInfo.sxgl.code,
-      dictionCtrl.careFreeInfo.qzcf.code,
-      dictionCtrl.careFreeInfo.bsxx.code,
-      dictionCtrl.careFreeInfo.jzxd.code,
-      dictionCtrl.careFreeInfo.gkzn.code
-    ];
-  }
-  offset = parseInt(offset);
-  limit = parseInt(limit);
-  let list = await articleCtrl.list({ type, offset, limit });
-  let hotInfos = await articleCtrl.getHotInfo(0, 10);
+  offset = parseInt(offset) || 0;
+  limit = parseInt(limit) || 8;
+  let data = await articleCtrl.studyNewList({ type, offset, limit });
 
-  let schoolMaterials = await articleCtrl.getLatestMaterials('school', 3);
-  let seniorMaterials = await articleCtrl.getLatestMaterials('senior', 3);
-  let highMaterials = await articleCtrl.getLatestMaterials('high', 4);
-  let materials = schoolMaterials.concat(seniorMaterials, highMaterials);
   informationList.prevRenderType = informationList.renderType;
   informationList.renderType = 'studyNewsList';
 
-  let diction = dictionCtrl.careFreeInfo;
-  let data = {
-    informationList: informationList,
-    list: list,
-    hotInfos: hotInfos,
-    materials,
-    diction,
-    typeName,
-    page: { offset, limit }
-  };
+  data.informationList = informationList;
+  data.typeName = typeName;
+
   console.log('/studyNewsList/:offset/:type/:page===', data);
   return await ctx.render("informationList", data)
 });
 
 
-router.get('/schoolList', async(ctx, next) => {
-  let obj = {};
-  Object.assign(obj, informationList, { renderType: "schoolList" });
-  return await ctx.render("informationList", obj)
+router.get('/dataDownloadList/:grade/:subject/:offset', async(ctx, next) => {
+  let { grade, subject, offset = 0 } =ctx.params;
+  if (grade != 'unlimit') {
+    assert(dictionCtrl.gradeEnumeration[grade].code, '年级参数有误');
+    grade = dictionCtrl.gradeEnumeration[grade].code;
+  }
+  if (subject != 'unlimit') {
+    assert(dictionCtrl.subjectEnumeration[subject].code, '科目参数有误');
+    subject = dictionCtrl.subjectEnumeration[subject].code;
+  }
+
+  offset = parseInt(offset) || 0;
+
+  let params = { grade, subject, offset };
+  let data = await articleCtrl.getMaterials(params);
+
+  informationList.prevRenderType = informationList.renderType;
+  informationList.renderType = "dataDownloadList";
+  data.informationList = informationList;
+
+  console.log('/dataDownloadList/:grade/:subject/:offset---data==', data);
+
+  return await ctx.render("informationList", data)
 });
 
-
-router.get('/dataDownloadList', async(ctx, next) => {
-  let obj = {};
-  Object.assign(obj, informationList, { renderType: "dataDownloadList" });
-  return await ctx.render("informationList", obj)
-});
-
+//文章详情
 router.get('/article/:id', async(ctx, next) => {
 
   let { id } =ctx.params;
-  let article = await articleCtrl.fetch(id);
-  article.threeTitles = await articleCtrl.getThreeArticle();
-  article.hotInfos = await articleCtrl.getHotInfo(0, 10);
-
-  let schoolMaterials = await articleCtrl.getLatestMaterials('school', 3);
-  let seniorMaterials = await articleCtrl.getLatestMaterials('senior', 3);
-  let highMaterials = await articleCtrl.getLatestMaterials('high', 4);
-  let materials = schoolMaterials.concat(seniorMaterials, highMaterials);
+  let data = await articleCtrl.fetch(id);
 
   informationList.prevRenderType = informationList.renderType;
   informationList.renderType = "article";
-  let data = {
-    informationList: informationList,
-    article: article,
-    materials
-  };
+  data.informationList = informationList;
 
   console.log('/article/:id===', data);
 
@@ -103,13 +102,37 @@ router.get('/article/:id', async(ctx, next) => {
 });
 
 
-router.get('/schoolDetail', async(ctx, next) => {
-  let obj = {};
-  Object.assign(obj, informationList, { renderType: "schoolDetail" });
-  return await ctx.render("informationList", obj)
+router.get('/schoolList/:city/:category/:region/:level/:offset', async(ctx, next) => {
+  let { category, region, level, offset, city } = ctx.params;
+  offset = parseInt(offset) || 0;
+
+  let data = await schoolInfoCtrl.list({ category, region, level, offset, city });
+
+  informationList.prevRenderType = informationList.renderType;
+  informationList.renderType = "schoolList";
+  data.informationList = informationList;
+
+  console.log('/schoolList/:grade/:city/:region/:level/:offset---data===', data);
+
+  return await ctx.render("informationList", data)
 });
 
+router.get('/schoolDetail/:city/:schoolID', async(ctx, next) => {
 
+  let { schoolID, city } =ctx.params;
+  assert(parseInt(schoolID), '学校id错误');
+  schoolID = parseInt(schoolID);
+
+  let data = await schoolInfoCtrl.getSchoolById(schoolID, city);
+
+  informationList.prevRenderType = informationList.renderType;
+  informationList.renderType = "schoolDetail";
+  data.informationList = informationList;
+
+  console.log('/schoolDetail/:city/:schoolID---data===', data);
+
+  return await ctx.render("informationList", data)
+});
 
 module.exports = router;
 

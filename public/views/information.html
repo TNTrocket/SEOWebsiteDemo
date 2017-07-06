@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="/build/style.css" rel="stylesheet"/>
 </head>
+<script src="/build/countRem.js"></script>
 <body data-pagetype="information" id="pageType" class="information">
 <%- include('./componentViews/common/homePageHeader.html') %>
 <%- include('./componentViews/common/homePageNav.html') %>
@@ -163,8 +164,6 @@
         <li data-information="psData" data-step="0"><a class="activeBorder">小学</a></li>
         <li data-information="jhsData" data-step="1"><a>初中</a></li>
         <li data-information="shsData" data-step="2"><a>高中</a></li>
-        <!--<li data-information="interview" data-step="3"><a>面试攻略</a></li>-->
-        <!--<li data-information="courseGuide" data-step="4"><a>学科指南</a></li>-->
     </ul>
     <div class="downloadList slideWarpper">
         <div class="pageSide1 slide textList">
@@ -224,14 +223,19 @@
     <%- include('./componentViews/information/recommendTeacher.html') %>
 </section>
 
-<%- include('./componentViews/information/advertiseBrand.html') %>
-<%- include('./componentViews/information/evaluateList.html') %>
-<%- include('./componentViews/information/familyEducationCase.html') %>
+<%- include('./componentViews/common/advertiseBrand.html') %>
+<%- include('./componentViews/common/evaluateList.html') %>
+<%- include('./componentViews/common/familyEducationCase.html') %>
 <%- include('./componentViews/common/footer.html') %>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Y04faNoNlPdLqtqpvIjUFzgLdmlllzDj"></script>
 <script>
-    var CMCONFIG = {
-        location :'<%- include("./componentViews/information/locationList.html").replace(/[\r\n]/g,"")%>'
+    var CONFIG = {}
+    function myFun(result){
+        var cityName = result.name;
+        CONFIG.city = cityName;
     }
+    var myCity = new BMap.LocalCity();
+    myCity.get(myFun);
 </script>
 <script src="/build/main.js"></script>
 </body>

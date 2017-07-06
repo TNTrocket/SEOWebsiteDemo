@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link href="/build/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" media="only screen and (min-width: 414px)" href="/build/pc.css"/>
+</head>
+<script src="/build/countRem.js"></script>
+<%
+var name = {
+ renderName : "联系我们",
+ link : locals.renderType
+}
+%>
+<body data-pagetype="contactUS" id="pageType"  class="contactUS">
+<%- include('./componentViews/common/homePageHeader.html') %>
+<%- include('./componentViews/common/homePageNav.html') %>
+<%- include('./componentViews/common/navMoreList.html') %>
+<section class="contactUSContent">
+  <div class="contactUSBanner"></div>
+  <article class="contactUSTxt">
+    <div class="topTitle">
+        <i></i>
+        <span>联系我们</span>
+    </div>
+      <div class="c_us_box">
+          <div>
+              <p class="name"> 广州岗顶总部</p>
+              <p class="place">地址:  广州市天河区五山路华晟大厦1506室</p>
+              <p class="phone">咨询热线:  020-8753298</p>
+          </div>
+          <div>
+              <p class="name"> 广州农交所体验中心</p>
+              <p class="place">地址:  广州市越秀区中山四路217号东鸣轩517A</p>
+              <p class="phone">咨询热线:  020-83702492</p>
+          </div>
+          <div>
+              <p class="name"> 广州鹭江体验中心</p>
+              <p class="place">地址:  广州市海珠区新港西路181号中电数码城405</p>
+              <p class="phone">咨询热线:  020-89115251</p>
+          </div>
+          <div>
+              <p class="name"> 深圳福田体验中心</p>
+              <p class="place">地址:  深圳市福田区华强北路4002号圣苑酒店B座写字楼1701</p>
+              <p class="phone">咨询热线:  020-89115251</p>
+          </div>
+      </div>
+  </article>
+</section>
+<div class="footCommonBox">
+    <%- include('./componentViews/supplement/footNav.html',name) %>
+    <%- include('./componentViews/common/advertiseBrand.html') %>
+    <%- include('./componentViews/common/evaluateList.html') %>
+    <%- include('./componentViews/common/familyEducationCase.html') %>
+</div>
+<%- include('./componentViews/common/footer.html') %>
+<script src="/build/main.js"></script>
+</body>
+</html>

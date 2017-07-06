@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link href="/build/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" media="only screen and (min-width: 414px)" href="/build/pc.css"/>
+</head>
+<script src="/build/countRem.js"></script>
+<%
+var name = {
+renderName : "联系我们",
+link : locals.renderType
+}
+%>
+<body data-pagetype="aboutUS" id="pageType"  class="aboutUS">
+<%- include('./componentViews/common/homePageHeader.html') %>
+<%- include('./componentViews/common/homePageNav.html') %>
+<%- include('./componentViews/common/navMoreList.html') %>
+<section class="aboutUSContent">
+    <div class="aboutUSBanner"></div>
+    <article class="aboutUSTxt">
+        <div class="item">
+            <div class="title">
+                <i></i>
+                <span>关于我们</span>
+            </div>
+            <div class="content">选师无忧（熙励教育）是华南区师资最丰富的互联网O2O平台之一，拥有14年的中小学课外辅导经验，
+                线上老师、家长群体用户超过100万，服务模式为家长线上预约，老师上门辅导，曾获2015年中国国际智慧教育展“中国实力教育品牌”，
+                羊城晚报“岭南教育（最受学生喜爱在线教育平台）金鼎奖”。</div>
+        </div>
+        <div class="item">
+            <div class="title">
+                <i></i>
+                <span>企业文化及核心价值观</span>
+            </div>
+            <div class="content">
+                <p>企业愿景：成为受尊敬的到家教育服务公司</p>
+                <p>使命：为老师创造价值，让孩子成长无忧</p>
+                <p>核心价值观：诚信务实，真诚服务，激情专注，学习创新</p>
+                <p>诚实守信：坚守诚信准则，秉持诚实守信的品德</p>
+                <p>真诚服务：真诚服务学生，建立严格的教师身份认证机制和用户投诉机制，通过人工审核、技术屏蔽以及授课反馈回访等方式维护教学质量、保障教学安全，为学生收获良好的辅导效果。</p>
+                <p>共享担当：团结合作，在竞争中共享担当</p>
+                <p>执行高效：快速执行反馈客户需求，配合高效完成任务</p>
+                <p>学习创新：持续学习，积极创新</p>
+            </div>
+        </div>
+        <div class="item">
+            <div class="title">
+                <i></i>
+                <span>品牌实力</span>
+            </div>
+            <div class="content">
+                <p>2010年荣获“最受公众信赖课外辅导品牌”</p>
+                <p>2011年荣获“南粤十佳课外辅导品牌”</p>
+                <p>2011年荣获第二届广东教育博览会金奖</p>
+                <p>2012-2015年 连续三届华南师范大学研究生教师技能大赛特约赞助商</p>
+                <p>2015年“选师无忧”项目荣获“中国十佳MBA/EMBA创业奖”</p>
+                <p>2015年 全球移动互联网创业大赛路演金奖</p>
+                <p>2015年 新浪网第八届“中国教育盛典”提名机构</p>
+                <p>2015年 中国国际智慧教育展“中国实力教育辅导品牌”</p>
+                <p>2015年 羊城晚报“岭南教育（最受学生喜爱在线教育平台）金鼎奖</p>
+            </div>
+        </div>
+        <div class="item">
+            <div class="title">
+                <i></i>
+                <span>联系我们</span>
+            </div>
+            <div class="content contactUS">
+                <div>
+                    <p class="name"> 广州岗顶总部</p>
+                    <p class="place">地址:  广州市天河区五山路华晟大厦1506室</p>
+                    <p class="phone">咨询热线:  020-8753298</p>
+                </div>
+                <div>
+                    <p class="name"> 广州农交所体验中心</p>
+                    <p class="place">地址:  广州市越秀区中山四路217号东鸣轩517A</p>
+                    <p class="phone">咨询热线:  020-83702492</p>
+                </div>
+                <div>
+                    <p class="name"> 广州鹭江体验中心</p>
+                    <p class="place">地址:  广州市海珠区新港西路181号中电数码城405</p>
+                    <p class="phone">咨询热线:  020-89115251</p>
+                </div>
+                <div>
+                    <p class="name"> 深圳福田体验中心</p>
+                    <p class="place">地址:  深圳市福田区华强北路4002号圣苑酒店B座写字楼1701</p>
+                    <p class="phone">咨询热线:  020-89115251</p>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+<div class="footCommonBox">
+    <%- include('./componentViews/supplement/footNav.html',name) %>
+    <%- include('./componentViews/common/advertiseBrand.html') %>
+    <%- include('./componentViews/common/evaluateList.html') %>
+    <%- include('./componentViews/common/familyEducationCase.html') %>
+</div>
+<%- include('./componentViews/common/footer.html') %>
+<script src="/build/main.js"></script>
+</body>
+</html>

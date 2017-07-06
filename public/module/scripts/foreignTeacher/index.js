@@ -3,6 +3,8 @@
  */
 import $ from 'jquery'
 import Swiper from 'swiper'
+import experienceAlert from  '../../component/experienceAlert'
+// import alert
 
 export default class foreignTeacher{
     constructor(){
@@ -14,6 +16,11 @@ export default class foreignTeacher{
             pagination : '.swiper-pagination',
             paginationElement : 'li',
             autoplayDisableOnInteraction : false
+        })
+        $(".formButton").click(function () {
+            new experienceAlert({
+                mask:true
+            })
         })
     }
 }

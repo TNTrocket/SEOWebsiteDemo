@@ -9,7 +9,8 @@ class call{
         this.config = {
             method : "post",
             headers : {
-                "Content-Type" : "application/json"
+                "Content-Type" : "application/json",
+                "Accept" : "application/json"
             }
         }
         this.jQCallApi = this.jQCallApi.bind($)
@@ -28,24 +29,24 @@ class call{
     }
     fetchCallApi(url,options){
         return  new Promise((resolve,reject) => {
-            window.fetch(url,options).then(function (data) {
-                if(data.status == 404){
+            window.fetch(url,options).then(function (response) {
+                if(response.status == 404){
                     return reject()
                 }
+                return response.json()
+            }).then(function (data) {
                 resolve(data)
             }).catch((error) =>{
 
             })
         })
-
     }
     simpleCall(url,options){
         options =deepAssign({},this.config,options);
-        console.log(options)
         if(window.fetch){
-          return  this.fetchCallApi(url,options)
+            return  this.fetchCallApi(url,options)
         }else{
-           return this.jQCallApi(url,options)
+            return this.jQCallApi(url,options)
         }
     }
 

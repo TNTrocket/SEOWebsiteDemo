@@ -1,19 +1,23 @@
 import Swiper from 'swiper'
 import $ from 'jquery'
 import locationModal from '../../component/locationModal'
-import { evaluate } from '../../plugin/global'
-// import { apiCall } from '../../plugin/xhr'
+import { evaluate, locationTemp, isEmptyObject } from '../../plugin/global'
+import { fetchCity } from '../../plugin/globalServer'
+import handlebars from 'handlebars'
 
 
 export  default class information{
    constructor(){
-       this.domEvent();
-       this.locationModal = null;
-       // apiCall.simpleCall("/test",{headers:{credentials:"include"}}).then(function () {
-       //     console.log("succ")
-       // },function () {
-       //     console.log("fail")
-       // })
+
+       this.locationModalDom = "";
+       this.city = null;
+       this.currentCity = isEmptyObject(CONFIG.city)? "广州市" : CONFIG.city;
+       $(".locationTxt").text(this.currentCity);
+       fetchCity().then((data)=>{
+           console.log(data);
+           this.city = Object.keys(data);
+           this.domEvent();
+       })
    }
    domEvent(){
         let self = this;
@@ -90,11 +94,9 @@ export  default class information{
         });
 
         $(".locationArea").click(function () {
-            if( self.locationModal ){
-                self.locationModal.show();
-            }else{
-                self.locationModal = new locationModal();
-            }
+            let temp = handlebars.compile(locationTemp);
+            let dom = temp(self.city);
+            new locationModal({dom});
         });
 
         evaluate();

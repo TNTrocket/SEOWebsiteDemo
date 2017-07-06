@@ -1,8 +1,6 @@
 /**
  * Created by tseian on 23/06/2017.
  */
-
-
 let Sequelize = require("sequelize");
 let sequelize = require("../config/sequelize");
 let Enumeration = sequelize.define("Enumeration", {

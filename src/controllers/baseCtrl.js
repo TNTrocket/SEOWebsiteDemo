@@ -6,4 +6,8 @@ module.exports = class BaseCtrl {
   constructor(){
 
   }
+
+  async verifyPhoneNO(){
+
+  }
 };

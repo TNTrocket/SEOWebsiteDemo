@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link href="/build/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" media="only screen and (min-width: 414px)" href="/build/pc.css"/>
+</head>
+<script src="/build/countRem.js"></script>
+<body data-pagetype="appDownload" id="pageType" >
+<%- include('./componentViews/common/homePageHeader.html') %>
+<%- include('./componentViews/common/homePageNav.html') %>
+<%- include('./componentViews/common/navMoreList.html') %>
+<section class="AppDownloadContent">
+  <div class="Bg">
+      <div class="iphone"></div>
+  </div>
+  <div>
+      <div class="appStudentBox">
+          <div class="icon"></div>
+          <div class="contentBox">
+              <p>家长版选师无忧-专业的中小学家教辅导神器</p>
+              <div class="btn studentDownload"><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.xsw.student" target="_blank">下载</a></div>
+          </div>
+      </div>
+      <div class="appTeacherBox">
+          <div class="icon"></div>
+          <div class="contentBox">
+              <p>老师版选师无忧-万千老师 工作兼职必备</p>
+              <div class="btn teacherDownload"><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.xsw.teacher" target="_blank">下载</a></div>
+          </div>
+      </div>
+  </div>
+</section>
+<div class="footCommonBox">
+    <%- include('./componentViews/common/advertiseBrand.html') %>
+    <%- include('./componentViews/common/evaluateList.html') %>
+    <%- include('./componentViews/common/familyEducationCase.html') %>
+</div>
+<%- include('./componentViews/common/footer.html') %>
+<script src="/build/main.js"></script>
+</body>
+</html>

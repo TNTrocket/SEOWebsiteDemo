@@ -1,14 +1,6 @@
 import $ from 'jquery'
-import { informationList, information, foreignTeacher } from './commonRoutes'
+import * as route from './commonRoutes'
 
-//移动端适配
-let isIphone = window.navigator.appVersion.match(/iphone/gi);
-let isAndroid = window.navigator.appVersion.match(/android/gi);
-// if( isIphone || isAndroid){
-let deviceWidth = document.documentElement.clientWidth;
-if(deviceWidth > 750){deviceWidth = 750;}
-document.documentElement.style.fontSize = deviceWidth / 7.5 + 'px';
-// }
 let type = $("#pageType").data("pagetype");
 
 switch (type){
@@ -16,13 +8,25 @@ switch (type){
         // require("./scripts/index/index")
         break;
     case "information":
-        new information();
+        new route.information();
         break;
     case "informationList":
-         new informationList();
+         new route.informationList();
         break;
     case "foreignTeacher":
-        new foreignTeacher();
+        new route.foreignTeacher();
+        break;
+    case "appDownload":
+        new  route.appDownload();
+        break;
+    case "successCase":
+        new route.successCase();
+        break;
+    case "contactUS":
+        new route.contactUS();
+        break;
+    case "selectTeacher":
+        new  route.selectTeacher();
         break;
 }
 

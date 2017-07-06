@@ -7,4 +7,4 @@ router.get('/', async(ctx, next) => {
     return await ctx.render("foreignTeacher", {})
 });
 
-module.exports = router
+module.exports = router;

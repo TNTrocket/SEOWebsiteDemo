@@ -1,0 +1,71 @@
+.teacherDetail{
+  .t_case{
+    font-size: 0;
+    padding: 30px 20px;
+    margin: 30px 0;
+    background: #ffffff;
+    border-top: 1px solid #dcdcdc;
+    border-bottom: 1px solid #dcdcdc;
+    >div{
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .t_content{
+      margin-left: 20px;
+       .t_name{
+         .fontSize(16px);
+       }
+      .t_approve{
+        display: flex;
+        margin-top: 26px;
+        justify-content: space-between;
+        >div{
+          .fontSize(14px);
+          margin-right: 10px;
+         i{
+           width: 30px;
+           height: 30px;
+           display: inline-block;
+           vertical-align: middle;
+         }
+          span{
+            display: inline-block;
+            vertical-align: middle;
+          }
+        }
+        .t_identity{
+          i{
+            .backgroundPic("shenfenyanzheng.png");
+          }
+        }
+        .t_ACCI{
+          i{
+            .backgroundPic("jiaoshirenzhen.png");
+          }
+        }
+        .t_education{
+          i{
+            .backgroundPic("xueliirenzhen.png");
+          }
+        }
+      }
+      .t_tags{
+        .fontSize(12px);
+        margin-top: 24px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        >div{
+          border: 1px solid #c1c1c1;
+          padding: 0px 5px;
+        }
+      }
+    }
+    .img{
+      img{
+        width: 132px;
+        height: 137px;
+      }
+    }
+  }
+}

@@ -1,24 +1,24 @@
 <section class="search">
     <div class="searchTopArea">
         <div class="searchSum">
-            选择<%= listTxt.queryType.sumTxt %>： <span class="searchSumType"><%= locals.queryName%></span>
-            <span class="text">共<span class="number">38569</span>条 ></span>
+            选择<%= listTxt.queryType.sumTxt %>： <span class="searchSumType"></span>
+            <span class="text">共<span class="number"><%= locals.total %></span>条 ></span>
         </div>
         <div class="searchHideBox">
             <div class="searchCondition">
-                <% listTxt.queryType.queryItem.forEach(function(result){%>
+                <% locals.diction.forEach(function(result){ %>
                 <div class="searchConditionItem">
-                    <div class="txt"><%= result.type %></div>
+                    <div class="txt"><%= result.category %></div>
                     <div class="item">
                         <ul>
-                            <% result.item.forEach(function(item,index){%>
-                            <li><a data-queryitem="<%= item %>"><%= item %></a></li>
+                           <% Object.keys(result.item).forEach(function(a){ %>
+                            <li><a data-queryitem="<%= a %>" data-itemname ="<%= result.item[a].name %>" data-querycategory = "<%= result.category.split('：')[0] %>"><%= result.item[a].name %></a></li>
                             <% }) %>
                         </ul>
                     </div>
                 </div>
+                <input type="hidden" name="<%= result.category.split('：')[0] %>" value=""/>
                 <% }) %>
-                <!--<div class="more moreGrade"><span class="moreGradeTxt">更多</span><i></i></div>-->
             </div>
             <div class="searchButton">
                 点击查询

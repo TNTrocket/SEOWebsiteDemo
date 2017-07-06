@@ -68,20 +68,24 @@ gulp.task('babel', (cb) => {
     // .pipe(sourcemap.write('../build'))
     .pipe(gulp.dest('./public/temp/')).on('end', cb)
 })
+gulp.task('countRem', (cb) => {
+    gulp.src('./public/temp/countRem.js')
+        .pipe(gulp.dest('./public/build/')).on('end', cb)
+})
 gulp.task('browserify', (cb) => {
-    gulp.src('./public/temp//main.js')
+    gulp.src('./public/temp/main.js')
         .pipe(browserify({
           insertGlobals: true
         }))
         .pipe(gulp.dest('./public/build/')).on('end', cb)
 })
 gulp.task('scripts',(cb) => {
-    runSequence('babel','browserify','temp-clean',cb);
+    runSequence('babel','browserify','countRem','temp-clean',cb);
 })
 gulp.task("node:sever", ['scripts', 'less'], () => {
   nodemon({
     script: './src/app.js',
-    ignore: ['.idea', 'node_modules', 'build','src','temp'],
+    ignore: ['.idea', 'node_modules', 'build','temp'],
     tasks: ['scripts'],
     env: { 'NODE_ENV': 'development' }
   })

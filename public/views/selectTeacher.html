@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link href="/build/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" media="only screen and (min-width: 414px)" href="/build/pc.css"/>
+</head>
+<script src="/build/countRem.js"></script>
+<body data-pagetype="selectTeacher" id="pageType"  class="selectTeacher">
+<%- include('./componentViews/common/homePageHeader.html') %>
+<%- include('./componentViews/common/homePageNav.html') %>
+<%- include('./componentViews/common/navMoreList.html') %>
+<section class="selectTeacherContent">
+    <div class="selectQuery">
+        <ul>
+            <li data-selecttype="intelligent">智能排序<span class="icon"></span></li>
+            <li data-selecttype="grade">年级<span class="icon"></span></li>
+            <li data-selecttype="area">区域<span class="icon"></span></li>
+            <li data-selecttype="select">筛选<span class="icon"></span></li>
+        </ul>
+    </div>
+    <div class="teacherData">
+        <div class="singleTeacher">
+            <div class="img">
+                <img src="/img/width@2x.png"/>
+            </div>
+            <div class="teacherDetail">
+                <div class="name"><span>语文张老师</span></div>
+                <div class="teacherRange">
+                    <span class="item">高中语文</span>
+                    <span class="item">初中语文</span>
+                </div>
+                <div class="features">
+                    <span class="item">语文张老师</span>
+                    <span class="item">语文张老师</span>
+                </div>
+            </div>
+            <div class="price">
+              ￥ <span class="number">60</span> 起
+            </div>
+        </div>
+        <div class="singleTeacher">
+            <div class="img">
+                <img src="/img/width@2x.png"/>
+            </div>
+            <div class="teacherDetail">
+                <div class="name"><span>语文张老师</span></div>
+                <div class="teacherRange">
+                    <span class="item">高中语文</span>
+                    <span class="item">初中语文</span>
+                </div>
+                <div class="features">
+                    <span class="item">语文张老师</span>
+                    <span class="item">语文张老师</span>
+                </div>
+            </div>
+            <div class="price">
+                ￥ <span class="number">60</span> 起
+            </div>
+        </div>
+        <div class="singleTeacher">
+            <div class="img">
+                <img src="/img/width@2x.png"/>
+            </div>
+            <div class="teacherDetail">
+                <div class="name"><span>语文张老师</span></div>
+                <div class="teacherRange">
+                    <span class="item">高中语文</span>
+                    <span class="item">初中语文</span>
+                </div>
+                <div class="features">
+                    <span class="item">语文张老师</span>
+                    <span class="item">语文张老师</span>
+                </div>
+            </div>
+            <div class="price">
+                ￥ <span class="number">60</span> 起
+            </div>
+        </div>
+    </div>
+
+
+</section>
+<div class="footCommonBox">
+    <%- include('./componentViews/common/advertiseBrand.html') %>
+    <%- include('./componentViews/common/evaluateList.html') %>
+    <%- include('./componentViews/common/familyEducationCase.html') %>
+</div>
+<%- include('./componentViews/common/footer.html') %>
+<script id="tpl" type="text/x-template">
+    <div class="queryTeacher globalModal {{target}}">
+        {{#each queryType}}
+        <section class="s_t_queryItem">
+            <div class="titleBox">
+                <div class="icon"></div>
+                <span>{{name}}</span>
+            </div>
+            <ul class="queryItemLi">
+                {{#each queryItem}}
+                <li>{{this}}</li>
+                {{/each}}
+            </ul>
+        </section>
+        {{/each}}
+        {{#if target}}
+        <div class="queryBtn">点击查看</div>
+        {{/if}}
+    </div>
+</script>
+<script id="intelligentTpl" type="text/x-template">
+    <div class="queryTeacher globalModal intelligentModal">
+     <ul class="intelligent">
+         <li>智能排序</li>
+         <li>评价最好</li>
+         <li>价格最高</li>
+         <li>价格最低</li>
+         <li>课时最长</li>
+     </ul>
+    </div>
+</script>
+<script src="/build/main.js"></script>
+</body>
+</html>

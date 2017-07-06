@@ -6,6 +6,7 @@ let Sequelize = require("sequelize");
 let sequelizeInstance = new Sequelize(
   config.sequelize.database, config.sequelize.userName, config.sequelize.password,
   {
+    port: config.sequelize.port,
     host: config.sequelize.host,
     dialect: config.sequelize.dialect,
     pool: {

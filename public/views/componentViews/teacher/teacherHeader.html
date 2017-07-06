@@ -1,0 +1,16 @@
+<header class="listHeader">
+    <nav>
+        <span class="logo"></span>
+        <span class="title"><a href="/information"><%= txt.headerTxt.title %></a></span>
+        <span class="arrow"></span>
+        <% if (locals.txt.headerTxt.h3){ %>
+        <% if (locals.prevRenderType !== "article"){ %>
+        <span><a href="/information/<%= locals.prevRenderType %><%= Link.link %>"><%= locals.h2Name %></a></span>
+        <span class="arrow"></span>
+        <% } %>
+        <% } else{ %>
+        <span><%= txt.headerTxt.h2 %></span>
+        <% } %>
+        <span class="h3Title"><%= locals.txt.headerTxt.h3 == 1 ? "" : locals.txt.headerTxt.h3 %></span>
+    </nav>
+</header>

@@ -1,32 +1,41 @@
 import $ from 'jquery'
 
-export  default function modal(option) {
-    if(option){
+export  default class modal {
+    constructor(option) {
+      if(option){
         this.event = option.event || "";
+        this.mask =  option.mask  || false;
+      }
+      this.maskDom = "<div class='mask'>"+"</div>";
     }
-}
-
-modal.prototype = {
-    constructor:modal,
-    init:function () {
+    init(){
+      $(".mask").remove();
+      $(".globalModal").remove();
+      this.mask && this.showMask();
       this.show();
       for(let a in this.event){
           let eventType = a.split(":")[0];
           let eventDom  = a.split(":")[1];
           $(eventDom).on(eventType,this.event[a]);
       }
-    },
-    show:function () {
-        let locationModal = $(".locationModal");
-        if(locationModal.length>0){
-            locationModal.show();
+    }
+    show(){
+        let globalModal = $(".globalModal");
+        if(globalModal.length>0){
+            globalModal.show();
         }else{
             $("body").append(this.dom);
-            $(".locationModal").show();
+            $(".globalModal").show();
         }
-    },
-    hide:function () {
-        let locationModal = $(".locationModal")
-        locationModal.hide();
+    }
+    hide(){
+        let globalModal = $(".globalModal");
+        globalModal.remove();
+    }
+    showMask(){
+        $("body").append(this.maskDom);
+    }
+    hideMask(){
+        $(".mask").remove();
     }
 }

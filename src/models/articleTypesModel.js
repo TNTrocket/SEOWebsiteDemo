@@ -12,6 +12,8 @@ let ArticleType = sequelize.define("ArticleType", {
   at_enu_code2: { type: Sequelize.STRING(30) },
   at_enu_code3: { type: Sequelize.STRING(30) },
   at_status: { type: Sequelize.INTEGER },
+  at_create_time: { type: Sequelize.BIGINT },
+  at_update_time: { type: Sequelize.BIGINT },
 }, {
   tableName: 'tbl_article_types',
   timestamps: false

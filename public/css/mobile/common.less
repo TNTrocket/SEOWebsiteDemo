@@ -42,9 +42,12 @@ a{
 }
 a:active,a:link,a:visited,a:hover{ text-decoration: none; }
 html,body{
-  height: 100%;
+  //height: 100%;
   background: #f5f5f9;
   overflow-x: hidden;
+  &.successCase,&.joinUS,&.aboutUS{
+    background: #ffffff;
+  }
 }
 body{
   -webkit-tap-highlight-color: rgba(0,0,0,0);
@@ -52,6 +55,7 @@ body{
   font-size: 14px; /*no*/
   width: 750px;
   margin: 0 auto;
+  position: relative;
 }
 ul{
   list-style: none;
@@ -230,6 +234,7 @@ ul{
   position: relative;
   .swiper-container{
     width: 100%;
+    height: 380px;
     .swiper-wrapper{
       width: 400%;
     }
@@ -308,6 +313,7 @@ footer{
      display: flex;
      flex-wrap: wrap;
     a{
+      color: #ffffff;
       flex-basis: 50%;
       margin: 10px 0;
     }
@@ -320,38 +326,42 @@ footer{
     }
   }
 }
-.locationModal{
-  display: none;
-  position: absolute;
-  top:0;
-  background: #ffffff;
-  width: 100%;
-  height: 100%;
-  z-index: 999;
-  .tooltip{
+.globalModal{
+  position: fixed;
+  max-width: 750px;
+  z-index: 9999;
+  &.locationModal{
+    display: none;
     width: 100%;
-    position: relative;
-    text-align: center;
-    padding: 20px;
-    background: #ebebeb;
-    .close{
-      .backgroundPic("xClose.png");
-       width: 36px;
-       height: 36px;
-       position: absolute;
-       left: 30px;
-       top:50%;
-       transform: translateY(-50%);
+    height: 100%;
+    top:0;
+    background: #ffffff;
+    .tooltip{
+      width: 100%;
+      position: relative;
+      text-align: center;
+      padding: 20px;
+      background: #ebebeb;
+      .close{
+        .backgroundPic("xClose.png");
+        width: 36px;
+        height: 36px;
+        position: absolute;
+        left: 30px;
+        top:50%;
+        transform: translateY(-50%);
+      }
     }
-}
-  ul{
-    margin-left: 30px;
-    li{
-      padding: 20px 30px 20px 50px;
-      border-bottom: 1px solid @line-border-color; /*no*/
+    ul{
+      margin-left: 30px;
+      li{
+        padding: 20px 30px 20px 50px;
+        border-bottom: 1px solid @line-border-color; /*no*/
+      }
     }
   }
 }
+
 .navMoreList{
   display: none;
   &.toggleList{
@@ -428,7 +438,7 @@ footer{
             float: left;
           }
           .item{
-            width: 65%;
+            width: 70%;
             vertical-align: middle;
             display: inline-block;
             ul{
@@ -436,9 +446,10 @@ footer{
               display: flex;
               flex-wrap: wrap;
               text-align: center;
+              justify-content: space-around;
               li{
                 padding: 5px 0;
-                flex-basis: 33% ;
+                flex-basis: 30% ;
                 margin-bottom: 30px;
                 a{
                   color: black;
@@ -446,7 +457,7 @@ footer{
                   border: 1px solid @line-border-color;
                   display: inline-block;
                   border-radius: 7px;
-                  width: 90%;
+                  width: 92%;
                 }
                 &:last-child{
                   margin: 0;
@@ -480,7 +491,7 @@ footer{
 }
 
 .activeListClickQuery{
-  background: @blueFontColor;
+  background: @blueFontColor !important;
   color: #fff !important;
 }
 .displayBlock{
@@ -488,4 +499,154 @@ footer{
 }
 .blueColor{
   color: @blueFontColor;
+}
+.commonEvaluate{
+  display: none;
+  padding: 0 20px;
+  .icon{
+    width: 46px;
+    height: 46px;
+    .backgroundPic("evaluate.png");
+  }
+}
+.footCommonBox{
+  padding-top: 50px;
+  .advertiseBrand{
+    border: 0;
+  }
+}
+.footNav{
+  padding: 0 20px;
+  overflow: hidden;
+  span{
+    display: inline-block;
+    a{
+      color: @blueFontColor;
+     display: block;
+    }
+    &.arrow{
+      .backgroundPic("smallArrow.png");
+      width: 14px;
+      height: 20px;
+    }
+  }
+}
+.mask{
+  position: absolute;
+  z-index: 9998;
+  background: #000000;
+  opacity: 0.8;
+  height: 100%;
+  width: 100%;
+  top: 0;
+}
+.experienceAlert{
+  background: #ffffff;
+  width: 670px;
+  height: 488px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  border-radius: 10px;
+  &.success{
+    height: 547px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .successIcon{
+      margin-top: 52px;
+      .backgroundPic("successIcon.png");
+      width: 211px;
+      height: 164px;
+    }
+    .successTxt{
+      margin-top: 52px;
+      .fontSize(16px);
+      color: #333333;
+    }
+    .tips{
+      margin-top: 34px;
+      .fontSize(14px);
+      color: #666666;
+    }
+  }
+  .e_a_button{
+    width: 610px;
+    height: 88px;
+    margin: 48px 30px;
+    background: #2196f1;
+    border-radius: 10px;
+    color: #ffffff;
+    .fontSize(17px);
+    text-align: center;
+    line-height: 88px;
+  }
+  .title{
+    padding: 48px 0;
+    text-align: center;
+    .fontSize(16px);
+    color: #666666;
+    border-bottom: 1px solid #dddddd;/*no*/
+  }
+  .e_a_inputBox{
+    height: 88px;
+    font-size: 0;
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #dddddd;/*no*/
+    position: relative;
+    >div{
+      display: inline-block;
+      vertical-align: middle;
+    }
+   .icon{
+     width: 28px;
+     height: 42px;
+     &.password{
+       .backgroundPic("mima.png");
+        width: 34px;
+
+     }
+     &.phone{
+       .backgroundPic("inputPhone.png");
+     }
+   }
+    .phoneBox{
+      width: 80%;
+      input{
+        width: 100%;
+      }
+    }
+    .authCode{
+      background: #2196f1;
+      width: 250px;
+      height: 64px;
+      float: right;
+      margin-right: 30px;
+      color: #ffffff;
+      .fontSize(16px);
+      text-align: center;
+      line-height: 64px;
+      border-radius: 10px;
+    }
+    input{
+      padding-left: 30px;
+      border: 0;
+      outline: none;
+      .fontSize(14px);
+      &::-webkit-input-placeholder { /* WebKit browsers */
+        color:    #c8c8c8;
+      }
+      &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        color:    #c8c8c8;
+      }
+      &::-moz-placeholder { /* Mozilla Firefox 19+ */
+        color:    #c8c8c8;
+      }
+      &:-ms-input-placeholder { /* Internet Explorer 10+ */
+        color:    #c8c8c8;
+      }
+    }
+  }
 }
