@@ -5,12 +5,13 @@ const informationList = dictionCtrl.informationList;
 const schoolInfoCtrl = require('../controllers/schoolInfoCtrl');
 const assert = require('assert');
 
+
+
 router.get('/', async(ctx, next) => {
-  return await ctx.render("information", {
-    user: {
-      name: "tnt"
-    }
-  })
+
+  let data = await articleCtrl.index();
+  console.log('router.get(/ ====', data);
+  return await ctx.render("information", data);
 });
 
 router.get('/parentsQaList/:grade/:offset', async(ctx, next) => {
@@ -50,11 +51,13 @@ router.get('/studyNewsList/:type/:offset', async(ctx, next) => {
   limit = parseInt(limit) || 8;
   let data = await articleCtrl.studyNewList({ type, offset, limit });
 
+
   informationList.prevRenderType = informationList.renderType;
   informationList.renderType = 'studyNewsList';
 
   data.informationList = informationList;
   data.typeName = typeName;
+
 
   console.log('/studyNewsList/:offset/:type/:page===', data);
   return await ctx.render("informationList", data)
@@ -102,8 +105,10 @@ router.get('/article/:id', async(ctx, next) => {
 });
 
 
-router.get('/schoolList/:city/:category/:region/:level/:offset', async(ctx, next) => {
-  let { category, region, level, offset, city } = ctx.params;
+router.get('/schoolList/:category/:level/:offset', async(ctx, next) => {
+  let { category, level, offset } = ctx.params;
+  let { city, region } =ctx.query;
+
   offset = parseInt(offset) || 0;
 
   let data = await schoolInfoCtrl.list({ category, region, level, offset, city });
@@ -117,9 +122,11 @@ router.get('/schoolList/:city/:category/:region/:level/:offset', async(ctx, next
   return await ctx.render("informationList", data)
 });
 
-router.get('/schoolDetail/:city/:schoolID', async(ctx, next) => {
+router.get('/school/detail/:schoolID', async(ctx, next) => {
 
-  let { schoolID, city } =ctx.params;
+  let { schoolID } =ctx.params;
+  let { city } =ctx.query;
+
   assert(parseInt(schoolID), '学校id错误');
   schoolID = parseInt(schoolID);
 

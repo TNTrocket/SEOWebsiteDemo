@@ -1,16 +1,15 @@
 <div>
     <section class="schoolGlory">
         <div>
-            <img src="../..//img/width@2x.png"/>
+            <img src="<%= school.header_image_url || '/img/width@2x.png' %>"/>
         </div>
         <div class="gloryListBox">
-            <div class="schoolName">执信中学</div>
+            <div class="schoolName"><%= school.name %></div>
             <div class="gloryList">
                 <ul>
-                    <li>市属师范性高中</li>
-                    <li>省一级</li>
-                    <li>公办学校</li>
-                    <li>广州名校</li>
+                    <% JSON.parse(school.targets).forEach(function(item){ %>
+                    <li><%= item %></li>
+                    <% }) %>
                 </ul>
             </div>
         </div>
@@ -18,71 +17,75 @@
     <div class="schoolDetail">
         <section>
             <div class="title">所在区域</div>
-            <div>越秀</div>
+            <div><%= school.region %></div>
         </section>
-        <section>
-            <div class="title">录取批次</div>
-            <div>独立批/指示批/提前批</div>
-        </section>
-        <section class="studentDemand">
-            <div class="title">入学难度</div>
-            <div class="star">
-                <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div>
-        </section>
-        <section class="score">
-            <div class="title">高考分数</div>
-            <div class="star">
-                <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div>
-        </section>
-        <section class="hot">
-            <div class="title">热门程度</div>
-            <div class="star">
-                <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div>
-        </section>
+        <!--<section>-->
+            <!--<div class="title">录取批次</div>-->
+            <!--<div>独立批/指示批/提前批</div>-->
+        <!--</section>-->
+        <!--<section class="studentDemand">-->
+            <!--<div class="title">入学难度</div>-->
+            <!--<div class="star">-->
+                <!--<ul>-->
+                    <!--<li></li>-->
+                    <!--<li></li>-->
+                    <!--<li></li>-->
+                    <!--<li></li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</section>-->
+        <!--<section class="score">-->
+            <!--<div class="title">高考分数</div>-->
+            <!--<div class="star">-->
+                <!--<ul>-->
+                    <!--<li></li>-->
+                    <!--<li></li>-->
+                    <!--<li></li>-->
+                    <!--<li></li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</section>-->
+        <!--<section class="hot">-->
+            <!--<div class="title">热门程度</div>-->
+            <!--<div class="star">-->
+                <!--<ul>-->
+                    <!--<li></li>-->
+                    <!--<li></li>-->
+                    <!--<li></li>-->
+                    <!--<li></li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</section>-->
         <section>
             <div class="title">学校地址</div>
-            <div>广州市越秀区</div>
+            <div><%= school.address%></div>
         </section>
         <section class="phone">
             <div class="title">联系电话</div>
             <div>
-                <p>1233445</p>
-                <p>234555</p>
+                <p><%= school.phone %></p>
+                <!--<p>234555</p>-->
             </div>
         </section>
+        <% if(school.main_page){ %>
         <section>
             <div class="title">官方网站</div>
-            <div style="word-break: break-all">fefegewghrgr</div>
+            <div style="word-break: break-all"><%= school.main_page %></div>
         </section>
+        <% } %>
+        <% if(school.desc){ %>
         <section class="schoolOverview">
             <div class="title">学校简介</div>
-            <div class="article">学校简介学校简介学校简介学校简介学校简介学校简介学校简介学校简介学校简介学校简介学校简介学校简介学校简介学校简介学校简介学校简介学校简介学校简介学校简介学校简介学校简介学校简介</div>
+            <div class="article"><%= school.desc%></div>
         </section>
-        <section class="well-knownAlumni">
-            <div class="title">知名校友</div>
-            <div class="article">eklfeklfjeklghrjklhgrkgreklfeklfjeklghrjklhgrkgreklfeklfjeklghrjklhgrkgreklfeklfjeklghrjklhgrkgreklfeklfjeklghrjklhgrkgrklfjeklghrjklhgrkgreklfeklfjeklghrjklhgrkgreklfeklfjeklghrjklhgrkgr</div>
-        </section>
+        <% } %>
+        <!--<section class="well-knownAlumni">-->
+            <!--<div class="title">知名校友</div>-->
+            <!--<div class="article"></div>-->
+        <!--</section>-->
     </div>
     <div class="schoolControl">
-        <div class="prevSchool">上一篇：广州实验中学</div>
-        <div class="nextSchool">下一篇：华附</div>
+        <div class="prevSchool" data-href="/information/school/detail/<%= school.id - 1 <=0 ? 1 : school.id-1 %>">上一篇：广州实验中学</div>
+        <div class="nextSchool" data-href="/information/school/detail/<%= school.id + 1 %>">下一篇：华附</div>
     </div>
 </div>

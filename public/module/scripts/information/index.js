@@ -1,17 +1,19 @@
 import Swiper from 'swiper'
 import $ from 'jquery'
 import locationModal from '../../component/locationModal'
-import { evaluate, locationTemp, isEmptyObject } from '../../plugin/global'
+import { evaluate, locationTemp, isEmptyObject, navEvent,locationStorage } from '../../plugin/global'
 import { fetchCity } from '../../plugin/globalServer'
 import handlebars from 'handlebars'
 
 
 export  default class information{
    constructor(){
-
        this.locationModalDom = "";
        this.city = null;
-       this.currentCity = isEmptyObject(CONFIG.city)? "广州市" : CONFIG.city;
+       this.currentCity = (isEmptyObject(CONFIG.city) || this.city.indexOf(CONFIG.city) === -1)? "广州市" : CONFIG.city;
+       locationStorage().setLocationStorage("city",this.currentCity);
+       let schoolListNav = $('#schoolListNav');
+       schoolListNav.attr("href","/information/schoolList/unlimit/unlimit/0?city="+this.currentCity+"&region=unlimit");
        $(".locationTxt").text(this.currentCity);
        fetchCity().then((data)=>{
            console.log(data);
@@ -27,22 +29,8 @@ export  default class information{
             paginationElement : 'span',
             autoplayDisableOnInteraction : false
         })
-       let navMoreList = $(".navMoreList");
-        $(".homePageNav a").click(function () {
-            let nav = $(this).data("nav");
-            switch (nav){
-                case "teacher":
-                    break;
-                case "information":
-                    break;
-                case "example":
-                    break;
-                case "more":
-                    $(this).toggleClass("blueColor");
-                    navMoreList.toggleClass("toggleList");
-                    break;
-            }
-        })
+       navEvent();
+
         $(".paginationUL li").on("click",function (e) {
             e.stopPropagation();
             // var type = e.currentTarget.className;

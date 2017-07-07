@@ -8,6 +8,7 @@ const BaseCtrl = require('../controllers/baseCtrl');
 const assert = require('assert');
 const $ = require('cheerio');
 const moment = require('moment');
+const teacherCtrl = require('../controllers/teacherCtrl');
 const sequelize = require("../config/sequelize");
 const dictionCtrl = require('../controllers/dictionaryCtrl');
 
@@ -134,13 +135,13 @@ class ArticleCtrl extends BaseCtrl {
     let materials = schoolMaterials.concat(seniorMaterials, highMaterials);
     let diction = [{ item: dictionCtrl.careFreeInfo, category: '类目：' }];
 
+    let famousTeachers = await teacherCtrl.famousTeacher();
+
     let { list, total } = await this.list(null, null, null, type, offset, limit);
 
-    list.forEach(item => {
-      item.a_images
-    });
 
     let data = {
+      famousTeachers,
       total, list, hotInfos,
       materials, diction,
       page: { offset, limit }
@@ -316,6 +317,8 @@ class ArticleCtrl extends BaseCtrl {
       { 'item': dictionCtrl.subjectEnumeration, category: '科目：' },
       { 'item': dictionCtrl.gradeEnumeration, category: '年级：' }];
 
+    let famousTeachers = await teacherCtrl.famousTeacher();
+
     if (grade == 'unlimit') {
       grade = null;
     }
@@ -324,7 +327,8 @@ class ArticleCtrl extends BaseCtrl {
     }
     let { list, total } = await this.list('MATERIAL', grade, subject, null, offset, limit);
 
-    return { total, list, materials, hotInfos, diction, page: { offset, limit } };
+    let data = { famousTeachers, total, list, materials, hotInfos, diction, page: { offset, limit } };
+    return data;
   }
 
   /**
@@ -346,8 +350,9 @@ class ArticleCtrl extends BaseCtrl {
     }
 
     let { list, total } = await this.list('PARENT_ASK_ANSWER', grade, null, null, offset, limit);
-
+    let famousTeachers = await teacherCtrl.famousTeacher();
     let data = {
+      famousTeachers,
       total, list, materials,
       diction, hotInfos,
       page: {
@@ -384,7 +389,11 @@ class ArticleCtrl extends BaseCtrl {
 
     if (type) {
       where.a_type = type;
-      queryString += 'and a_type = "' + type + '" ';
+      if (typeof type == 'object') {
+        queryString += 'and a_type in (' + type + ')';
+      } else {
+        queryString += 'and a_type = ' + type + ' ';
+      }
     }
     let list = await ArticleModel.findAll({ where, offset, limit });
     let total = await sequelize.query(queryString, { type: sequelize.QueryTypes.SELECT });
@@ -425,6 +434,29 @@ class ArticleCtrl extends BaseCtrl {
     } else {
       return { success: false, msg: '修改失败' };
     }
+  }
+
+  async index() {
+    let offset = parseInt(Math.random() * 100);
+    let limit = 10;
+    offset = offset > limit ? offset - limit : 0;
+
+    let hotInfos = await this.getHotInfo(offset, limit);
+
+    offset = offset + limit;
+
+    let careFreeHotInfos = await this.getHotInfo(offset, limit);
+
+    let threeInfos = await this.getThreeArticle();
+
+    let schoolMaterials = await this.getLatestMaterials('school', 3);
+    let seniorMaterials = await this.getLatestMaterials('senior', 3);
+    let highMaterials = await this.getLatestMaterials('high', 4);
+    let materials = schoolMaterials.concat(seniorMaterials, highMaterials);
+
+    let famousTeachers = await teacherCtrl.famousTeacher();
+
+    return { hotInfos, careFreeHotInfos, threeInfos, materials, famousTeachers };
   }
 
 }

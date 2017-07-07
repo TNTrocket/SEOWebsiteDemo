@@ -10,6 +10,18 @@ const sequelize = require("../config/sequelize");
 const assert = require('assert');
 const articleCtrl = require('../controllers/articleCtrl');
 const dictionCtrl = require('../controllers/dictionaryCtrl');
+const moment = require('moment');
+const teacherCtrl = require('../controllers/teacherCtrl');
+
+
+const shortImgUrls = [
+  'http://ortr4se0b.bkt.clouddn.com/short1.png',
+  'http://ortr4se0b.bkt.clouddn.com/short2.png',
+  'http://ortr4se0b.bkt.clouddn.com/short3.png',
+  'http://ortr4se0b.bkt.clouddn.com/short4.png',
+  'http://ortr4se0b.bkt.clouddn.com/short5.png'
+];
+
 class SchoolInfo extends BaseCtrl {
 
   /**
@@ -19,45 +31,61 @@ class SchoolInfo extends BaseCtrl {
   async list(params) {
     let { category, region, level, offset, city } = params;
 
+    let cityInfo = await areaCtrl.getCityByName(city);
+
     let schoolMaterials = await articleCtrl.getLatestMaterials('school', 3);
     let seniorMaterials = await articleCtrl.getLatestMaterials('senior', 3);
     let highMaterials = await articleCtrl.getLatestMaterials('high', 4);
     let materials = schoolMaterials.concat(seniorMaterials, highMaterials);
-    let hotSchools = await this.getHotSchools(city);
+    let hotSchools = await this.getHotSchools(cityInfo.a_id);
     let schoolLevel = dictionCtrl.schoolLevel;
     let schoolCategory = dictionCtrl.schoolCategory;
 
+    let queryString = 'select count(id) as total from tbl_school_info where 1=1 ';
     let where = {};
+    where.city = cityInfo.a_name;
     if (category != 'unlimit') {
       assert(dictionaryCtrl.schoolCategory[category].value, '学校年级参数错误');
       category = dictionaryCtrl.schoolCategory[category].value;
       where.category = category;
+      queryString += 'and category  in ( "' + category[0] + '","' + category[1] + '")';
     }
 
     if (region != 'unlimit') {
-      region = await areaCtrl.getCityById(region);
-      assert(region, '该城市不存在');
-      where.region = region.a_name;
+      where.region = region;
+      queryString += ' and region = "' + region + '"';
     }
 
     if (level != 'unlimit') {
       assert(dictionaryCtrl.schoolLevel[level].name, '学校级别参数错误');
       level = dictionaryCtrl.schoolLevel[level].name;
       where.level = level;
+      queryString += ' and level = "' + level + '"';
     }
 
+
+    let total = await sequelize.query(queryString, { type: sequelize.QueryTypes.SELECT });
+    total = total[0].total;
     let list = await SchoolInfoModel.findAll({ where, offset, limit: 10 });
 
+
+    let tem = [];
     list.forEach(item => {
-      delete item.dataValues.desc;
-      delete item.dataValues.recruit_condition;
-      delete item.dataValues.main_page;
-      delete item.dataValues.address;
-      delete item.dataValues.recruit_scope;
+      let id = item.id;
+      let title = item.name;
+      let time = moment(item.updated_at).format('YYYY-MM-DD');
+      let i = parseInt(Math.random() * 5);
+      let url = item.header_image_url || shortImgUrls[i];
+      tem.push({ title, url, time, id });
     });
 
+    list = tem;
+
+    let famousTeachers = await teacherCtrl.famousTeacher();
+
     let data = {
-      list, materials, hotSchools,
+      famousTeachers,
+      total, list, materials, hotSchools,
       diction: [
         { item: schoolCategory, category: '年级：' },
         { item: schoolLevel, category: '级别：' }],
@@ -86,6 +114,8 @@ class SchoolInfo extends BaseCtrl {
    * @param schoolID
    */
   async getSchoolById(schoolID, city) {
+    city = await areaCtrl.getCityByName(city);
+    city = city.a_id;
 
     let hotSchools = await this.getHotSchools(city);
     let schoolMaterials = await articleCtrl.getLatestMaterials('school', 3);

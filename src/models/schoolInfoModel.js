@@ -30,7 +30,6 @@ let SchoolInfo = sequelize.define("SchoolInfo", {
   score_line: { type: Sequelize.TEXT },
   college_entrance_examination_score_line: { type: Sequelize.TEXT },
 
-  corresponding_school: { type: Sequelize.TEXT },
   is_recommended: { type: Sequelize.INTEGER },
   targets: { type: Sequelize.TEXT },
 

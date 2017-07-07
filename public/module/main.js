@@ -25,6 +25,12 @@ switch (type){
     case "contactUS":
         new route.contactUS();
         break;
+    case "joinUS":
+        new route.contactUS();
+        break;
+    case "aboutUS":
+        new route.contactUS();
+        break;
     case "selectTeacher":
         new  route.selectTeacher();
         break;

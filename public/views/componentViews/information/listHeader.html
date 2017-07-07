@@ -5,7 +5,7 @@
         <span class="arrow"></span>
         <% if (locals.txt.headerTxt.h3){ %>
           <% if (locals.prevRenderType !== "article"){ %>
-        <span><a href="/information/<%= locals.prevRenderType %><%= Link.link %>"><%= locals.h2Name %></a></span>
+        <span><a href="/information/<%= locals.prevRenderType %><%= locals.h2Link.link %>"><%= locals.h2Name %></a></span>
         <span class="arrow"></span>
           <% } %>
         <% } else{ %>

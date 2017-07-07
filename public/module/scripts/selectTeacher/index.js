@@ -5,7 +5,7 @@ import $ from 'jquery'
 import handlebars from 'handlebars'
 import { selectTeacherData } from './selectTeacherData'
 import selectTeacherAlert from '../../component/selectTeacherAlert'
-
+import { navEvent } from '../../plugin/global'
 export default class foreignTeacher{
     constructor(){
         this.domEvent();
@@ -14,6 +14,7 @@ export default class foreignTeacher{
     }
     domEvent(){
         let self = this;
+        navEvent();
         $("[data-selecttype]").click(function () {
            let selecttype = $(this).data("selecttype");
            switch (selecttype){

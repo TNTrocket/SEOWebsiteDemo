@@ -15,6 +15,10 @@ if(render === "article"){
  h2Link = {
   link : "/unlimit/0"
   }
+}else if (render ==="schoolDetail"){
+ h2Link = {
+ link : "/unlimit/unlimit/0"
+ }
 }
 var prevRenderTypeName = locals.informationList.prevRenderType;
 if(prevRenderTypeName == "" || prevRenderTypeName == undefined){
@@ -25,7 +29,7 @@ var listHeader ={
 txt : locals.informationList[render],
 listH1 : informationList.listH1,
 renderType : render,
-Link : h2Link,
+h2Link : h2Link,
 prevRenderType: prevRenderTypeName,
 h2Name: locals.informationList[prevRenderTypeName].headerTxt.h2
 }
@@ -34,7 +38,8 @@ listTxt:locals.informationList[render],
 list: locals.list,
 page: locals.page,
 diction: locals.diction,
-total: locals.total
+total: locals.total,
+renderType : render
 }
 
  %>
@@ -63,7 +68,7 @@ total: locals.total
     </div>
     <% }else if( render === 'schoolDetail'){ %>
     <div class="schoolDetailContent">
-        <%- include("./componentViews/information/schoolDetail.html") %>
+        <%- include("./componentViews/information/schoolDetail.html",school) %>
     </div>
     <% }else{ %>
     <%- include("./componentViews/information/queryCondition.html",queryCondition)%>
@@ -82,11 +87,17 @@ total: locals.total
     <div class="hotArticle eachListTitle">
         <div>
             <span class="icon"></span>
+            <% if ( render === 'schoolList'){ %>
+            <span class="txt">热门学校</span>
+            <% }else { %>
             <span class="txt">热门推荐</span>
+            <% } %>
         </div>
         <% if( render === 'article'){ %>
         <%- include('./componentViews/common/list.html',{ dataList:article.hotInfos}) %>
-        <% } else { %>
+        <% } else if(render === 'schoolList') { %>
+        <%- include('./componentViews/information/hotSchool.html',{ dataList:hotSchools}) %>
+        <% }else{ %>
         <%- include('./componentViews/common/list.html',{ dataList:hotInfos}) %>
         <% } %>
     </div>
@@ -102,24 +113,25 @@ total: locals.total
             <span class="icon"></span>
             <span class="txt">名师推荐</span>
         </div>
-        <%- include('./componentViews/information/recommendTeacher.html') %>
+        <%- include('./componentViews/information/recommendTeacher.html',famousTeachers) %>
     </div>
     <%- include('./componentViews/common/advertiseBrand.html') %>
     <%- include('./componentViews/common/evaluateList.html') %>
     <%- include('./componentViews/common/familyEducationCase.html') %>
     <%- include('./componentViews/common/footer.html') %>
 </div>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Y04faNoNlPdLqtqpvIjUFzgLdmlllzDj"></script>
+<!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Y04faNoNlPdLqtqpvIjUFzgLdmlllzDj"></script>-->
 <script>
     var CONFIG = {
-        queryName : "<%= locals.typeName %>"
+        queryName : "<%= locals.typeName %>",
+        location : ""
     }
-    function myFun(result){
-        var cityName = result.name;
-        config.location = cityName;
-    }
-    var myCity = new BMap.LocalCity();
-    myCity.get(myFun);
+//    function myFun(result){
+//        var cityName = result.name;
+//        CONFIG.location = cityName;
+//    }
+//    var myCity = new BMap.LocalCity();
+//    myCity.get(myFun);
 </script>
 <script src="/build/main.js"></script>
 </body>

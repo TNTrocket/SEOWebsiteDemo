@@ -29,10 +29,22 @@
         <div>
             <% if (list.length > 0 ) {%>
             <% list.forEach(function(item){ %>
+              <% if (renderType ==="schoolList"){ %>
+            <a  data-href="/information/school/detail/<%= item.id %>" data-schoollist="schoolList">
+                <section>
+                    <div class="newsCover">
+                        <img src="<%= item.url || '/img/newLogo.png'%>"/>
+                    </div>
+                    <div class="newsTxt">
+                        <span class="newsTitle"><%= item.title %> </span>
+                        <span class="newsTime"></span>
+                    </div>
+                </section>
+            </a>
+               <% }else{ %>
             <a href="/information/article/<%= item.id %>">
             <section>
                 <div class="newsCover">
-                    <!--<img src="/img/width@2x.png"/>-->
                     <img src="<%= item.url || '/img/newLogo.png'%>"/>
                 </div>
                 <div class="newsTxt">
@@ -41,14 +53,15 @@
                 </div>
             </section>
             </a>
+               <% } %>
             <% }) %>
             <% }else {%>
             <div class="noData">没有数据</div>
             <% } %>
         </div>
     </div>
-    <div class="newsButton">
-        <div class="prev"><a href="<%= page.offset - 8 < 0 ? 0 : page.offset - 8 %>">上一页</a></div>
-        <div class="next"><a href="<%= page.offset + 8 %>">下一页</a></div>
+    <div class="newsButton next_page">
+        <div class="prev"><a  data-href="<%= page.offset - 8 < 0 ? 0 : page.offset - 8 %>">上一页</a></div>
+        <div class="next"><a data-href="<%= page.offset + 8 %>">下一页</a></div>
     </div>
 </section>

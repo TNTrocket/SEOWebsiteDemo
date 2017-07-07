@@ -1,0 +1,9 @@
+<ul class="commonListTitle hotSchool">
+    <% if (locals.dataList){ %>
+    <% locals.dataList.forEach(function(item){ %>
+    <li data-href="/information/school/detail/<%= item.id %>"><a><i></i><span class="listTxt"><%= item.name %></span>
+        <!--<span class="dateTime"><%= item.time || ""%></span>-->
+    </a></li>
+    <% }) %>
+    <% } %>
+</ul>

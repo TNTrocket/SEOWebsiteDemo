@@ -26,4 +26,11 @@ router.get('/area', async(ctx, next) => {
   ctx.response.body = citys;
 });
 
+router.get('/banner/list', async(ctx, next) => {
+  let { city } = ctx.query;
+  city = await areaCtrl.getCityByName(city);
+  let data = await indexCtrl.getBanners(city.a_id);
+  ctx.response.body = data;
+});
+
 module.exports = router;

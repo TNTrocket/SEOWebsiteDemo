@@ -1,29 +1,13 @@
 <div class="teacherList">
+    <% famousTeachers.forEach(function(item){ %>
         <section>
             <div class="t_r_cover">
-                <img src="/img/width@2x.png"/>
+                <img src="<%= item.url %>"/>
             </div>
             <div class="t_r_txt">
-                <h3 class="teacherName">钟老师</h3>
-                <p class="introduce">在哈佛大学研究生毕业，获得多项国际教育 大奖，现在在深圳一所教育机构任教。</p>
+                <h3 class="teacherName"><%= item.title %></h3>
+                <p class="introduce"><%= item.introduction %></p>
             </div>
         </section>
-        <section>
-            <div class="t_r_cover">
-                <img src="/img/width@2x.png"/>
-            </div>
-            <div class="t_r_txt">
-                <h3 class="teacherName">钟老师</h3>
-                <p class="introduce">在哈佛大学研究生毕业，获得多项国际教育 大奖，现在在深圳一所教育机构任教。</p>
-            </div>
-        </section>
-        <section>
-            <div class="t_r_cover">
-                <img src="/img/width@2x.png"/>
-            </div>
-            <div class="t_r_txt">
-                <h3 class="teacherName">钟老师</h3>
-                <p class="introduce">在哈佛大学研究生毕业，获得多项国际教育 大奖，现在在深圳一所教育机构任教。</p>
-            </div>
-        </section>
+    <% }) %>
     </div>

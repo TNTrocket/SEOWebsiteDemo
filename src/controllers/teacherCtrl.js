@@ -7,6 +7,10 @@ const TeacherTagsModel = require('../models/teacherTagsModel');
 const TeacherGradeModel = require('../models/teacherGradeModel');
 const BaseCtrl = require('../controllers/baseCtrl');
 const dictionaryCtrl = require('../controllers/dictionaryCtrl');
+const areaCtrl = require('../controllers/areaCtrl');
+const sequelize = require("../config/sequelize");
+const moment = require('moment');
+
 const assert = require('assert');
 
 class TeacherCtrl extends BaseCtrl {
@@ -108,7 +112,7 @@ class TeacherCtrl extends BaseCtrl {
       queryParams.where.t_id = t_ids;
     }
     queryParams.offset = offset;
-    queryParams.limit = 3;
+    queryParams.limit = 10;
     queryParams.where.t_status = 1;
     let list = await TeacherModel.findAll(queryParams);
 
@@ -198,6 +202,33 @@ class TeacherCtrl extends BaseCtrl {
     }
     return result;
   }
+
+
+  /**
+   * 名师推荐
+   */
+  async famousTeacher() {
+    let total = await sequelize.query('select count(t_id) as total from teacher where t_status = 1 and (t_type = 1 or t_type = 2)', { type: sequelize.QueryTypes.SELECT });
+    total = total[0].total || 0;
+    let offset = parseInt(total * Math.random());
+    let limit = 10;
+    offset = offset > limit ? offset - limit : 0;
+
+    let teachers = await TeacherModel.findAll({ where: { t_status: 1, t_type: [1, 2] }, offset, limit });
+
+    let tem = [];
+    teachers.forEach(item => {
+      let title = item.t_name;
+      let url = 'http://ortr4se0b.bkt.clouddn.com/' + item.t_headimg;
+      let id = item.t_id;
+      let introduction = item.t_introduction;
+      tem.push({ introduction, url, id, title });
+    });
+    console.log('teachers=======', tem);
+    return tem;
+  }
+
+
 
 }
 module.exports = new TeacherCtrl();

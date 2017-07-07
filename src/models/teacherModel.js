@@ -30,8 +30,8 @@ let Teacher = sequelize.define("Teacher", {
   t_university: { type: Sequelize.STRING(50) },
   t_type: { type: Sequelize.INTEGER },
   t_status: { type: Sequelize.INTEGER },
-  tg_update_time: { type: Sequelize.BIGINT },
-  tg_create_time: { type: Sequelize.BIGINT }
+  t_update_time: { type: Sequelize.BIGINT },
+  t_create_time: { type: Sequelize.BIGINT }
 }, {
   tableName: 'teacher',
   timestamps: false

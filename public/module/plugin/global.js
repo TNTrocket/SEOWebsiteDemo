@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import { apiCall } from "../plugin/xhr"
+
 
 export  function evaluate() {
     let viewMoreEvaluateBtn = $(".viewMoreEvaluateBtn");
@@ -14,6 +14,27 @@ export  function evaluate() {
         evaluate.hide();
         viewMoreEvaluateBtn.show();
         packUpEvaluate.hide();
+    })
+}
+export function navEvent() {
+    let navMoreList = $(".navMoreList");
+    $(".homePageNav a").click(function () {
+        let nav = $(this).data("nav");
+        switch (nav){
+            case "teacher":
+                window.location.href = "/selectTeacher"
+                break;
+            case "information":
+                window.location.href = "/information"
+                break;
+            case "example":
+                window.location.href = "/successCase"
+                break;
+            case "more":
+                $(this).toggleClass("blueColor");
+                navMoreList.toggleClass("toggleList");
+                break;
+        }
     })
 }
 

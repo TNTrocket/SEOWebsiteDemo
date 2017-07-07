@@ -170,7 +170,7 @@ module.exports = {
     schoolList: {
       headerTxt: {
         title: "升学资讯",
-        h2: "问答类型"
+        h2: "学校列表"
       },
       queryType: {
         sumTxt: "问答类型",

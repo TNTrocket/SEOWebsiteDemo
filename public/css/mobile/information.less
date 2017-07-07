@@ -183,9 +183,14 @@
       vertical-align: middle;
       .fontSize(13px);
       width: 80%;
+      height: 100%;
       .introduce{
         color:#999999;
         margin-top: 10px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
     }
   }

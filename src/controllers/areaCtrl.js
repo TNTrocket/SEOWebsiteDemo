@@ -3,6 +3,7 @@
  */
 const BaseCtrl = require('../controllers/baseCtrl');
 const AreaModel = require('../models/areaModel');
+const assert = require('assert');
 class AreaCtrl extends BaseCtrl {
 
   /**
@@ -39,6 +40,16 @@ class AreaCtrl extends BaseCtrl {
     let districts = await AreaModel.findAll({ where: { a_parentID: cityID } });
     area.dataValues.districts = districts;
     return area;
+  }
+
+  /**
+   * 城市名字  或 区名字
+   * @param name
+   */
+  async getCityByName(name) {
+    let city = await AreaModel.findAll({ where: { a_name: name, a_status: 1 } });
+    assert(city.length > 0, '不存在该城市');
+    return city[0];
   }
 
 

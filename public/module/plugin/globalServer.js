@@ -1,6 +1,7 @@
 /**
  * Created by Administrator on 2017/7/6.
  */
+import { apiCall } from "../plugin/xhr"
 export function fetchCity(){
     return new Promise((resolve,reject)=>{
         apiCall.simpleCall("/user/area",{method:"get"}).then((data)=>{
