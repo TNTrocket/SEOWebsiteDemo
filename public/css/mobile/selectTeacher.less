@@ -61,24 +61,29 @@
             flex-wrap: wrap;
             .fontSize(12px);
             .item{
-              margin-left: 10px;
-              &:first-child{
-                margin: 0;
-              }
+              flex-basis: 30%;
+              padding: 5px 0;
             }
           }
           .features{
             margin-top: 10px;
             display: flex;
             flex-wrap: wrap;
+            //justify-content: space-between;
             .fontSize(12px);
             .item{
-              margin-left: 10px;
-              padding: 5px 10px;
-              border: 1px solid #cdcdcd;
-              &:first-child{
-                margin: 0;
+              margin: 5px 0;
+              flex-basis: 30%;
+              text-align: center;
+              a{
+                display: block;
+                padding: 5px 10px;
+                width: 90%;
+                border: 1px solid #cdcdcd;
               }
+              //&:first-child{
+              //  margin: 0;
+              //}
             }
           }
         }
@@ -134,12 +139,13 @@
         padding: 0 20px;
         overflow: hidden;
         display: flex;
-        justify-content:space-between;
+        //justify-content:space-between;
         align-items: center;
         flex-wrap: wrap;
         text-align: center;
         li{
           float: left;
+          margin-right: 10px;
           border: 1px solid #dcdcdc; /*no*/
           flex-basis: 224px;
           height: 80px;

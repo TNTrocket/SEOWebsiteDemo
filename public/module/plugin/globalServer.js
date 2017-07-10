@@ -10,9 +10,14 @@ export function fetchCity(){
             for(let item of dataResult){
                 obj[item.a_name] = [];
                 for (let a of item.districts){
-                    obj[item.a_name].push(a.a_name)
+                    let data = {
+                        itemName : a.a_name,
+                        code     : a.a_id
+                    }
+                    obj[item.a_name].push(data)
                 }
             }
+            console.log(obj)
             resolve(obj)
         })
     })

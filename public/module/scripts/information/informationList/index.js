@@ -21,14 +21,14 @@ export default class informationList{
         if(this.renderType ==="schoolList" ){
             this.region = getQueryString("region") || "unlimit";
             fetchCity().then((data)=>{
-                this.area = data;
-                this.city = Object.keys(data);
-                this.allRegion = []
-                for(let a of this.city){
-                    this.allRegion = this.allRegion.concat(data[a])
-                }
                 this.currentCity = (isEmptyObject(CONFIG.city) || this.city.indexOf(CONFIG.city) === -1)? "广州市" : CONFIG.city;
                 locationStorage().setLocationStorage("city",this.currentCity);
+                this.area = data;
+                this.city = Object.keys(data);
+                this.currentRegion = data[locationStorage().getLocationStorage("city")];
+                // for(let a of this.city){
+                //     this.allRegion = this.allRegion.concat(data[a])
+                // }
                 this.schoolListEvent();
                 this.domEvent();
             })
@@ -56,7 +56,7 @@ export default class informationList{
             window.location.href = href+"?city="+locationStorage().getLocationStorage("city");
         })
         let temp = handlebars.compile(areaDom);
-        let dom = temp(this.allRegion);
+        let dom = temp(this.currentRegion);
         $('.searchCondition').append(dom)
         $("[data-schoollist]").click(function () {
             window.location.href = $(this).data("href")+"?city="+locationStorage().getLocationStorage("city");

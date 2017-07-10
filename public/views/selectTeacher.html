@@ -15,70 +15,40 @@
 <section class="selectTeacherContent">
     <div class="selectQuery">
         <ul>
-            <li data-selecttype="intelligent">智能排序<span class="icon"></span></li>
-            <li data-selecttype="grade">年级<span class="icon"></span></li>
-            <li data-selecttype="area">区域<span class="icon"></span></li>
-            <li data-selecttype="select">筛选<span class="icon"></span></li>
+            <li data-selecttype="intelligent"><span class="intelligentTxt">智能排序</span><span class="icon"></span></li>
+            <li data-selecttype="grade"><span class="gradeTxt">年级</span><span class="icon"></span></li>
+            <li data-selecttype="area"><span class="areaTxt">区域</span><span class="icon"></span></li>
+            <li data-selecttype="select"><span class="selectTxt">筛选</span><span class="icon"></span></li>
         </ul>
+        <input type="hidden" name="intelligent"/>
+        <input type="hidden" name="grade"/>
+        <input type="hidden" name="area"/>
+        <!--<input type="hidden" name="select"/>-->
     </div>
     <div class="teacherData">
+        <% locals.list.forEach(function(item){ %>
         <div class="singleTeacher">
             <div class="img">
-                <img src="/img/width@2x.png"/>
+                <img src="http://ortr4se0b.bkt.clouddn.com/<%= item.t_headimg %>"/>
             </div>
             <div class="teacherDetail">
-                <div class="name"><span>语文张老师</span></div>
+                <div class="name"><span><%= item.t_name %></span></div>
                 <div class="teacherRange">
-                    <span class="item">高中语文</span>
-                    <span class="item">初中语文</span>
+                    <% item.t_grades.forEach(function(grade){ %>
+                    <span class="item"><%= grade %></span>
+                    <% }) %>
                 </div>
                 <div class="features">
-                    <span class="item">语文张老师</span>
-                    <span class="item">语文张老师</span>
+                    <% item.t_tags.forEach(function(tag){ %>
+                    <span class="item"><a><%= tag %></a></span>
+                    <% }) %>
                 </div>
             </div>
             <div class="price">
-              ￥ <span class="number">60</span> 起
+              ￥ <span class="number"><%= item.t_price %></span> 起
             </div>
         </div>
-        <div class="singleTeacher">
-            <div class="img">
-                <img src="/img/width@2x.png"/>
-            </div>
-            <div class="teacherDetail">
-                <div class="name"><span>语文张老师</span></div>
-                <div class="teacherRange">
-                    <span class="item">高中语文</span>
-                    <span class="item">初中语文</span>
-                </div>
-                <div class="features">
-                    <span class="item">语文张老师</span>
-                    <span class="item">语文张老师</span>
-                </div>
-            </div>
-            <div class="price">
-                ￥ <span class="number">60</span> 起
-            </div>
-        </div>
-        <div class="singleTeacher">
-            <div class="img">
-                <img src="/img/width@2x.png"/>
-            </div>
-            <div class="teacherDetail">
-                <div class="name"><span>语文张老师</span></div>
-                <div class="teacherRange">
-                    <span class="item">高中语文</span>
-                    <span class="item">初中语文</span>
-                </div>
-                <div class="features">
-                    <span class="item">语文张老师</span>
-                    <span class="item">语文张老师</span>
-                </div>
-            </div>
-            <div class="price">
-                ￥ <span class="number">60</span> 起
-            </div>
-        </div>
+        <% }) %>
     </div>
 
 
@@ -99,7 +69,7 @@
             </div>
             <ul class="queryItemLi">
                 {{#each queryItem}}
-                <li>{{this}}</li>
+                <li data-{{ ../category}}="{{code}}">{{itemName}}</li>
                 {{/each}}
             </ul>
         </section>
@@ -112,13 +82,26 @@
 <script id="intelligentTpl" type="text/x-template">
     <div class="queryTeacher globalModal intelligentModal">
      <ul class="intelligent">
-         <li>智能排序</li>
-         <li>评价最好</li>
-         <li>价格最高</li>
-         <li>价格最低</li>
-         <li>课时最长</li>
+         <li data-orderby="auto">智能排序</li>
+         <li data-orderby="goodComment">评价最好</li>
+         <li data-orderby="highPrice">价格最高</li>
+         <li data-orderby="lowPrice">价格最低</li>
+         <li data-orderby="longCource">课时最长</li>
      </ul>
     </div>
+</script>
+<!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Y04faNoNlPdLqtqpvIjUFzgLdmlllzDj"></script>-->
+<script>
+    var CONFIG = {
+        queryName : "<%= locals.typeName %>",
+        location : ""
+    }
+    //    function myFun(result){
+    //        var cityName = result.name;
+    //        CONFIG.location = cityName;
+    //    }
+    //    var myCity = new BMap.LocalCity();
+    //    myCity.get(myFun);
 </script>
 <script src="/build/main.js"></script>
 </body>

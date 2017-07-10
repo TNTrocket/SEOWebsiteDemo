@@ -34,6 +34,9 @@ switch (type){
     case "selectTeacher":
         new  route.selectTeacher();
         break;
+    case "teacherDetail":
+        new  route.teacherDetail();
+        break;
 }
 
 

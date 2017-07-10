@@ -43,11 +43,118 @@
    </div>
  </div>
  <div class="t_query">
+   <section class="selectClass">
+    <div class="title">
+        <span class="icon"></span>
+        <span class="txt">选择年级</span>
+    </div>
+       <div class="selectClassContent">
 
+       </div>
+   </section>
+     <section class="selectArea">
+         <div class="title">
+             <span class="icon"></span>
+             <span class="txt">选择区域</span>
+         </div>
+         <div class="selectAreaContent">
+
+         </div>
+     </section>
+     <div class="t_d_button">
+         <div class="telephone">
+             电话咨询
+         </div>
+         <div class="book">
+             立即预约
+         </div>
+     </div>
  </div>
+    <div class="t_successCase">
+        <p class="title">
+            成功案例
+            <span class="arrowRight">
+
+            </span>
+        </p>
+        <p class="tips">
+            蒋同学历史中考94分考入深中
+        </p>
+        <p class="content">
+            蒋同学历史中考94分考入深中
+        </p>
+    </div>
+    <div class="t_experience">
+        <p class="title">
+            教学经验
+            <span class="arrowRight">
+
+            </span>
+        </p>
+        <p class="tips">
+            1987/08—至今
+        </p>
+        <p class="content">
+            蒋同学去年刚从山东老家转到深圳读书，由于在老家不考历史，成绩很差，考试经常不及格。我不仅帮他讲解历史概念及前因后果，还传授记忆方法和解题技巧，他的成绩提高很快。
+        </p>
+    </div>
+    <div class="t_school">
+        <p class="title">
+            毕业院校
+        </p>
+        <p class="tips">
+            1987/08—至今
+        </p>
+        <p class="content">
+            蒋同学去年刚从山东老家转到深圳读书，由于在老家不考历史，成绩很差，考试经常不及格。我不仅帮他讲解历史概念及前因后果，还传授记忆方法和解题技巧，他的成绩提高很快。
+        </p>
+    </div>
+    <div class="studentAssessment">
+        <p class="title">
+            学生评价
+        </p>
+        <div class="assessmentList">
+            <div data-evaluatetype="good">好评</div>
+            <div data-evaluatetype="middle">中评</div>
+            <div data-evaluatetype="bad">差评</div>
+        </div>
+    </div>
+    <div class="assessmentContent">
+        <div class="evaluateSingle">
+            <div class="pic">
+                <img src="/img/width@2x.png"/>
+            </div>
+            <div class="txtContent">
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+            </div>
+        </div>
+    </div>
 </section>
 
 <%- include('./componentViews/common/footer.html') %>
+<script id="tpl" type="text/x-template">
+    <ul class="teacherDetailQuery">
+        {{#each this }}
+        <li>{{itemName}}</li>
+        {{/each}}
+    </ul>
+</script>
+<!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Y04faNoNlPdLqtqpvIjUFzgLdmlllzDj"></script>-->
+<script>
+    var CONFIG = {
+        queryName : "<%= locals.typeName %>",
+        location : ""
+    }
+    //    function myFun(result){
+    //        var cityName = result.name;
+    //        CONFIG.location = cityName;
+    //    }
+    //    var myCity = new BMap.LocalCity();
+    //    myCity.get(myFun);
+</script>
 <script src="/build/main.js"></script>
 </body>
 </html>

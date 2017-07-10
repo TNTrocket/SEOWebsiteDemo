@@ -23,8 +23,9 @@ router.get('/list/:orderBy/:grade/:district/:subject/:teacherType/:tags/:gender/
   offset = parseInt(offset);
   let params = { orderBy, grade, district, subject, teacherType, gender, tags, offset };
   let data = await teacherCtrl.listTeacher(params);
-  ctx.response.body = data;
-  return data;
+  console.log("teacherData======",data.list);
+    data.renderType = "selectTeacher";
+    return await ctx.render("selectTeacher", data)
 });
 /**
  * 通过老师ID 获取老师信息

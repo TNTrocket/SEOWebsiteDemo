@@ -21,15 +21,15 @@ export function navEvent() {
     $(".homePageNav a").click(function () {
         let nav = $(this).data("nav");
         switch (nav){
-            case "teacher":
-                window.location.href = "/selectTeacher"
-                break;
-            case "information":
-                window.location.href = "/information"
-                break;
-            case "example":
-                window.location.href = "/successCase"
-                break;
+            // case "teacher":
+            //     window.location.href = "/selectTeacher"
+            //     break;
+            // case "information":
+            //     window.location.href = "/information"
+            //     break;
+            // case "example":
+            //     window.location.href = "/successCase"
+            //     break;
             case "more":
                 $(this).toggleClass("blueColor");
                 navMoreList.toggleClass("toggleList");
@@ -46,6 +46,9 @@ export function getQueryString(name) {
 
 export function locationStorage() {
     function set(name,value) {
+        if(typeof value === "object"){
+            value = JSON.stringify(value)
+        }
         window.localStorage.setItem(name,value)
     }
     function get(name) {

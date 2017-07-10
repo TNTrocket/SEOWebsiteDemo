@@ -130,8 +130,8 @@ class TeacherCtrl extends BaseCtrl {
       let sum = item.t_good_comment + item.t_mid_comment + item.t_bad_comment;
       item.t_good_comment = parseInt((item.t_good_comment / sum) * 100) + '%';
 
-      item.dataValues.t_grades = [];
-      item.dataValues.t_tags = [];
+      item.t_grades = [];
+      item.t_tags = [];
 
       t_ids.push(item.t_id);
     });
@@ -145,7 +145,7 @@ class TeacherCtrl extends BaseCtrl {
         if (grade.tg_teacher_id == teach.t_id) {
           if (dictionaryCtrl.subjectIDName[teach.t_subject].name && dictionaryCtrl.gradeIDName[grade.tg_grade_id].name) {
             let subject = dictionaryCtrl.subjectIDName[teach.t_subject].name;
-            teach.dataValues.t_grades.push(dictionaryCtrl.gradeIDName[grade.tg_grade_id].name + subject);
+            teach.t_grades.push(dictionaryCtrl.gradeIDName[grade.tg_grade_id].name + subject);
           }
         }
       });
@@ -153,7 +153,7 @@ class TeacherCtrl extends BaseCtrl {
       teacherTags.forEach(tag => {
         if (teach.t_id == tag.tt_teacher_id) {
           if (dictionaryCtrl.teacherTagIDName[tag.tt_tag_id].name) {
-            teach.dataValues.t_tags.push(dictionaryCtrl.teacherTagIDName[tag.tt_tag_id].name);
+            teach.t_tags.push(dictionaryCtrl.teacherTagIDName[tag.tt_tag_id].name);
           }
         }
       });

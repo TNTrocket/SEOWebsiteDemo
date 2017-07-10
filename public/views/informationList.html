@@ -113,7 +113,7 @@ renderType : render
             <span class="icon"></span>
             <span class="txt">名师推荐</span>
         </div>
-        <%- include('./componentViews/information/recommendTeacher.html',famousTeachers) %>
+        <%- include('./componentViews/information/recommendTeacher.html',{famousTeachers : locals.famousTeachers }) %>
     </div>
     <%- include('./componentViews/common/advertiseBrand.html') %>
     <%- include('./componentViews/common/evaluateList.html') %>
