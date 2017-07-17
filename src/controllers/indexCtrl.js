@@ -3,6 +3,8 @@
  */
 const request = require("request");
 const BannerModel = require('../models/bannerModel');
+const areaCtrl = require('../controllers/areaCtrl');
+const teacherCtrl = require('../controllers/teacherCtrl');
 class IndexCtrl {
   constructor() {
 
@@ -21,6 +23,14 @@ class IndexCtrl {
    */
   async save(phoneNO, areaID) {
 
+  }
+
+  async index(params) {
+    let { city } = params;
+    let banners = await this.getBanners(city);
+    let comments = await teacherCtrl.getLatestComments();
+    let latestComments = await teacherCtrl.getLatestComments();
+    return { latestComments, banners, comments };
   }
 
   /**

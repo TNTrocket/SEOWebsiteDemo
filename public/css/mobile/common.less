@@ -48,6 +48,9 @@ html,body{
   &.successCase,&.joinUS,&.aboutUS{
     background: #ffffff;
   }
+  &.homePage footer{
+    margin: 0!important;
+  }
 }
 body{
   -webkit-tap-highlight-color: rgba(0,0,0,0);
@@ -65,6 +68,12 @@ ul{
 .listHeader{
     background: #ffffff;
     border-bottom: 1px solid @line-border-color; /*no*/
+    .schoolName{
+      width: 160px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
     nav{
       padding: 20px 20px;
       >img{
@@ -84,6 +93,10 @@ ul{
           .backgroundPic("newLogo.png");
           width: 174px;
           height: 50px;
+          .homePage{
+            height: 100%;
+            width: 100%;
+          }
         }
         &.title{
           margin-left: 20px;
@@ -111,6 +124,11 @@ ul{
 
 .commonListTitle{
   color:#1A1A1A;
+  &.evaluateList{
+    .listTxt{
+      width: 90%!important;
+    }
+  }
   li{
     height: 87px;
     line-height: 88px;
@@ -165,6 +183,13 @@ ul{
   justify-content: space-between;
   text-align: center;
   align-items: center;
+  .logoHeader{
+    border: 0;
+    //display: block;
+    //flex: 1;
+    display: flex;
+    align-items: center;
+  }
   >div{
     flex:1;
   }
@@ -236,6 +261,7 @@ ul{
   .swiper-container{
     width: 100%;
     height: 380px;
+    position: absolute;
     .swiper-wrapper{
       width: 400%;
     }
@@ -279,6 +305,7 @@ ul{
     padding: 26px 0 0 0;
     border-bottom: 1px solid @line-border-color;
     a{
+      color: #000;
       display: inline-block;
       padding-bottom: 23px ;
     }
@@ -448,6 +475,10 @@ footer{
               flex-wrap: wrap;
               text-align: center;
               justify-content: space-around;
+              &:after{
+                content: "";
+                flex-basis: 30%;
+              }
               li{
                 padding: 5px 0;
                 flex-basis: 30% ;
@@ -499,7 +530,7 @@ footer{
   display: block !important;
 }
 .blueColor{
-  color: @blueFontColor;
+  color: @blueFontColor!important;
 }
 .commonEvaluate{
   display: none;
@@ -541,6 +572,37 @@ footer{
   width: 100%;
   top: 0;
 }
+.normalAlert{
+  background: #ffffff;
+  width: 400px;
+  height: 188px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  border-radius: 10px;
+  &.success{
+    //height: 547px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .successIcon{
+      margin-top: 52px;
+      .backgroundPic("successIcon.png");
+      width: 211px;
+      height: 164px;
+    }
+    .successTxt{
+      margin-top: 20px;
+      .fontSize(16px);
+      color: #333333;
+    }
+    .tips{
+      margin-top: 34px;
+      .fontSize(16px);
+      color: #666666;
+    }
+  }
+}
 .experienceAlert{
   background: #ffffff;
   width: 670px;
@@ -571,10 +633,16 @@ footer{
       color: #666666;
     }
   }
+  .errorPhone{
+    text-align: center;
+    color: red;
+    position: relative;
+    top:10px;
+  }
   .e_a_button{
     width: 610px;
     height: 88px;
-    margin: 48px 30px;
+    margin: 38px 30px 48px 30px;
     background: #2196f1;
     border-radius: 10px;
     color: #ffffff;
@@ -647,6 +715,18 @@ footer{
       }
       &:-ms-input-placeholder { /* Internet Explorer 10+ */
         color:    #c8c8c8;
+      }
+    }
+  }
+}
+.activeBorder{
+  border-bottom: 3px solid @blueFontColor;
+}
+.footerBox{
+  ul{
+    li{
+      a{
+        color: #000;
       }
     }
   }

@@ -47,7 +47,7 @@ class AreaCtrl extends BaseCtrl {
    * @param name
    */
   async getCityByName(name) {
-    let city = await AreaModel.findAll({ where: { a_name: name, a_status: 1 } });
+    let city = await AreaModel.findAll({ where: { a_name: name } });
     assert(city.length > 0, '不存在该城市');
     return city[0];
   }

@@ -3,12 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="/css/style.css"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link href="/build/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" media="only screen and (min-width: 414px)" href="/build/pc.css"/>
 </head>
-<body data-pagetype="index" id="pageType">
-<% if (user) { %>
-<h2><%= user.name %></h2>
-<% } %>
-<script src="../build/js/main.js"></script>
+<script src="/build/countRem.js"></script>
+<body data-pagetype="index" id="pageType"  class="homePage">
+<%- include('./componentViews/common/homePageHeader.html') %>
+<%- include('./componentViews/common/homePageNav.html',{city:locals.params.city}) %>
+<%- include('./componentViews/common/commonMoreList.html') %>
+<section class="homePageBanner">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <% banners.forEach(function(item){ %>
+            <div class="swiper-slide">
+                <a style="display: block" target="_blank" href="<%= item.b_target %>">
+                    <img src="<%= item.b_path %>" alt="<%= item.b_title %>"/>
+                </a>
+            </div>
+            <% }) %>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+</section>
+
+<section class="fourLinks">
+  <div class="txtBox">
+      <i class="icon"></i>
+      <div class="txt">
+          <p class="title">三项审核四大环节</p>
+          <p class="tips">严格甄选，只为让每个孩子找到最好的老师</p>
+      </div>
+  </div>
+    <div class="img"></div>
+    <div class="i_e_button">立即免费体验</div>
+</section>
+<section class="teachingExample">
+    <div class="txtBox">
+        <i class="icon"></i>
+        <div class="txt">
+            <p class="title">个性化教学</p>
+            <p class="tips">高科技阻力学习效果提升</p>
+        </div>
+    </div>
+    <div class="content">
+       <div class="single">
+         <div class="icon teachWay"></div>
+           <p class="title">多种授课方式任选</p>
+           <div class="tips">
+               <p>提供老师上门、</p>
+               <p>学生上门、一对一、</p>
+               <p>一对多等多样化的教学方式</p>
+           </div>
+       </div>
+        <div class="single">
+            <div class="icon teacherChoose"></div>
+            <p class="title">最严老师甄选</p>
+            <div class="tips">
+                <p>老师身份、学历、</p>
+                <p>职业资格三重审核；</p>
+                <p>笔试、面试、试讲多维评定</p>
+            </div>
+        </div>
+        <div class="single">
+            <div class="icon safe"></div>
+            <p class="title">支付安全随心</p>
+            <div class="tips">
+                <p>按次扣费，</p>
+                <p>平台担保，</p>
+                <p>灵活提现</p>
+            </div>
+        </div>
+        <div class="single">
+            <div class="icon teacher"></div>
+            <p class="title">海量名师任你挑</p>
+            <div class="tips">
+                <p>高考状元、</p>
+                <p>名校学霸、</p>
+                <p>机构名师都在这</p>
+            </div>
+        </div>
+        <div class="i_e_button">立即免费体验</div>
+    </div>
+</section>
+<section class="dataShow">
+    <div class="txtBox">
+        <i class="icon"></i>
+        <div class="txt">
+            <p class="title">学生学费降低30% 老师课酬提升30%</p>
+            <p class="tips">免去场地、人工、管理等费用，颠覆传统一对一家</p>
+        </div>
+    </div>
+    <div class="content">
+      <div class="coordinateLine">
+          <div class="box1">
+              <span>
+                  选师无忧老师课酬
+              </span>
+              <span class="txt">
+                  品质监控
+              </span>
+          </div>
+          <div class="text">
+              为您省下30%学费
+          </div>
+          <div class="box2">
+              <span class="txt1">传统机构老师课酬</span>
+              <span class="txt2">场地、人工、管理等费用</span>
+          </div>
+      </div>
+    </div>
+</section>
+<section class="articleStep">
+    <div class="txtBox">
+        <i class="icon"></i>
+        <div class="txt">
+            <p class="title">快速提分有保障</p>
+            <p class="tips"> 筛选高质量老师+先进的教学体系+严格的教学管理+全面的到家服务</p>
+        </div>
+    </div>
+    <div class="content">
+        <p>
+            <i></i>
+            <span>第一步：个性化学业水平测试，建立专属学生档案</span>
+        </p>
+        <p>
+            <i></i>
+            <span>第二步：通过整理性格分析，知识点评测，学习方式等数据，智能配海量优质老师</span>
+        </p>
+        <p>
+            <i></i>
+            <span>第三步：教学管理老师人工甄选最合适的老师</span>
+        </p>
+        <p>
+            <i></i>
+            <span>第四步：制定教学目标、教学计划，保质保量完成教学任务</span>
+        </p>
+        <p>
+            <i></i>
+            <span>第五步：建立家长、老师、教管老师、公司高管沟通交流群，时刻掌握孩子学习动态</span>
+        </p>
+        <p>
+            <i></i>
+            <span>第六步：课前发送此次课程教学目标，课后发送课程日志与教学成果</span>
+        </p>
+        <p>
+            <i></i>
+            <span>第七步：互动授课、课后回访、每月测评、阶段总结。效果看得见</span>
+        </p>
+        <p>
+            <i></i>
+            <span>第八步：提供独家心理辅导、报考指导、教育政策解读等增值服务</span>
+        </p>
+    </div>
+    <div class="i_e_button">立即免费体验</div>
+</section>
+<section class="honorsBox">
+    <div class="txtBox">
+        <i class="icon"></i>
+        <div class="txt">
+            <p class="title">企业荣誉</p>
+            <p class="tips">社会公众的赞许是对我们最大的鼓励</p>
+        </div>
+    </div>
+    <div class="honorsList">
+
+    </div>
+</section>
+<%- include('./componentViews/common/footer.html') %>
+<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
+<script>
+    var CONFIG = {
+        queryName : "<%= locals.typeName %>",
+        location : ""
+    }
+
+</script>
+<script src="/build/main.js"></script>
 </body>
 </html>

@@ -17,7 +17,6 @@ class TeacherCtrl extends BaseCtrl {
 
   async listTeacher(params) {
     let { orderBy, grade, district, subject, teacherType, gender, tags, offset } = params;
-    console.log('listTeacher====', params);
     let queryParams = { where: {} };
 
     //排序
@@ -119,23 +118,15 @@ class TeacherCtrl extends BaseCtrl {
     t_ids = [];
 
     list.forEach(item => {
-      delete item.dataValues.t_good_comment_content;
-      delete item.dataValues.t_mid_comment_content;
-      delete item.dataValues.t_bad_comment_content;
-
+      delete item.dataValues.t_comment;
       delete item.dataValues.t_case;
       delete item.dataValues.t_introduction;
-      delete item.dataValues.t_bad_comment_content;
-
-      let sum = item.t_good_comment + item.t_mid_comment + item.t_bad_comment;
-      item.t_good_comment = parseInt((item.t_good_comment / sum) * 100) + '%';
 
       item.t_grades = [];
       item.t_tags = [];
 
       t_ids.push(item.t_id);
     });
-    console.log('t_ids==', t_ids);
     let teacherGrades = await TeacherGradeModel.findAll({ where: { tg_teacher_id: t_ids, tg_status: 1 } });
     let teacherTags = await TeacherTagsModel.findAll({ where: { tt_teacher_id: t_ids, tt_status: 1 } });
 
@@ -149,7 +140,6 @@ class TeacherCtrl extends BaseCtrl {
           }
         }
       });
-
       teacherTags.forEach(tag => {
         if (teach.t_id == tag.tt_teacher_id) {
           if (dictionaryCtrl.teacherTagIDName[tag.tt_tag_id].name) {
@@ -158,7 +148,9 @@ class TeacherCtrl extends BaseCtrl {
         }
       });
     });
-    return { list, offset };
+
+    let latestComments = await this.getLatestComments();
+    return { latestComments, list, offset };
   }
 
 
@@ -166,12 +158,15 @@ class TeacherCtrl extends BaseCtrl {
    * 获取老师信息
    * @param teacherID
    */
-  async getTeacherInfo(teacherID) {
+  async getTeacherInfo(params) {
+    let { teacherID, cityId } = params;
+    let latestComments = await this.getLatestComments();
     let teacher = await TeacherModel.findById(teacherID);
     assert(teacher, '没改该老师信息');
-    teacher.dataValues.t_tags = await this.getTagsByTeacherID(teacherID);
-    teacher.dataValues.t_grades = await this.getGradesByTeacherID(teacherID);
-    return teacher;
+    teacher.t_tags = await this.getTagsByTeacherID(teacherID);
+    teacher.t_grades = await this.getGradesByTeacherID(teacherID);
+    let data = { teacher, latestComments };
+    return data;
   }
 
   /**
@@ -183,7 +178,7 @@ class TeacherCtrl extends BaseCtrl {
     let tags = await TeacherTagsModel.findAll({ where: { tt_teacher_id: teacherID, tt_status: 1 } });
     let result = [];
     for (let tag of tags) {
-      result.push(dictionaryCtrl.teacherTagIDName[tag.tt_id].name);
+      result.push(dictionaryCtrl.teacherTagIDName[tag.tt_tag_id].name);
     }
     return result;
   }
@@ -224,11 +219,76 @@ class TeacherCtrl extends BaseCtrl {
       let introduction = item.t_introduction;
       tem.push({ introduction, url, id, title });
     });
-    console.log('teachers=======', tem);
     return tem;
   }
 
+  /**
+   * 获取最新评价
+   * @param cityId
+   * @returns {*}
+   */
+  async getLatestComments() {
+    let comments = await TeacherModel.findAll({
+      where: {
+        t_status: 1,
+        t_comment: { $not: null }
+      },
+      limit: 10,
+      order: 't_update_time desc'
+    });
+    let tem = [];
+    comments.forEach(l => {
+      let comment = l.t_comment;
+      if (comment) {
+        comment = JSON.parse(comment);
+        comment = comment.good_comment[0];
+      } else {
+        comment = {};
+      }
 
+      tem.push({
+        t_id: l.t_id,
+        t_comment: comment,
+        t_name: l.t_name
+      });
+    });
+
+    comments = tem;
+    return comments;
+  }
+
+  /**
+   * 获取老师的评价
+   * @param teacherId
+   */
+  async getTeacherCommentsByTeacherId(params) {
+    let { teacherID, cityId } = params;
+    let teacherInfo = await TeacherModel.findById(teacherID);
+    assert(teacherInfo, '不存在改该老师');
+    let goodComment = '';
+    let midComment = '';
+    let badComment = '';
+    if (teacherInfo.t_comment) {
+      let comment = JSON.parse(teacherInfo.t_comment);
+      goodComment = comment.good_comment;
+      midComment = comment.mid_comment;
+      badComment = comment.bad_comment;
+    }
+
+    let comments = {
+      goodComment,
+      midComment,
+      badComment,
+      goodCount: teacherInfo.t_good_comment,
+      midCount: teacherInfo.t_mid_comment,
+      badCount: teacherInfo.t_bad_comment,
+    };
+    let headImg = teacherInfo.t_headimg;
+    let name = teacherInfo.t_name;
+    let latestComments = await this.getLatestComments();
+    let data = { comments, headImg, name, latestComments };
+    return data;
+  }
 
 }
 module.exports = new TeacherCtrl();

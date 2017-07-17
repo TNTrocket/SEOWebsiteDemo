@@ -1,0 +1,84 @@
+.teacherEvaluate{
+  .studentAssessment{
+    margin-top: 30px;
+    background: #ffffff;
+    //padding: 20px;
+    .title{
+      .fontSize(16px);
+      padding: 20px;
+      border-top: 1px solid #dcdcdc;/*no*/
+      border-bottom: 1px solid #dcdcdc;/*no*/
+    }
+    .assessmentList{
+      display: flex;
+      >div{
+        flex: 33%;
+        //padding: 15px 0 27px;
+        text-align: center;
+        >span{
+          display: inline-block;
+          padding: 30px 10px ;
+        }
+      }
+    }
+  }
+  .assessmentContent{
+    width: 100%;
+    overflow: hidden;
+    margin-top: 30px;
+    background: #ffffff;
+    .noData{
+      text-align: center;
+      padding: 20px 0;
+    }
+    .middleEvaluate,.badEvaluate{
+      display: none;
+    }
+    .evaluateSingle{
+      padding: 20px;
+      font-size: 0;
+      border-bottom: 1px solid #dcdcdc; /*no*/
+      >div{
+        display: inline-block;
+        vertical-align: text-top;
+      }
+      .pic{
+        //padding: 20px;
+        width: 120px;
+        height: 120px;
+        img{
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+        }
+      }
+      .txtContent{
+        margin-left: 20px;
+        .fontSize(14px);
+        width: 80%;
+        .phoneAndName{
+          color: #666666;
+        }
+        .tags{
+          .fontSize(12px);
+          color: #999999;
+          margin-top: 10px;
+        }
+        .studentEvaluate{
+          margin-top: 10px;
+          color: #323232;
+        }
+        .reply{
+          margin-top: 20px;
+          color: #323232;
+          background: #F5F5F7;
+          padding: 15px 15px;
+          .fontSize(13px);
+          .teacher{
+            color: @blueFontColor;
+          }
+        }
+      }
+    }
+  }
+}

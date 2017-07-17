@@ -31,7 +31,7 @@ class SchoolInfo extends BaseCtrl {
   async list(params) {
     let { category, region, level, offset, city } = params;
 
-    let cityInfo = await areaCtrl.getCityByName(city);
+    let cityInfo = await areaCtrl.getCityById(city);
 
     let schoolMaterials = await articleCtrl.getLatestMaterials('school', 3);
     let seniorMaterials = await articleCtrl.getLatestMaterials('senior', 3);
@@ -80,7 +80,7 @@ class SchoolInfo extends BaseCtrl {
     });
 
     list = tem;
-
+    let latestComments = await teacherCtrl.getLatestComments();
     let famousTeachers = await teacherCtrl.famousTeacher();
 
     let data = {
@@ -89,7 +89,8 @@ class SchoolInfo extends BaseCtrl {
       diction: [
         { item: schoolCategory, category: '年级：' },
         { item: schoolLevel, category: '级别：' }],
-      page: { offset, limit: 10 }
+      page: { offset, limit: 10 },
+      latestComments
     };
 
     return data;
@@ -100,7 +101,7 @@ class SchoolInfo extends BaseCtrl {
    * @param params
    */
   async getHotSchools(city) {
-    city = parseInt(city) || 440100;
+    city = parseInt(city) || dictionCtrl.defaultCity.a_id;
     city = await areaCtrl.getCityById(city);
     assert(city, '找不到该城市');
     let schools = await sequelize.query('select name,id,(entirety_score+teacher_score+teach_score) as score from ' +
@@ -114,8 +115,6 @@ class SchoolInfo extends BaseCtrl {
    * @param schoolID
    */
   async getSchoolById(schoolID, city) {
-    city = await areaCtrl.getCityByName(city);
-    city = city.a_id;
 
     let hotSchools = await this.getHotSchools(city);
     let schoolMaterials = await articleCtrl.getLatestMaterials('school', 3);
@@ -124,10 +123,12 @@ class SchoolInfo extends BaseCtrl {
     let materials = schoolMaterials.concat(seniorMaterials, highMaterials);
     let hotInfos = await articleCtrl.getHotInfo(0, 10);
 
+    let famousTeachers = await teacherCtrl.famousTeacher();
+    let latestComments = await teacherCtrl.getLatestComments();
     let school = await SchoolInfoModel.findById(schoolID);
     assert(school, '没有该学校');
 
-    return { hotSchools, materials, hotInfos, school };
+    return { latestComments, famousTeachers, hotSchools, materials, hotInfos, school };
   }
 }
 

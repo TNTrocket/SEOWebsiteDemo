@@ -21,15 +21,6 @@ export function navEvent() {
     $(".homePageNav a").click(function () {
         let nav = $(this).data("nav");
         switch (nav){
-            // case "teacher":
-            //     window.location.href = "/selectTeacher"
-            //     break;
-            // case "information":
-            //     window.location.href = "/information"
-            //     break;
-            // case "example":
-            //     window.location.href = "/successCase"
-            //     break;
             case "more":
                 $(this).toggleClass("blueColor");
                 navMoreList.toggleClass("toggleList");
@@ -55,7 +46,7 @@ export function locationStorage() {
        return window.localStorage.getItem(name)
     }
     function remove(name) {
-        window.localStorage.getItem(name)
+        window.localStorage.removeItem(name)
     }
     function clear() {
         window.localStorage.clear()
@@ -76,9 +67,9 @@ export let locationTemp = '<div class="globalModal locationModal">'+
     '</div>'+
     '<ul>'+
     '{{#each this}}'+
-    '<li data-location="{{this}}">{{this}}</li>'+
+    '<li data-location="{{code}}">{{name}}</li>'+
     '{{/each}}'+
-    '</ul></div>;';
+    '</ul></div>';
 
 export function isEmptyObject(e) {
     let t;

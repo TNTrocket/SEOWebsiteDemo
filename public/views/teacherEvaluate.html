@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link href="/build/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" media="only screen and (min-width: 414px)" href="/build/pc.css"/>
+</head>
+<script src="/build/countRem.js"></script>
+<body data-pagetype="teacherEvaluate" id="pageType"  class="teacherEvaluate">
+<%- include('./componentViews/teacher/teacherEvaluateHeader.html',{params :params , name :name }) %>
+
+<section class="teacherDetailContent">
+    <div class="studentAssessment">
+        <p class="title">
+            学生评价
+        </p>
+        <div class="assessmentList">
+            <div data-evaluatetype="good" class="blueColor"><span class="activeBorder">好评(<%= comments.goodCount %>)</span></div>
+            <div data-evaluatetype="middle"><span>中评(<%= comments.midCount %>)</span></div>
+            <div data-evaluatetype="bad"><span>差评(<%= comments.badCount %>)</span></div>
+        </div>
+    </div>
+    <div class="assessmentContent">
+        <div class="goodEvaluate">
+            <% if(comments.goodComment.length !== 0){ %>
+            <% comments.goodComment.forEach(function(item){ %>
+            <div class="evaluateSingle">
+                <div class="pic">
+                    <img src="http://ortr4se0b.bkt.clouddn.com/<%= headImg %>"/>
+                </div>
+                <div class="txtContent">
+                    <p class="phoneAndName">
+                        <span class="phone"><%= item.student_phone %></span>
+                        <span class="name"><%= item.student_name %></span>
+                    </p>
+                    <p class="tags">
+                        <span><%= item.course_name %></span>
+                        <span><%= item.grade_name %></span>
+                        <span><%= item.teacher_type %></span>
+                        <!--<span>语文</span>-->
+                    </p>
+                    <p class="studentEvaluate">
+                        <%= item.student_appraise_info %>
+                    </p>
+                    <% if (item.teacher_appraise_info) { %>
+                    <p class="reply">
+                        <span class="teacher">老师</span>&nbsp;回复：<%= item.teacher_appraise_info %>
+                    </p>
+                    <% } %>
+                </div>
+            </div>
+            <% }) %>
+            <% } else { %>
+            <div class="noData"> 没有评价</div>
+            <% } %>
+        </div>
+        <div class="middleEvaluate">
+            <% if(comments.midComment.length !== 0){ %>
+            <% comments.midComment.forEach(function(item){ %>
+            <div class="evaluateSingle">
+                <div class="pic">
+                    <img src="http://ortr4se0b.bkt.clouddn.com/<%= headImg %>"/>
+                </div>
+                <div class="txtContent">
+                    <p class="phoneAndName">
+                        <span class="phone"><%= item.student_phone %></span>
+                        <span class="name"><%= item.student_name %></span>
+                    </p>
+                    <p class="tags">
+                        <span><%= item.course_name %></span>
+                        <span><%= item.grade_name %></span>
+                        <span><%= item.teacher_type %></span>
+                        <!--<span>语文</span>-->
+                    </p>
+                    <p class="studentEvaluate">
+                        <%= item.student_appraise_info %>
+                    </p>
+                    <% if (item.teacher_appraise_info) { %>
+                    <p class="reply">
+                        <span class="teacher">老师</span>&nbsp;回复：<%= item.teacher_appraise_info %>
+                    </p>
+                    <% } %>
+                </div>
+            </div>
+            <% }) %>
+            <% } else { %>
+            <div class="noData"> 没有评价</div>
+            <% } %>
+        </div>
+        <div class="badEvaluate">
+            <% if(comments.badComment.length !== 0){ %>
+            <% comments.badComment.forEach(function(item){ %>
+            <div class="evaluateSingle">
+                <div class="pic">
+                    <img src="http://ortr4se0b.bkt.clouddn.com/<%= headImg %>"/>
+                </div>
+                <div class="txtContent">
+                    <p class="phoneAndName">
+                        <span class="phone"><%= item.student_phone %></span>
+                        <span class="name"><%= item.student_name %></span>
+                    </p>
+                    <p class="tags">
+                        <span><%= item.course_name %></span>
+                        <span><%= item.grade_name %></span>
+                        <span><%= item.teacher_type %></span>
+                        <!--<span>语文</span>-->
+                    </p>
+                    <p class="studentEvaluate">
+                        <%= item.student_appraise_info %>
+                    </p>
+                    <% if (item.teacher_appraise_info) { %>
+                    <p class="reply">
+                        <span class="teacher">老师</span>&nbsp;回复：<%= item.teacher_appraise_info %>
+                    </p>
+                    <% } %>
+                </div>
+            </div>
+            <% }) %>
+            <% } else { %>
+            <div class="noData"> 没有评价</div>
+            <% } %>
+        </div>
+    </div>
+</section>
+
+<%- include('./componentViews/common/footer.html') %>
+<script id="tpl" type="text/x-template">
+    <ul class="teacherDetailQuery">
+        {{#each this }}
+        <li>{{itemName}}</li>
+        {{/each}}
+    </ul>
+</script>
+<!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Y04faNoNlPdLqtqpvIjUFzgLdmlllzDj"></script>-->
+<script>
+    var CONFIG = {
+        queryName : "<%= locals.typeName %>",
+        location : ""
+    }
+    //    function myFun(result){
+    //        var cityName = result.name;
+    //        CONFIG.location = cityName;
+    //    }
+    //    var myCity = new BMap.LocalCity();
+    //    myCity.get(myFun);
+</script>
+<script src="/build/main.js"></script>
+</body>
+</html>

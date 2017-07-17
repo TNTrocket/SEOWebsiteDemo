@@ -8,16 +8,17 @@
     <link rel="stylesheet" media="only screen and (min-width: 414px)" href="/build/pc.css"/>
 </head>
 <% var render = locals.informationList.renderType %>
+
 <%
 
 var h2Link = null;
 if(render === "article"){
  h2Link = {
-  link : "/unlimit/0"
+  link : "/unlimit/"+params.city+"/0"
   }
 }else if (render ==="schoolDetail"){
  h2Link = {
- link : "/unlimit/unlimit/0"
+ link : "/unlimit/unlimit/"+params.city+"unlimit/0"
  }
 }
 var prevRenderTypeName = locals.informationList.prevRenderType;
@@ -39,14 +40,21 @@ list: locals.list,
 page: locals.page,
 diction: locals.diction,
 total: locals.total,
-renderType : render
+renderType : render,
+params : locals.params
 }
-
+console.log(locals.cacheData);
  %>
 <script src="/build/countRem.js"></script>
 <body data-pagetype="informationList" id="pageType" data-rendertype="<%= render %>" >
 <div class="informationList">
+    <% if(render === "schoolList"){ %>
+    <%- include("./componentViews/information/schoolListHeader.html",listHeader ) %>
+    <% } else if(render === "schoolDetail") {%>
+    <%- include("./componentViews/information/schoolDetailHeader.html",{listHeader: listHeader, schoolName: locals.school.name} ) %>
+    <% } else{ %>
     <%- include("./componentViews/information/listHeader.html",listHeader ) %>
+    <% } %>
     <% if( render === 'article'){ %>
     <article class="listContentArticle">
         <h3><%= article.a_content_title %></h3>
@@ -57,7 +65,7 @@ renderType : render
     </article>
     <div class="imgInfoBanner">
         <% article.threeTitles.forEach(function(item){ %>
-        <a href="/information/article/<%= item.id %>">
+        <a href="/information/article/<%= params.city %>/<%= item.id %>">
         <div class="imgBannerPic">
             <img src="/img/banner1.png">
             <div class="w-f-txt"><%= item.title %></div>
@@ -96,7 +104,7 @@ renderType : render
         <% if( render === 'article'){ %>
         <%- include('./componentViews/common/list.html',{ dataList:article.hotInfos}) %>
         <% } else if(render === 'schoolList') { %>
-        <%- include('./componentViews/information/hotSchool.html',{ dataList:hotSchools}) %>
+        <%- include('./componentViews/information/hotSchool.html',{ dataList:hotSchools,city:locals.params.city}) %>
         <% }else{ %>
         <%- include('./componentViews/common/list.html',{ dataList:hotInfos}) %>
         <% } %>
@@ -116,22 +124,17 @@ renderType : render
         <%- include('./componentViews/information/recommendTeacher.html',{famousTeachers : locals.famousTeachers }) %>
     </div>
     <%- include('./componentViews/common/advertiseBrand.html') %>
-    <%- include('./componentViews/common/evaluateList.html') %>
+    <%- include('./componentViews/common/evaluateList.html',latestComments) %>
     <%- include('./componentViews/common/familyEducationCase.html') %>
     <%- include('./componentViews/common/footer.html') %>
 </div>
-<!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Y04faNoNlPdLqtqpvIjUFzgLdmlllzDj"></script>-->
 <script>
     var CONFIG = {
         queryName : "<%= locals.typeName %>",
-        location : ""
+        location : "",
+        cacheData: JSON.parse('<%- JSON.stringify(locals.params)%>') || {},
+        cityID : "<%= params.city %>"
     }
-//    function myFun(result){
-//        var cityName = result.name;
-//        CONFIG.location = cityName;
-//    }
-//    var myCity = new BMap.LocalCity();
-//    myCity.get(myFun);
 </script>
 <script src="/build/main.js"></script>
 </body>

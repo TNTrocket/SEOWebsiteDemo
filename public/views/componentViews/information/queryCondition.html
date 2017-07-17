@@ -14,6 +14,7 @@
                            <% Object.keys(result.item).forEach(function(a){ %>
                             <li><a data-queryitem="<%= a %>" data-itemname ="<%= result.item[a].name %>" data-querycategory = "<%= result.category.split('：')[0] %>"><%= result.item[a].name %></a></li>
                             <% }) %>
+                            <li style="visibility: hidden;height: 0px;margin: 0;padding: 0"></li>
                         </ul>
                     </div>
                 </div>
@@ -30,7 +31,7 @@
             <% if (list.length > 0 ) {%>
             <% list.forEach(function(item){ %>
               <% if (renderType ==="schoolList"){ %>
-            <a  data-href="/information/school/detail/<%= item.id %>" data-schoollist="schoolList">
+            <a  href="/information/school/detail/<%= params.city %>/<%= item.id %>?city=<%= params.city%>" data-schoollist="schoolList">
                 <section>
                     <div class="newsCover">
                         <img src="<%= item.url || '/img/newLogo.png'%>"/>
@@ -42,7 +43,7 @@
                 </section>
             </a>
                <% }else{ %>
-            <a href="/information/article/<%= item.id %>">
+            <a href="/information/article/<%= params.city %>/<%= item.id %>">
             <section>
                 <div class="newsCover">
                     <img src="<%= item.url || '/img/newLogo.png'%>"/>
@@ -60,8 +61,27 @@
             <% } %>
         </div>
     </div>
+    <%
+    var url = "";
+    var search = "";
+    if(renderType =="studyNewsList"){
+      url = params.type
+    }else if(renderType =="dataDownloadList"){
+    url = params.grade+'/'+ params.subject
+    }else if(renderType =="parentsQaList"){
+    url = params.grade
+    }else if(renderType =="schoolList"){
+    url = params.category + '/'+ params.level
+    search = "?city="+(params.city || "unlimit")+"&region="+ (params.region || "unlimit")
+    }
+    %>
     <div class="newsButton next_page">
-        <div class="prev"><a  data-href="<%= page.offset - 8 < 0 ? 0 : page.offset - 8 %>">上一页</a></div>
-        <div class="next"><a data-href="<%= page.offset + 8 %>">下一页</a></div>
+        <% if (renderType =="schoolList"){ %>
+        <div class="prev"><a  href="/information/<%= renderType %>/<%= url %>/<%= params.city %>/<%= params.region %>/<%= page.offset - 8 < 0 ? 0 : page.offset - 8 %><%= search %>">上一页</a></div>
+        <div class="next"><a  href="/information/<%= renderType %>/<%= url %>/<%= params.city %>/<%= params.region %>/<%= page.offset + 8 %><%= search %>">下一页</a></div>
+        <% }else { %>
+        <div class="prev"><a  href="/information/<%= renderType %>/<%= url %>/<%= params.city %>/<%= page.offset - 8 < 0 ? 0 : page.offset - 8 %>">上一页</a></div>
+        <div class="next"><a  href="/information/<%= renderType %>/<%= url %>/<%= params.city %>/<%= page.offset + 8 %>">下一页</a></div>
+        <% } %>
     </div>
 </section>

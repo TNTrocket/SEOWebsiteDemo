@@ -4,6 +4,19 @@
         <span class="icon"></span>
         <span class="txt">最新评价</span>
     </div>
-    <%- include('../common/list.html') %>
+    <ul class="commonListTitle evaluateList">
+        <% if (locals.latestComments && locals.latestComments.length !== 0){ %>
+        <% locals.latestComments.forEach(function(item){ %>
+        <li><a href="/teacher/teacher/comments/<%= item.t_id %>/<%= params.city %>">
+            <% console.log(item.t_comment) %>
+            <i></i><span class="listTxt"><%= item.t_name %>：
+            <% if(item.t_comment) { %>
+            <%= item.t_comment.student_appraise_info %>
+            <% } %>
+        </span>
+        </a></li>
+        <% }) %>
+        <% } %>
+    </ul>
 </section>
 <div class="packUpEvaluate"><div class="packUpBtn">收起<i></i></div></div>

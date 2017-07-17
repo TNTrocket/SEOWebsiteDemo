@@ -10,7 +10,7 @@
 <script src="/build/countRem.js"></script>
 <body data-pagetype="successCase" id="pageType"  class="successCase">
 <%- include('./componentViews/common/homePageHeader.html') %>
-<%- include('./componentViews/common/homePageNav.html') %>
+<%- include('./componentViews/common/homePageNav.html',{active:"successCase"}) %>
 <%- include('./componentViews/common/commonMoreList.html') %>
 <section class="successCaseContent">
     <div class="topTitle">
@@ -47,7 +47,7 @@
             </div>
       </div>
     </div>
-    <div class="button">
+    <div class="button btnNOW">
         立即免费体验
     </div>
     <article class="tip-article">
@@ -59,7 +59,7 @@
           <img src="/img/successPhone.png"/>
       </div>
     </div>
-    <div class="button">
+    <div class="button btnNOW">
         立即免费体验
     </div>
 </section>
@@ -69,6 +69,12 @@
     <%- include('./componentViews/common/familyEducationCase.html') %>
 </div>
 <%- include('./componentViews/common/footer.html') %>
+<script>
+    var CONFIG = {
+        queryName : "<%= locals.typeName %>",
+        city : ""
+    }
+</script>
 <script src="/build/main.js"></script>
 </body>
 </html>

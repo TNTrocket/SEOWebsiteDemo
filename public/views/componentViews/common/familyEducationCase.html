@@ -2,53 +2,45 @@
     <section class="familyEducationArea eachListTitle">
         <div>
             <span class="icon"></span>
-            <span class="txt">广州家教区域</span>
+            <span class="txt"><span class="placeName">广州</span>家教区域</span>
         </div>
-        <ul>
-            <li><a>广州天河家教</a></li>
-            <li><a>广州白云家教</a></li>
-            <li><a>广州越秀家教</a></li>
-            <li><a>广州荔湾家教</a></li>
-            <li><a>广州增城家教</a></li>
-            <li><a>广州萝岗家教</a></li>
-            <li><a>广州海珠家教</a></li>
-            <li><a>广州番禺家教</a></li>
-            <li><a>广州黄埔家教</a></li>
-            <li><a>广州花都家教</a></li>
-        </ul>
+        <div class="footerBox">
+
+        </div>
     </section>
+
     <section class="familyEducationSubject eachListTitle">
         <div>
             <span class="icon"></span>
-            <span class="txt">广州家教科目</span>
+            <span class="txt"><span class="placeName">广州</span>家教科目</span>
         </div>
         <ul>
-            <li><a>广州语文家教</a></li>
-            <li><a>广州数学家教</a></li>
-            <li><a>广州英语家教</a></li>
-            <li><a>广州物理家教</a></li>
-            <li><a>广州化学家教</a></li>
-            <li><a>广州生物家教</a></li>
-            <li><a>广州地理家教</a></li>
-            <li><a>广州历史家教</a></li>
-            <li><a>广州生物家教</a></li>
-            <li><a>广州奥数家教</a></li>
-            <li><a>广州竞赛家教</a></li>
+            <li><a><span class="placeName">广州</span>语文家教</a></li>
+            <li><a><span class="placeName">广州</span>数学家教</a></li>
+            <li><a><span class="placeName">广州</span>英语家教</a></li>
+            <li><a><span class="placeName">广州</span>物理家教</a></li>
+            <li><a><span class="placeName">广州</span>化学家教</a></li>
+            <li><a><span class="placeName">广州</span>生物家教</a></li>
+            <li><a><span class="placeName">广州</span>地理家教</a></li>
+            <li><a><span class="placeName">广州</span>历史家教</a></li>
+            <li><a><span class="placeName">广州</span>生物家教</a></li>
+            <li><a><span class="placeName">广州</span>奥数家教</a></li>
+            <li><a><span class="placeName">广州</span>竞赛家教</a></li>
         </ul>
     </section>
     <section class="familyEducationType eachListTitle">
         <div>
             <span class="icon"></span>
-            <span class="txt">广州家教类型</span>
+            <span class="txt"><span class="placeName">广州</span>家教类型</span>
         </div>
         <ul>
             <li><a>上门一对一家教</a></li>
-            <li><a>广州课外辅导</a></li>
-            <li><a>广州家教网</a></li>
-            <li><a>广州上门家教</a></li>
-            <li><a>广州中考家教</a></li>
-            <li><a>广州高考家教</a></li>
-            <li><a>广州小升初家教</a></li>
+            <li><a><span class="placeName">广州</span>课外辅导</a></li>
+            <li><a><span class="placeName">广州</span>家教网</a></li>
+            <li><a><span class="placeName">广州</span>上门家教</a></li>
+            <li><a><span class="placeName">广州</span>中考家教</a></li>
+            <li><a><span class="placeName">广州</span>高考家教</a></li>
+            <li><a><span class="placeName">广州</span>小升初家教</a></li>
         </ul>
     </section>
     <section class="familyEducationNews eachListTitle">
@@ -66,4 +58,37 @@
             <li><a>升学指南</a></li>
         </ul>
     </section>
+</div>
+<script id="footerAreaTpl" type="text/x-template">
+    <ul>
+        {{#each this}}
+        <li><a href="/teacher/list/auto/unlimit/{{code}}/unlimit/unlimit/unlimit/unlimit/<%= params.city%>/0"><span class="placeName">广州</span><span class="regionName">{{itemName}}</span>家教</a></li>
+        {{/each}}
+    </ul>
+</script>
+<div class="seoFooter" style="display: none">
+    <ul>
+        <li><a><span class="placeName">广州</span><span class="regionName">天河</span>家教</a></li>
+        <li><a>
+            <span class="placeName">广州</span><span class="regionName">白云</span>家教</a></li>
+        <li><a>
+            <span class="placeName">广州</span><span class="regionName">越秀</span>家教</a></li>
+        <li><a>
+            <span class="placeName">广州</span><span class="regionName">荔湾</span>家教</a></li>
+        <li><a>
+            <span class="placeName">广州</span><span class="regionName">增城</span>家教</a></li>
+        <li><a>
+            <span class="placeName">广州</span><span class="regionName">萝岗</span>家教</a></li>
+        <li><a>
+            <span class="placeName">广州</span><span class="regionName">海珠</span>家教</a></li>
+        <li><a>
+            <span class="placeName">广州</span><span class="regionName">番禺</span>
+            家教</a></li>
+        <li><a>
+            <span class="placeName">广州</span><span class="regionName">黄埔</span>
+            家教</a></li>
+        <li><a>
+            <span class="placeName">广州</span><span class="regionName">花都</span>
+            家教</a></li>
+    </ul>
 </div>

@@ -12,7 +12,7 @@ module.exports = {
     name: "选师无忧"
   },
   sequelize: {
-    host: '127.0.0.1',
+    host: '39.108.86.180',
     userName: 'ian',
     password: 'xuanshi@2017',
     database: 'xswy_web_index',

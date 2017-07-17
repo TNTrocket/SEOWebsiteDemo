@@ -1,8 +1,10 @@
 <ul class="commonListTitle">
     <% if (locals.dataList){ %>
     <% locals.dataList.forEach(function(item){ %>
-    <li><a href="/information/article/<%= item.id %>"><i></i><span class="listTxt"><%= item.title %></span>
+    <li><a href="/information/article/<%= params.city %>/<%= item.id %>"><i></i><span class="listTxt"><%= item.title %></span>
+        <% if (!locals.needTime) { %>
         <span class="dateTime"><%= item.time || ""%></span>
+        <% } %>
     </a></li>
     <% }) %>
     <% } %>

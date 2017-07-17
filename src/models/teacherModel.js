@@ -14,9 +14,7 @@ let Teacher = sequelize.define("Teacher", {
   t_mid_comment: { type: Sequelize.INTEGER },
   t_bad_comment: { type: Sequelize.INTEGER },
 
-  t_good_comment_content: { type: Sequelize.TEXT },
-  t_mid_comment_content: { type: Sequelize.TEXT },
-  t_bad_comment_content: { type: Sequelize.TEXT },
+  t_comment: { type: Sequelize.TEXT },
 
   t_course_total: { type: Sequelize.INTEGER },
   t_price: { type: Sequelize.INTEGER },

@@ -241,5 +241,12 @@ module.exports = {
         h3: "1"
       }
     }
+  },
+  defaultCity: {
+    a_id: 440100,
+    a_name: '广州市',
+    a_shortName: '广州',
+    a_pinyin: 'Guangzhou',
+    a_parentID: 440000
   }
 };

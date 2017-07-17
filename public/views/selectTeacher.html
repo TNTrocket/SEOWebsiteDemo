@@ -10,7 +10,7 @@
 <script src="/build/countRem.js"></script>
 <body data-pagetype="selectTeacher" id="pageType"  class="selectTeacher">
 <%- include('./componentViews/common/homePageHeader.html') %>
-<%- include('./componentViews/common/homePageNav.html') %>
+<%- include('./componentViews/common/homePageNav.html',{active:"selectTeacher"}) %>
 <%- include('./componentViews/common/commonMoreList.html') %>
 <section class="selectTeacherContent">
     <div class="selectQuery">
@@ -25,9 +25,10 @@
         <input type="hidden" name="area"/>
         <!--<input type="hidden" name="select"/>-->
     </div>
-    <div class="teacherData">
+    <ul class="teacherData">
         <% locals.list.forEach(function(item){ %>
-        <div class="singleTeacher">
+        <li class="singleTeacher">
+            <a style="display: block" href="/teacher/<%= item.t_id %>/<%= params.city %>">
             <div class="img">
                 <img src="http://ortr4se0b.bkt.clouddn.com/<%= item.t_headimg %>"/>
             </div>
@@ -40,16 +41,17 @@
                 </div>
                 <div class="features">
                     <% item.t_tags.forEach(function(tag){ %>
-                    <span class="item"><a><%= tag %></a></span>
+                    <span class="item"><span><%= tag %></span></span>
                     <% }) %>
                 </div>
             </div>
             <div class="price">
               ￥ <span class="number"><%= item.t_price %></span> 起
             </div>
-        </div>
+            </a>
+        </li>
         <% }) %>
-    </div>
+    </ul>
 
 
 </section>
@@ -90,18 +92,14 @@
      </ul>
     </div>
 </script>
-<!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Y04faNoNlPdLqtqpvIjUFzgLdmlllzDj"></script>-->
+<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
 <script>
     var CONFIG = {
         queryName : "<%= locals.typeName %>",
-        location : ""
+        city : "",
+        cacheData: JSON.parse('<%- JSON.stringify(params)%>') || {},
+        cityID : "<%= params.city %>"
     }
-    //    function myFun(result){
-    //        var cityName = result.name;
-    //        CONFIG.location = cityName;
-    //    }
-    //    var myCity = new BMap.LocalCity();
-    //    myCity.get(myFun);
 </script>
 <script src="/build/main.js"></script>
 </body>

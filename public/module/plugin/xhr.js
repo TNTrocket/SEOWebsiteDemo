@@ -16,7 +16,6 @@ class call{
         this.jQCallApi = this.jQCallApi.bind($)
     }
     jQCallApi(url,options){
-        // let deferred = this.Deferred();
         let self = this;
        return new Promise((resolve,reject) => {
             self.ajax(url,options).done(function (data, textStatus, jqXHR) {
@@ -30,26 +29,49 @@ class call{
     fetchCallApi(url,options){
         return  new Promise((resolve,reject) => {
             window.fetch(url,options).then(function (response) {
-                if(response.status == 404){
+                console.log(response);
+                if(response.status === 404){
+                    return reject()
+                }
+                if(response.ok === false){
                     return reject()
                 }
                 return response.json()
             }).then(function (data) {
+                console.log(data)
                 resolve(data)
             }).catch((error) =>{
-
+                console.log(error)
             })
         })
     }
-    simpleCall(url,options){
+    simpleCall(url,options,type){
         options =deepAssign({},this.config,options);
-        if(window.fetch){
+        type = type!==false;
+        if(window.fetch && type){
+            if(options.method === "get"){
+                url = this.packageUrl(url,options);
+                console.log(url);
+            }
+            if(options.data && options.method === "post"){
+                options.body = options.data;
+            }
             return  this.fetchCallApi(url,options)
         }else{
             return this.jQCallApi(url,options)
         }
     }
+    packageUrl(url,options) {
+        if(options.data){
+            url = url+ "?"
+            for (let a of Object.keys(options.data)){
+                url = url + a + "="+options.data[a]+"&";
+            }
+        }
+
+       return url.replace(/\&$/,"");
+    }
 
 }
 
-export let apiCall = new call()
+export let apiCall = new call();

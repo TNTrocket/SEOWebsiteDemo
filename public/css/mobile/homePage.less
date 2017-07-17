@@ -1,0 +1,229 @@
+.homePage{
+  .i_e_button{
+    margin: 20px auto 0 auto;
+    width: 709px;
+    height: 89px;
+    background: @blueFontColor;
+    color: #ffffff;
+    line-height: 89px;
+    text-align: center;
+    border-radius: 10px;
+    .fontSize(17px);
+  }
+  .txtBox{
+    padding: 20px;
+    //font-size: 0;
+    .icon,.txt{
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .icon{
+      .backgroundPic("longBlueBox.png");
+      width: 5px;
+      height: 56px;
+    }
+    .txt{
+      margin-left: 10px;
+      .fontSize(12px);
+      .title{
+        color: @blueFontColor;
+        .fontSize(16px);
+      }
+      .tips{
+        margin-top: 5px;
+      }
+    }
+  }
+ .fourLinks{
+  .backgroundPic("fourLinksBg.png");
+   width: 750px;
+   height: 608px;
+   .img{
+     .backgroundPic("fourLinksImg.png");
+     width: 671px;
+     height: 355px;
+     margin: 0 auto;
+   }
+ }
+  .teachingExample{
+    .content{
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      .single{
+        flex-basis: 45%;
+        background: #ffffff;
+        padding: 84px 0;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+        flex-direction: column;
+        align-items: center;
+        .fontSize(12px);
+        color: #999999;
+        .title{
+          .fontSize(14px);
+          color: #404040;
+          margin-top: 30px;
+        }
+        .tips{
+          margin-top: 20px;
+          //line-height: ;
+          text-align: center;
+        }
+        .icon{
+          &.teachWay{
+            .backgroundPic("teachWay.png");
+            width: 141px;
+            height: 141px;
+          }
+          &.teacherChoose{
+            .backgroundPic("teacherChoose.png");
+            width: 141px;
+            height: 141px;
+          }
+          &.safe{
+            .backgroundPic("safe.png");
+            width: 141px;
+            height: 141px;
+          }
+          &.teacher{
+            .backgroundPic("teacherImg.png");
+            width: 141px;
+            height: 141px;
+          }
+        }
+      }
+    }
+  }
+  .dataShow{
+    width: 750px;
+    height: 460px;
+    .backgroundPic("banner2.png");
+    margin-top: 30px;
+    .txtBox{
+      .icon{
+        .backgroundPic("longWhiteBox.png");
+      }
+      .txt{
+        color: #ffffff;
+        .title{
+          color: #ffffff;
+        }
+      }
+    }
+    .content{
+      .coordinateLine{
+        position: relative;
+        .backgroundPic("coordinateLine.png");
+        width: 715px;
+        height: 262px;
+        margin: 30px auto 0 auto;
+        .text{
+          border: 1px dashed #ffffff;
+          position: absolute;
+          top:0;
+          right: 0;
+          .fontSize(12px);
+          color: #ffffff;
+          height: 73px;
+          line-height: 73px;
+          text-align: center;
+          padding: 0 8px;
+        }
+        .box1{
+          .backgroundPic("coordinateLineBox1.png");
+          width: 404px;
+          height: 73px;
+          margin-left: 66px;
+          .fontSize(12px);
+          color: #ffffff;
+          line-height: 73px;
+          text-align: center;
+          .txt{
+            position: relative;
+            left: 20px;
+          }
+        }
+        .box2{
+          .backgroundPic("coordinateLineBox2.png");
+          width: 643px;
+          height: 73px;
+          margin-left: 66px;
+          margin-top: 30px;
+          .fontSize(12px);
+          color: #ffffff;
+          line-height: 73px;
+          text-align: left;
+          .txt1{
+            position: relative;
+            left: 10px;
+          }
+          .txt2{
+            position: relative;
+            left: 50px;
+          }
+        }
+      }
+    }
+  }
+  .articleStep{
+    .txtBox{
+      .txt{
+        margin-left: 10px;
+        width: 90%;
+        .fontSize(12px);
+        .title{
+          color: @blueFontColor;
+          .fontSize(16px);
+        }
+        .tips{
+          margin-top: 5px;
+        }
+      }
+    }
+    .content{
+      padding: 0 20px;
+      line-height: 25px;/*no*/
+      text-align: justify;
+      p{
+        text-indent:-30px;
+        margin: 0 0 0 30px;
+        i{
+          display: inline-block;
+          .backgroundPic("ponit.png");
+          width: 10px;
+          height: 10px;
+          vertical-align: middle;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+  .honorsBox{
+    margin-top: 30px;
+    .txtBox{
+      .icon{
+        .backgroundPic("longWhiteBox.png");
+      }
+      .txt{
+        color: #ffffff;
+        .title{
+          color: #ffffff;
+        }
+      }
+    }
+    width: 750px;
+    .backgroundPic("honorsBoxBg.png");
+    background-size:cover ;
+    padding: 30px 0 30px 20px;
+    .honorsList{
+      background: url("/img/honorsList.png");
+      width: 710px;
+      height: 111px;
+      background-size: 100% 100%;
+      margin: 15px auto 0 auto;
+
+    }
+  }
+}

@@ -5,7 +5,6 @@
 const router = require('koa-router')();
 const assert = require('assert');
 const articleCtrl = require('../controllers/articleCtrl');
-const dictionCtrl = require('../controllers/dictionaryCtrl');
 
 /**
  * 删除文章
@@ -44,8 +43,9 @@ router.post('/update', async(ctx, next) => {
 
   let params = { id, title, imageUrl, content, time, seoTitle, enuCode1, enuCode2, enuCode3, description, keyword };
 
-  let data = await articleCtrl.updateArticle(params);
 
+
+  let data = await articleCtrl.updateArticle(params);
   console.log('router.post(/update/:id', data);
 
   ctx.response.body = data;
@@ -61,6 +61,8 @@ router.get('/article/:id', async(ctx, next) => {
   let { id } = ctx.params;
   assert(parseInt(id), '文章ID参数有误');
   let data = await articleCtrl.getArticleById(id);
+  let latestComments = await teacherCtrl.getLatestComments();
+  data.latestComments = latestComments;
   console.log('router.get(/:id--data====', data);
   ctx.response.body = data;
   next();
@@ -76,6 +78,8 @@ router.get('/update/status/:id/:status', async(ctx, next) => {
   assert(id && parseInt(id), '参数ID不正确');
   assert(parseInt(status) <= 2 && parseInt(status) >= 0, '参数status不正确');
   let data = await articleCtrl.changeEditStatus(id, status);
+  let latestComments = await teacherCtrl.getLatestComments();
+  data.latestComments = latestComments;
   ctx.response.body = data;
   next();
 });

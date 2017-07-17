@@ -1,18 +1,45 @@
 import $ from 'jquery'
 import modal from '../plugin/modal'
+import { verifyCode, findTeacherWithSmsCode } from '../plugin/globalServer'
+
 
 export  default  class experienceAlert extends modal{
-    constructor(option) {
+    constructor(option,callback) {
         super(option);
         let self = this;
         self.tiemOut = 60;
+        self.areaId = option.areaId;
+        self.realname = option.realname;
         self.touchMove = true;
         self.forbidTouch();
         self.event = {
             "click:.step1Btn" : function (e) {
                 e.stopPropagation();
-                self.dom = self.successDom;
-                self.init();
+                typeof callback === "function" && callback();
+                let phone = $("input[name='phone']").val();
+                let code = $("input[name='code']").val();
+                if(self.verifyPhone("code","step1")){
+                    findTeacherWithSmsCode({data:JSON.stringify({
+                        phone:phone,
+                        channel: "web",
+                        verifyCode: code,
+                        realname: self.realname || "官网用户",
+                        areaId: self.areaId || "440100"
+                       })
+                    }).then((data) =>{
+                        console.log(data);
+                        if(data.statusCode === 200){
+                            self.dom = self.successDom;
+                            self.init();
+                        }else{
+                            $(".errorPhone").text(data.message);
+                        }
+
+                    },()=>{
+                        $(".errorPhone").text("失败");
+                    })
+
+                }
             },
             "click:.authCode" : function (e) {
                 e.stopPropagation();
@@ -20,19 +47,31 @@ export  default  class experienceAlert extends modal{
                 if(authCode.data("time")){
                     return false;
                 }else{
-                    authCode.text(self.tiemOut);
-                    authCode.data("time",true);
-                    let time = setInterval(function () {
-                        if(self.tiemOut === 0){
-                            clearInterval(time);
-                            self.tiemOut = 60;
-                            authCode.text("获取验证码");
-                            authCode.data("time",false);
-                            return false;
-                        }
-                        self.tiemOut--;
-                        authCode.text(self.tiemOut);
-                    },1000)
+                    let phone = $("input[name='phone']").val();
+                      if(self.verifyPhone()){
+                          authCode.data("time",true);
+                          verifyCode({
+                              method : "get",
+                              data : {phone:phone}
+                              // mode : "cors"
+                          }).then((data)=>{
+                              authCode.text(self.tiemOut);
+                              let time = setInterval(function () {
+                                  if(self.tiemOut === 0){
+                                      clearInterval(time);
+                                      self.tiemOut = 60;
+                                      authCode.text("获取验证码");
+                                      authCode.data("time",false);
+                                      return false;
+                                  }
+                                  self.tiemOut--;
+                                  authCode.text(self.tiemOut);
+                              },1000)
+                          },()=>{
+                              $(".errorPhone").text("获取验证码失败");
+                              authCode.data("time",false);
+                          })
+                      }
                 }
             },
             "click:.mask" : function () {
@@ -55,15 +94,16 @@ export  default  class experienceAlert extends modal{
             '<div class="e_a_inputBox">' +
             '<div class="icon phone"></div>' +
             '<div class="phoneBox">' +
-            '<input placeholder="请输入手机号码"/>'+
+            '<input placeholder="请输入手机号码" name="phone"/>'+
             '</div></div>'+
             '<div class="e_a_inputBox">' +
             '<div class="icon password"></div>' +
             '<div>' +
-            '<input placeholder="请输入验证码"/>' +
+            '<input placeholder="请输入验证码" name="code"/>' +
             '</div>' +
             '<div class="authCode">获取验证码 </div>' +
             '</div>' +
+            '<div class="errorPhone"></div>'+
             '<div class="e_a_button step1Btn">确&nbsp;&nbsp;定</div></div>';
 
         self.init();
@@ -83,4 +123,34 @@ export  default  class experienceAlert extends modal{
         mask.remove();
         this.touchMove = false;
     }
+    verifyPhone(type ,step){
+        let phone = $("input[name='phone']").val();
+        let code = $("input[name='code']").val();
+        let reg = /^1(3|4|5|7|8)\d{9}$/;
+        if(type === "code"){
+            if(!code) {
+               $(".errorPhone").text("请输入验证码")
+                return false;
+            }
+            if(!phone || !reg.test(phone)) {
+                if(step === "step1"){
+                    $(".errorPhone").text("输入手机号请获取验证码")
+                }else{
+                    $(".errorPhone").text("输入正确的手机号")
+                }
+                return false;
+            }
+        }else{
+            if(!phone || !reg.test(phone)) {
+                if(step === "step1"){
+                    $(".errorPhone").text("输入手机号请获取验证码")
+                }else{
+                    $(".errorPhone").text("输入正确的手机号")
+                }
+                return false;
+            }
+        }
+
+        return true;
+  }
 }

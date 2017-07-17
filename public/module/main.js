@@ -5,7 +5,7 @@ let type = $("#pageType").data("pagetype");
 
 switch (type){
     case "index":
-        // require("./scripts/index/index")
+        new route.homePage();
         break;
     case "information":
         new route.information();
@@ -36,6 +36,9 @@ switch (type){
         break;
     case "teacherDetail":
         new  route.teacherDetail();
+        break;
+    case "teacherEvaluate":
+        new  route.teacherEvaluate();
         break;
 }
 

@@ -11,6 +11,8 @@ const moment = require('moment');
 const teacherCtrl = require('../controllers/teacherCtrl');
 const sequelize = require("../config/sequelize");
 const dictionCtrl = require('../controllers/dictionaryCtrl');
+const indexCtrl = require('../controllers/indexCtrl');
+const areaCtrl = require('../controllers/areaCtrl');
 
 const shortImgUrls = [
   'http://ortr4se0b.bkt.clouddn.com/short1.png',
@@ -39,45 +41,39 @@ class ArticleCtrl extends BaseCtrl {
     let article = await ArticleModel.findById(id);
     assert(article, '不存在该文章');
     //修改为 编辑中
-    await this.changeEditStatus(id, 1);
+    // await this.changeEditStatus(id, 1);
     return article;
   }
 
   async getlist(title, id, offset) {
-    let where = { a_status: 1, a_enu_code1: ["PARENT_ASK_ANSWER", "MATERIAL", "INFO"], a_edit_status: [0, 2] };
-
-    let queryString = 'select count(a_id) as total from tbl_articles where a_status =1 and a_enu_code1 in ("PARENT_ASK_ANSWER","MATERIAL","INFO") and a_edit_status in (0,2)';
+    let queryArticleString = 'select a_enu_code1,a_update_time,a_create_time,a_id,a_content_title,a_edit_status' +
+      ' from tbl_articles where a_status =1 and a_enu_code1 in ("PARENT_ASK_ANSWER","MATERIAL","INFO")';
+    let queryString = 'select count(a_id) as total from tbl_articles where a_status =1 and a_enu_code1 in ("PARENT_ASK_ANSWER","MATERIAL","INFO")';
 
     if (title) {
-      where.a_content_title = {
-        $like: '%' + title + '%'
-      };
+      queryArticleString += 'and a_content_title like "%' + title + '%"';
       queryString += 'and a_content_title like "%' + title + '%"';
     }
 
     if (id && parseInt(id)) {
-      where.a_id = parseInt(id);
+      queryArticleString += 'and a_id =' + id;
       queryString += 'and a_id =' + id;
     }
 
-    let query = { where, limit: 10 };
+    let limit = 'limit 10';
     if (offset && parseInt(offset)) {
-      query.limit = [parseInt(offset), 10];
+      limit = 'limit ' + offset + ',' + 10;
     }
-
-    query.order = 'a_id asc';
-
-    let list = await ArticleModel.findAll(query);
-
+    queryArticleString += limit;
+    let list = await sequelize.query(queryArticleString, { type: sequelize.QueryTypes.SELECT });
     let total = await sequelize.query(queryString, { type: sequelize.QueryTypes.SELECT });
 
     let types = { "PARENT_ASK_ANSWER": '家长问答', "MATERIAL": '资料下载', "INFO": '无忧资讯' };
 
     list.forEach(item => {
-      item.dataValues.type = types[item.a_enu_code1];
-      item.dataValues.a_update_time = moment(new Date(item.a_update_time)).format('YYYY-MM-DD hh:mm:ss');
-      item.dataValues.a_create_time = moment(new Date(item.a_create_time)).format('YYYY-MM-DD hh:mm:ss');
-      delete item.dataValues.a_content;
+      item.type = types[item.a_enu_code1];
+      item.a_update_time = moment(new Date(item.a_update_time)).format('YYYY-MM-DD hh:mm:ss');
+      item.a_create_time = moment(new Date(item.a_create_time)).format('YYYY-MM-DD hh:mm:ss');
     });
 
     return { list, total: total[0].total || 0 };
@@ -127,7 +123,7 @@ class ArticleCtrl extends BaseCtrl {
 
   async studyNewList(params) {
     let { type, offset, limit } =params;
-
+    let latestComments = await teacherCtrl.getLatestComments();
     let hotInfos = await this.getHotInfo(0, 10);
     let schoolMaterials = await this.getLatestMaterials('school', 3);
     let seniorMaterials = await this.getLatestMaterials('senior', 3);
@@ -141,6 +137,7 @@ class ArticleCtrl extends BaseCtrl {
 
 
     let data = {
+      latestComments,
       famousTeachers,
       total, list, hotInfos,
       materials, diction,
@@ -150,18 +147,20 @@ class ArticleCtrl extends BaseCtrl {
   }
 
   async fetch(id) {
-
+    let latestComments = await teacherCtrl.getLatestComments();
     let schoolMaterials = await this.getLatestMaterials('school', 3);
     let seniorMaterials = await this.getLatestMaterials('senior', 3);
     let highMaterials = await this.getLatestMaterials('high', 4);
     let materials = schoolMaterials.concat(seniorMaterials, highMaterials);
+
+    let famousTeachers = await teacherCtrl.famousTeacher();
 
     let article = await ArticleModel.findById(id);
     article.threeTitles = await this.getThreeArticle();
     article.hotInfos = await this.getHotInfo(0, 10);
     article.a_create_time = moment(article.a_create_time).format('YYYY-MM-DD hh:mm:ss');
 
-    return { materials, article };
+    return { latestComments, famousTeachers, materials, article };
   }
 
   /**
@@ -207,8 +206,12 @@ class ArticleCtrl extends BaseCtrl {
       order: [['a_create_time', 'DESC']]
     });
 
+
     list = list.map(l => {
-      return { title: l.a_content_title, id: l.a_id }
+      let i = parseInt(Math.random() * 5);
+      let url = shortImgUrls[i];
+      let time = moment(new Date(l.a_update_time)).format('YYYY-MM-DD');
+      return { title: l.a_content_title, id: l.a_id, url: url, time };
     });
     return list;
   }
@@ -295,7 +298,9 @@ class ArticleCtrl extends BaseCtrl {
     });
 
     list = list.map(l => {
-      return { title: l.a_content_title, id: l.a_id, time: moment(l.a_create_time).format('YYYY-MM-DD hh:mm:ss') }
+      let i = parseInt(Math.random() * 5);
+      let url = shortImgUrls[i];
+      return { url, title: l.a_content_title, id: l.a_id, time: moment(l.a_create_time).format('YYYY-MM-DD hh:mm:ss') }
     });
     return list;
   }
@@ -307,7 +312,7 @@ class ArticleCtrl extends BaseCtrl {
    */
   async getMaterials(params) {
     let { offset, limit = 10, grade, subject } =params;
-
+    let latestComments = await teacherCtrl.getLatestComments();
     let schoolMaterials = await this.getLatestMaterials('school', 3);
     let seniorMaterials = await this.getLatestMaterials('senior', 3);
     let highMaterials = await this.getLatestMaterials('high', 4);
@@ -327,7 +332,7 @@ class ArticleCtrl extends BaseCtrl {
     }
     let { list, total } = await this.list('MATERIAL', grade, subject, null, offset, limit);
 
-    let data = { famousTeachers, total, list, materials, hotInfos, diction, page: { offset, limit } };
+    let data = { latestComments, famousTeachers, total, list, materials, hotInfos, diction, page: { offset, limit } };
     return data;
   }
 
@@ -337,7 +342,7 @@ class ArticleCtrl extends BaseCtrl {
    */
   async getParentQuestions(params) {
     let { offset, limit = 10, grade } =params;
-
+    let latestComments = await teacherCtrl.getLatestComments();
     let schoolMaterials = await this.getLatestMaterials('school', 3);
     let seniorMaterials = await this.getLatestMaterials('senior', 3);
     let highMaterials = await this.getLatestMaterials('high', 4);
@@ -352,6 +357,7 @@ class ArticleCtrl extends BaseCtrl {
     let { list, total } = await this.list('PARENT_ASK_ANSWER', grade, null, null, offset, limit);
     let famousTeachers = await teacherCtrl.famousTeacher();
     let data = {
+      latestComments,
       famousTeachers,
       total, list, materials,
       diction, hotInfos,
@@ -436,7 +442,9 @@ class ArticleCtrl extends BaseCtrl {
     }
   }
 
-  async index() {
+  async index(params) {
+    let { city } = params;
+
     let offset = parseInt(Math.random() * 100);
     let limit = 10;
     offset = offset > limit ? offset - limit : 0;
@@ -444,11 +452,10 @@ class ArticleCtrl extends BaseCtrl {
     let hotInfos = await this.getHotInfo(offset, limit);
 
     offset = offset + limit;
-
+    let latestComments = await teacherCtrl.getLatestComments();
     let careFreeHotInfos = await this.getHotInfo(offset, limit);
-
     let threeInfos = await this.getThreeArticle();
-
+    let banners = await indexCtrl.getBanners(city);
     let schoolMaterials = await this.getLatestMaterials('school', 3);
     let seniorMaterials = await this.getLatestMaterials('senior', 3);
     let highMaterials = await this.getLatestMaterials('high', 4);
@@ -456,7 +463,7 @@ class ArticleCtrl extends BaseCtrl {
 
     let famousTeachers = await teacherCtrl.famousTeacher();
 
-    return { hotInfos, careFreeHotInfos, threeInfos, materials, famousTeachers };
+    return { latestComments, banners, hotInfos, careFreeHotInfos, threeInfos, materials, famousTeachers };
   }
 
 }

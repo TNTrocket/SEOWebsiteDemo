@@ -1,11 +1,22 @@
 .teacherDetail{
   .t_case{
+    position: relative;
     font-size: 0;
     padding: 30px 20px;
     margin: 30px 0;
     background: #ffffff;
     border-top: 1px solid #dcdcdc;
     border-bottom: 1px solid #dcdcdc;
+    .t_price{
+      position: absolute;
+      top:20px;
+      right: 20px;
+      .fontSize(12px);
+      color: red;
+      .price{
+        .fontSize(16px);
+      }
+    }
     >div{
       display: inline-block;
       vertical-align: middle;
@@ -90,6 +101,10 @@
        display: flex;
        flex-wrap: wrap;
        justify-content: space-between;
+       &:after{
+         content: "";
+         flex-basis: 201px;
+       }
        li{
          background: #f7f7f7;
          margin: 30px 0 0 0;
@@ -117,6 +132,10 @@
       }
       .telephone{
         background: #56d176;
+        a{
+          display: block;
+          color: #ffffff;
+        }
       }
       .book{
         background: @blueFontColor;
@@ -132,19 +151,15 @@
       .fontSize(16px);
       padding: 20px;
       border-bottom: 1px solid #dcdcdc;/*no*/
-      .arrowRight{
-        width: 14px;
-        height: 27px;
-        .backgroundPic("arrowRight.png");
-        float: right;
-        margin-top: 5px;
-      }
+
     }
     .tips{
       .fontSize(16px);
       padding:20px;
     }
     .content{
+      text-align: justify;
+      margin-top: 20px;
       padding: 0 20px;
       color: #646464;
     }
@@ -158,26 +173,49 @@
       padding: 20px;
       border-top: 1px solid #dcdcdc;/*no*/
       border-bottom: 1px solid #dcdcdc;/*no*/
+      display: block;
+      color:#000;
+      .arrowRight{
+        width: 14px;
+        height: 27px;
+        .backgroundPic("arrowRight.png");
+        float: right;
+        margin-top: 5px;
+      }
     }
     .assessmentList{
       display: flex;
       >div{
         flex: 33%;
-        padding: 35px 0 27px;
+        //padding: 15px 0 27px;
         text-align: center;
+        >span{
+          display: inline-block;
+          padding: 30px 10px ;
+        }
       }
     }
   }
   .assessmentContent{
-    width: 300%;
+    width: 100%;
     overflow: hidden;
-    display: flex;
     margin-top: 30px;
     background: #ffffff;
+    .middleEvaluate,.badEvaluate{
+      display: none;
+    }
+    .noData{
+      text-align: center;
+      padding: 20px 0;
+    }
     .evaluateSingle{
-      flex: 1;
-      //flex-basis: 33%;
       padding: 20px;
+      font-size: 0;
+      border-bottom: 1px solid #dcdcdc; /*no*/
+      >div{
+        display: inline-block;
+        vertical-align: text-top;
+      }
       .pic{
         //padding: 20px;
         width: 120px;
@@ -186,6 +224,33 @@
           width: 100%;
           height: 100%;
           border-radius: 50%;
+        }
+      }
+      .txtContent{
+        margin-left: 20px;
+        .fontSize(14px);
+        width: 80%;
+        .phoneAndName{
+          color: #666666;
+        }
+        .tags{
+          .fontSize(12px);
+          color: #999999;
+          margin-top: 10px;
+        }
+        .studentEvaluate{
+          margin-top: 10px;
+          color: #323232;
+        }
+        .reply{
+          margin-top: 20px;
+          color: #323232;
+          background: #F5F5F7;
+          padding: 15px 15px;
+          .fontSize(13px);
+          .teacher{
+            color: @blueFontColor;
+          }
         }
       }
     }

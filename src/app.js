@@ -10,6 +10,7 @@ const serve = require('koa-static');
 const config = require("./config/config");
 const error = require('koa-json-error');
 const jwt = require('koa-jwt');
+const proxy = require('koa-proxy');
 
 const index = require("./routes/index");
 const information = require("./routes/information");
@@ -19,8 +20,6 @@ const successCase = require("./routes/successCase");
 const contactUS = require("./routes/contactUS");
 const joinUS = require("./routes/joinUS");
 const aboutUS = require("./routes/aboutUS");
-const teacherDetail = require("./routes/teacherDetail");
-const selectTeacher = require("./routes/selectTeacher");
 const article = require("./routes/articleRoute");
 const teacher = require("./routes/teacherRoute");
 
@@ -48,7 +47,16 @@ ejs(app, {
   cache: false,
   debug: true
 });
+//添加代理
+app.use(proxy({
+  host: 'http://120.25.67.145:3030',
+  match: /^\/api\//
+}));
 
+router.all('/', async(ctx, next) => {
+  ctx.redirect('/user');
+  ctx.status = 301;
+});
 
 router.use('/user', index.routes(), index.allowedMethods());
 router.use('/information', information.routes(), information.allowedMethods());
@@ -58,31 +66,12 @@ router.use('/successCase', successCase.routes(), successCase.allowedMethods());
 router.use('/contactUS', contactUS.routes(), contactUS.allowedMethods());
 router.use('/joinUS', joinUS.routes(), joinUS.allowedMethods());
 router.use('/aboutUS', aboutUS.routes(), aboutUS.allowedMethods());
-router.use('/selectTeacher', selectTeacher.routes(), selectTeacher.allowedMethods());
 router.use('/article', article.routes(), router.allowedMethods());
 router.use('/teacher', teacher.routes(), router.allowedMethods());
-router.use('/teacherDetail', teacherDetail.routes(), router.allowedMethods());
+
+
 
 app.use(router.routes()).use(router.allowedMethods());
-
-
-// app.use(function(ctx, next) {
-//   if (!ctx.url.match(/^\/api/)) {
-//     ctx.body = 'unprotected\n';
-//   } else {
-//     return next();
-//   }
-// });
-//
-// app.use(jwt({ secret: 'shared-secret' }));
-//
-// app.use(function(ctx) {
-//   if (ctx.url.match(/^\/api/)) {
-//     ctx.body = 'protected\n';
-//     // ctx.response.header.
-//     console.log('ctx====', ctx);
-//   }
-// });
 
 
 app.listen(config.app.port);

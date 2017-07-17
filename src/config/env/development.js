@@ -1,3 +1,6 @@
+/**
+ * Created by tseian on 15/06/2017.
+ */
 module.exports = {
     app: {
         env: 'test',
