@@ -31,7 +31,7 @@ let Teacher = sequelize.define("Teacher", {
   t_update_time: { type: Sequelize.BIGINT },
   t_create_time: { type: Sequelize.BIGINT }
 }, {
-  tableName: 'teacher',
+  tableName: 'tbl_teacher',
   timestamps: false
 });
 

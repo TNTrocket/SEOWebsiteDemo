@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <link href="/build/style.css" rel="stylesheet"/>
-    <link rel="stylesheet" media="only screen and (min-width: 414px)" href="/build/pc.css"/>
-</head>
-<script src="/build/countRem.js"></script>
+<%- include('./componentViews/common/meta.html') %>
 <body data-pagetype="teacherEvaluate" id="pageType"  class="teacherEvaluate">
 <%- include('./componentViews/teacher/teacherEvaluateHeader.html',{params :params , name :name }) %>
 
@@ -124,7 +117,11 @@
         </div>
     </div>
 </section>
-
+<div class="footCommonBox">
+    <%- include('./componentViews/common/advertiseBrand.html') %>
+    <%- include('./componentViews/common/evaluateList.html') %>
+    <%- include('./componentViews/common/familyEducationCase.html') %>
+</div>
 <%- include('./componentViews/common/footer.html') %>
 <script id="tpl" type="text/x-template">
     <ul class="teacherDetailQuery">

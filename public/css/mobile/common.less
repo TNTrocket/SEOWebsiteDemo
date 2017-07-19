@@ -262,8 +262,10 @@ ul{
     width: 100%;
     height: 380px;
     position: absolute;
+    overflow: hidden;
     .swiper-wrapper{
-      width: 400%;
+      //width: 400%;
+      display: flex;
     }
     .swiper-pagination{
       position: absolute;
@@ -283,10 +285,11 @@ ul{
       }
     }
     .swiper-slide{
-      float: left;
-      width: 25%!important;
+      flex: 1;
+      //float: left;
+      //width: 25%!important;
       img{
-        width: 100%;
+        width: 750px;
         height: 380px;
       }
     }
@@ -603,12 +606,75 @@ footer{
     }
   }
 }
+.switchCityAlert{
+  background: #ffffff;
+  width: 670px;
+  //height: 488px;
+  left: 50%;
+  top: 400px;
+  transform: translate(-50%,-50%);
+  border-radius: 10px;
+  &.success {
+    height: 347px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .successIcon {
+      margin-top: 52px;
+      .backgroundPic("successIcon.png");
+      width: 211px;
+      height: 164px;
+    }
+    .successTxt {
+      margin-top: 52px;
+      .fontSize(16px);
+      color: #333333;
+    }
+    .tips {
+      margin-top: 34px;
+      .fontSize(14px);
+      color: #666666;
+    }
+  }
+  .switchBtn{
+    >div{
+      display: inline-block;
+    }
+    .switchConfirmBOX{
+      margin: 38px 30px 48px 30px;
+      width: 210px;
+      height: 68px;
+      .switchConfirm{
+        background: #2196f1;
+        border-radius: 10px;
+        color: #ffffff;
+        .fontSize(17px);
+        text-align: center;
+        line-height: 68px;
+      }
+    }
+    .switchCancelBOX{
+      width: 210px;
+      height: 68px;
+      margin: 38px 30px 48px 30px;
+      .switchCancel{
+        background: #aaa;
+        border-radius: 10px;
+        color: #ffffff;
+        .fontSize(17px);
+        text-align: center;
+        line-height: 68px;
+      }
+    }
+
+  }
+}
 .experienceAlert{
   background: #ffffff;
   width: 670px;
   height: 488px;
   left: 50%;
-  top: 50%;
+  top: 400px;
   transform: translate(-50%,-50%);
   border-radius: 10px;
   &.success{

@@ -5,20 +5,21 @@ import $ from 'jquery'
 import { fetchCity } from '../../plugin/globalServer'
 import handlebars from 'handlebars'
 import { teacherDetailData, orderbyData } from './teacherDetailData'
-import {  locationStorage } from '../../plugin/global'
+import {  locationStorage, evaluate } from '../../plugin/global'
 import experienceAlert from '../../component/experienceAlert'
-
+import {  footerData } from '../../plugin/footArea'
 
 export default class teacherDetail{
     constructor(){
         this.currentRegionCode = "";
         this.gradeName = "";
+        this.cache = {};
         fetchCity().then((data)=>{
             this.area = data.city;
             this.city = Object.keys(data.city);
             this.cityCode = data.cityCode;
-            let cacheCity = locationStorage().getLocationStorage("city") || "广州市";
-            this.currentRegion = data.city[cacheCity];
+            this.cache.City = locationStorage().getLocationStorage("city") || "广州市";
+            this.currentRegion = data.city[ this.cache.City];
             this.domEvent();
         })
     }
@@ -27,6 +28,11 @@ export default class teacherDetail{
         this.regionEvent();
         this.evaluateEvent();
         this.bookEvent();
+        evaluate();
+        new footerData({
+            city:   this.cache.city,
+            area:  this.currentRegion
+        });
     }
     bookEvent(){
         let self = this;
@@ -34,10 +40,12 @@ export default class teacherDetail{
         $(".bookNow").click(function () {
             // if(self.currentRegionCode) {
             let city = locationStorage().getLocationStorage("city");
+            //暂时传城市id
+            // self.currentRegionCode
                 new experienceAlert({
                     mask: true,
-                    areaId: self.currentRegionCode || self.cityCode[city],
-                    realname: self.gradeName
+                    areaId: self.cityCode[city] ,
+                    realname: self.gradeName || "官网用户"
                 });
             // }else{
             //     new alert({ mask: true, text:""});

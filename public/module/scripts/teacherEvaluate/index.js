@@ -1,12 +1,29 @@
 import $ from 'jquery'
-
+import { fetchCity } from '../../plugin/globalServer'
+import {  locationStorage, evaluate } from '../../plugin/global'
+import {  footerData } from '../../plugin/footArea'
 
 export default class teacherEvaluate{
     constructor(){
-        this.domEvent();
+        this.cache = {};
+        fetchCity().then((data)=>{
+            console.log(data);
+            this.city = Object.keys(data.city);
+            this.cacheCity = locationStorage().getLocationStorage("city");
+            this.cache.city = this.cacheCity || "广州市";
+            this.currentRegion = data.city[this.cache.city];
+            this.locationCode = data.locationCode;
+            $(".locationTxt").text(this.cache.city);
+            this.domEvent();
+        })
     }
     domEvent(){
         this.evaluateEvent();
+        new footerData({
+            city:   this.cache.city,
+            area:  this.currentRegion
+        });
+        evaluate();
     }
     evaluateEvent(){
         let goodEvaluate = $(".goodEvaluate");

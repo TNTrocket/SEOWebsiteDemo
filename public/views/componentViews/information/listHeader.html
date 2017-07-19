@@ -1,6 +1,6 @@
 <header class="listHeader">
     <nav>
-        <span class="logo"><a style="display: block" href="/user" class="homePage"></a></span>
+        <span class="logo"><a style="display: block" href="/user/<%= params.city %>" class="homePage"></a></span>
         <span class="title"><a href="/information/<%= params.city %>"><%= txt.headerTxt.title %></a></span>
         <span class="arrow"></span>
         <% if (locals.txt.headerTxt.h3){ %>

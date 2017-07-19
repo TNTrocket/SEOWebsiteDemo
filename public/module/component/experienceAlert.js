@@ -24,11 +24,11 @@ export  default  class experienceAlert extends modal{
                         channel: "web",
                         verifyCode: code,
                         realname: self.realname || "官网用户",
-                        areaId: self.areaId || "440100"
+                        areaId: self.areaId ? self.areaId.toString() : "440100"
                        })
                     }).then((data) =>{
                         console.log(data);
-                        if(data.statusCode === 200){
+                        if(data === true || data.success === true){
                             self.dom = self.successDom;
                             self.init();
                         }else{
@@ -36,7 +36,7 @@ export  default  class experienceAlert extends modal{
                         }
 
                     },()=>{
-                        $(".errorPhone").text("失败");
+                        $(".errorPhone").text("验证码错误或网络错误");
                     })
 
                 }
@@ -110,7 +110,7 @@ export  default  class experienceAlert extends modal{
     }
     forbidTouch(){
         let self = this;
-        $("body").on("touchmove",function (e) {
+        $("body").off("touchmove").on("touchmove",function (e) {
             if(self.touchMove){
                 e.preventDefault();
             }

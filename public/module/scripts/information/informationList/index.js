@@ -18,28 +18,28 @@ export default class informationList{
         this.renderType = $("[data-rendertype]").data("rendertype");
         this.searchName = getQueryString("searchName") || "";
         this.categoryName = "";
-
-        if(this.renderType ==="schoolList" ){
-            this.region = getQueryString("region") || "unlimit";
-            fetchCity().then((data)=>{
-                this.area = data.city;
-                this.city = Object.keys(data.city);
-                this.currentCity =  locationStorage().getLocationStorage("city") || "广州市";
-                this.currentRegion = data.city[this.currentCity];
+        this.cache={}
+        fetchCity().then((data)=>{
+            this.area = data.city;
+            this.city = Object.keys(data.city);
+            this.cache.city =  locationStorage().getLocationStorage("city") || "广州市";
+            this.currentRegion = data.city[this.cache.city];
+            if(this.renderType ==="schoolList" ){
+                this.region = getQueryString("region") || "unlimit";
                 this.schoolListEvent();
                 this.domEvent();
                 this.initCacheData();
                 this.initQueryData();
-            })
-        }else if(this.renderType ==="schoolDetail"){
-            this.schoolDetail();
-            this.domEvent();
-            this.initQueryData();
-        }else{
-            this.domEvent();
-            this.initCacheData();
-            this.initQueryData();
-        }
+            }else if(this.renderType ==="schoolDetail"){
+                this.schoolDetail();
+                this.domEvent();
+                this.initQueryData();
+            }else{
+                this.domEvent();
+                this.initCacheData();
+                this.initQueryData();
+            }
+        })
     }
     schoolDetail(){
         // $(".schoolControl >div").click(function () {
@@ -125,7 +125,12 @@ export default class informationList{
         let searchHideBox = $(".searchHideBox");
         let self = this;
         evaluate();
-        footerData(this.currentCity);
+        new footerData(
+            {
+                city:   this.cache.city,
+                area:  this.currentRegion
+            }
+        );
         searchSum.on("click",function (e) {
             e.stopPropagation();
             searchHideBox.toggleClass("displayBlock")

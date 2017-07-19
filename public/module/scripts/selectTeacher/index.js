@@ -232,7 +232,7 @@ export default class selectTeacher{
             self.queryData.teacherType =  self.selectteachertype;
             self.queryData.tags =  self.selectteacherfeature || self.cache.tags;
             self.queryData.gender =  self.selectteachergender;
-            // locationStorage().setLocationStorage("select",self.queryData);
+
             self.querySelect = null;
             window.location.href = "/teacher/list/"+(self.cache.orderBy || "unlimit")
                 +"/"+(self.cache.grade || "unlimit" )+"/"+

@@ -20,12 +20,14 @@ const successCase = require("./routes/successCase");
 const contactUS = require("./routes/contactUS");
 const joinUS = require("./routes/joinUS");
 const aboutUS = require("./routes/aboutUS");
-const article = require("./routes/articleRoute");
+const article = require("./routes/api/articleApi");
 const teacher = require("./routes/teacherRoute");
 
 
 app.name = config.app.name;
 app.env = config.app.env;
+app.poxyHost = config.app.poxyHost;
+app.viewCache = config.app.viewCache;
 app.use(serve(path.join(__dirname, '../public')));
 app.use(bodyparser());
 app.use(json());
@@ -44,12 +46,12 @@ ejs(app, {
   root: path.join(__dirname, '../public/views'),
   layout: false,
   viewExt: 'html',
-  cache: false,
+  cache: app.viewCache,
   debug: true
 });
 //添加代理
 app.use(proxy({
-  host: 'http://120.25.67.145:3030',
+  host: app.poxyHost,
   match: /^\/api\//
 }));
 

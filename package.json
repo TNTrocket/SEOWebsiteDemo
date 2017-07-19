@@ -6,9 +6,8 @@
   "scripts": {
     "dev": "gulp dev",
     "build": "gulp build",
-    "start": "NODE_ENV=development babel-watch --only src --watch src --exclude node_modules src/app.js",
-    "test": "NODE_ENV=test babel-watch --only src --watch src --exclude node_modules src/app.js",
-    "devOnLine": "NODE_ENV=devOnLine babel-watch --only src --watch src --exclude node_modules src/app.js"
+    "start": " babel-watch --only src  --exclude node_modules src/app.js",
+    "test": "NODE_ENV=test babel-watch --only src --watch src --exclude node_modules src/app.js"
   },
   "author": "",
   "license": "ISC",
@@ -35,7 +34,7 @@
     "gulp-sourcemaps": "^2.6.0",
     "gulp-uglify": "^3.0.0",
     "koa-cors": "0.0.16",
-    "koa-jwt": "^3.2.2",
+    "koa-proxy": "^0.8.0",
     "postcss-px2rem": "^0.3.0",
     "pump": "^1.0.2",
     "remove-trailing-separator": "^1.0.2",
@@ -51,10 +50,12 @@
     "koa-ejs": "^4.0.0",
     "koa-json": "^2.0.2",
     "koa-json-error": "^3.1.2",
+    "koa-jwt": "^3.2.2",
     "koa-router": "^7.2.0",
     "koa-static": "^3.0.0",
     "moment": "^2.18.1",
     "mysql": "^2.13.0",
+    "request-promise": "*",
     "sequelize": "^3.30.4",
     "swiper": "^3.4.2"
   }

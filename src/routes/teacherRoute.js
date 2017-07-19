@@ -23,7 +23,7 @@ router.get('/list/:orderBy/:grade/:district/:subject/:teacherType/:tags/:gender/
     tags = [];
   }
   offset = parseInt(offset);
-  let params = { orderBy, grade, district, subject, teacherType, gender, tags, offset };
+  let params = { orderBy, grade, district, subject, teacherType, gender, tags, offset, city };
   let data = await teacherCtrl.listTeacher(params);
   data.params = paramsOld;
   data.renderType = "selectTeacher";

@@ -10,13 +10,15 @@ import { footerData } from '../../plugin/footArea'
 
 export default class foreignTeacher{
     constructor(){
+        this.cache ={};
         fetchCity().then((data)=>{
             console.log(data);
             this.city = Object.keys(data.city);
             this.cacheCity = locationStorage().getLocationStorage("city");
-            this.currentCity = this.cacheCity? this.cacheCity : "广州市";
+            this.cache.city = this.cacheCity || "广州市";
+            this.currentRegion = data.city[this.cache.city];
             this.locationCode = data.locationCode;
-            $(".locationTxt").text(this.currentCity);
+            $(".locationTxt").text(this.cache.city);
             this.domEvent();
         })
     }
@@ -34,6 +36,9 @@ export default class foreignTeacher{
         });
         navEvent();
         evaluate();
-        footerData(this.currentCity);
+        new footerData({
+            city:   this.cache.city,
+            area:  this.currentRegion
+        });
     }
 }

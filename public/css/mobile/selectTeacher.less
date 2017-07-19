@@ -31,6 +31,10 @@
     }
     .teacherData{
       background: #ffffff;
+      .noData{
+        text-align: center;
+        padding: 20px 0;
+      }
       .singleTeacher{
         font-size: 0;
         padding: 22px 20px;
@@ -58,6 +62,10 @@
           width: 80%;
           .name{
             .fontSize(16px);
+            width: 80%;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
           }
           .teacherRange{
             margin-top: 10px;
@@ -100,6 +108,36 @@
           .number{
             .fontSize(16px);
           }
+        }
+      }
+    }
+    .selectTeacherBtn{
+      background: @basicBg;
+      text-align: center;
+      font-size: 0;
+      padding: 31px 0 30px 0 ;
+      >div{
+        display: inline-block;
+        .fontSize(16px);
+        width: 160px;
+        height: 70px;
+        line-height: 70px;
+        border-radius: 10px;
+      }
+      .prev{
+        border: 1px solid @blueFontColor; /*no*/
+        a{
+          display: block;
+          color: @blueFontColor;
+        }
+      }
+      .next{
+        margin-left: 30px;
+        border: 1px solid transparent; /*no*/
+        background: @blueFontColor;
+        a{
+          display: block;
+          color:#ffffff;
         }
       }
     }

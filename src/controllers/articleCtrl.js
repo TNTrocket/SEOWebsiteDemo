@@ -14,14 +14,6 @@ const dictionCtrl = require('../controllers/dictionaryCtrl');
 const indexCtrl = require('../controllers/indexCtrl');
 const areaCtrl = require('../controllers/areaCtrl');
 
-const shortImgUrls = [
-  'http://ortr4se0b.bkt.clouddn.com/short1.png',
-  'http://ortr4se0b.bkt.clouddn.com/short2.png',
-  'http://ortr4se0b.bkt.clouddn.com/short3.png',
-  'http://ortr4se0b.bkt.clouddn.com/short4.png',
-  'http://ortr4se0b.bkt.clouddn.com/short5.png'
-];
-
 
 class ArticleCtrl extends BaseCtrl {
   //删除文章
@@ -59,7 +51,7 @@ class ArticleCtrl extends BaseCtrl {
       queryArticleString += 'and a_id =' + id;
       queryString += 'and a_id =' + id;
     }
-
+    queryArticleString += ' order by a_id asc ';
     let limit = 'limit 10';
     if (offset && parseInt(offset)) {
       limit = 'limit ' + offset + ',' + 10;
@@ -158,7 +150,7 @@ class ArticleCtrl extends BaseCtrl {
     let article = await ArticleModel.findById(id);
     article.threeTitles = await this.getThreeArticle();
     article.hotInfos = await this.getHotInfo(0, 10);
-    article.a_create_time = moment(article.a_create_time).format('YYYY-MM-DD hh:mm:ss');
+    article.a_update_time = moment(article.a_update_time).format('YYYY-MM-DD hh:mm:ss');
 
     return { latestComments, famousTeachers, materials, article };
   }
@@ -203,13 +195,12 @@ class ArticleCtrl extends BaseCtrl {
       where: { a_status: 1, a_type: type },
       offset: offset,
       limit: limit,
-      order: [['a_create_time', 'DESC']]
+      order: [['a_update_time', 'DESC']]
     });
 
 
     list = list.map(l => {
-      let i = parseInt(Math.random() * 5);
-      let url = shortImgUrls[i];
+      let url = l.a_images;
       let time = moment(new Date(l.a_update_time)).format('YYYY-MM-DD');
       return { title: l.a_content_title, id: l.a_id, url: url, time };
     });
@@ -294,13 +285,12 @@ class ArticleCtrl extends BaseCtrl {
       where: { a_status: 1, a_enu_code1: 'MATERIAL', a_enu_code2: code2s, a_enu_code3: code3s },
       offset: 0,
       limit: limit,
-      order: [['a_create_time', 'DESC']]
+      order: [['a_update_time', 'DESC']]
     });
 
     list = list.map(l => {
-      let i = parseInt(Math.random() * 5);
-      let url = shortImgUrls[i];
-      return { url, title: l.a_content_title, id: l.a_id, time: moment(l.a_create_time).format('YYYY-MM-DD hh:mm:ss') }
+      let url = l.a_images;
+      return { url, title: l.a_content_title, id: l.a_id, time: moment(l.a_update_time).format('YYYY-MM-DD hh:mm:ss') }
     });
     return list;
   }
@@ -407,9 +397,8 @@ class ArticleCtrl extends BaseCtrl {
     list.forEach(l => {
       let title = l.a_content_title;
       let content = $(l.a_content);
-      let i = parseInt(Math.random() * 5);
-      let url = shortImgUrls[i];
-      let time = moment(l.a_create_time).format('YYYY-MM-DD');
+      let url = l.a_images;
+      let time = moment(l.a_update_time).format('YYYY-MM-DD');
       let id = l.a_id;
       tem.push({ title, url, time, id });
     });

@@ -16,7 +16,7 @@ const assert = require('assert');
 class TeacherCtrl extends BaseCtrl {
 
   async listTeacher(params) {
-    let { orderBy, grade, district, subject, teacherType, gender, tags, offset } = params;
+    let { orderBy, grade, district, subject, teacherType, gender, tags, offset, city } = params;
     let queryParams = { where: {} };
 
     //排序
@@ -40,6 +40,12 @@ class TeacherCtrl extends BaseCtrl {
           break;
       }
       queryParams.order = order;
+    }
+
+    //城市
+    if (city != 'unlimit') {
+      assert(parseInt(city), "城市Id参数不正确");
+      queryParams.where.t_city_id = parseInt(city);
     }
 
     //区域
@@ -74,7 +80,7 @@ class TeacherCtrl extends BaseCtrl {
 
       let gradeID = dictionaryCtrl.gradeEnumeration[grade].id;
       let tem = await TeacherGradeModel.findAll({
-        where: { tg_id: gradeID, tg_status: 1 },
+        where: { tg_grade_id: gradeID, tg_status: 1 },
         distinct: 'tg_teacher_id'
       });
       tem.forEach(item => {
@@ -203,7 +209,7 @@ class TeacherCtrl extends BaseCtrl {
    * 名师推荐
    */
   async famousTeacher() {
-    let total = await sequelize.query('select count(t_id) as total from teacher where t_status = 1 and (t_type = 1 or t_type = 2)', { type: sequelize.QueryTypes.SELECT });
+    let total = await sequelize.query('select count(t_id) as total from tbl_teacher where t_status = 1 and (t_type = 1 or t_type = 2)', { type: sequelize.QueryTypes.SELECT });
     total = total[0].total || 0;
     let offset = parseInt(total * Math.random());
     let limit = 10;
@@ -230,8 +236,7 @@ class TeacherCtrl extends BaseCtrl {
   async getLatestComments() {
     let comments = await TeacherModel.findAll({
       where: {
-        t_status: 1,
-        t_comment: { $not: null }
+        t_status: 1
       },
       limit: 10,
       order: 't_update_time desc'

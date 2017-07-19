@@ -168,17 +168,18 @@
   font-size: 0;
   a{
     color: #000;
+    display: block;
+    border-bottom:1px solid @line-border-color ; /*no*/
+    &:last-child{
+      border: 0;
+    }
   }
   section{
     height: 180px;
     padding-top: 20px;
     padding-bottom: 30px;
-    border-bottom:1px solid @line-border-color ; /*no*/
     display: flex;
     align-items: center;
-    &:last-child{
-      border: 0;
-    }
     >div{
       display: inline-block;
     }
@@ -292,6 +293,7 @@
       padding: 20px 0 10px 0;
       color: #1A1A1A;
       a {
+        color: #000;
         display: block;
         border-left: 1px solid #1A1A1A; /*no*/
         line-height: 1;
@@ -370,14 +372,18 @@
     .w-f-txt{
       position: absolute;
       bottom: 0;
-      left: 0;
-      width: 100%;
+      left: 50%;
+      width: 80%;
       height: 64px;
       line-height: 64px;
       color:#ffffff;
       z-index: 3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       .fontSize(14px);
       text-align: center;
+      transform: translateX(-50%);
       span{
         opacity: 1;
       }

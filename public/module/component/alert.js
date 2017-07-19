@@ -31,7 +31,7 @@ export  default  class alert extends modal {
     }
     forbidTouch(){
         let self = this;
-        $("body").on("touchmove",function (e) {
+        $("body").off("touchmove").on("touchmove",function (e) {
             if(self.touchMove){
                 e.preventDefault();
             }

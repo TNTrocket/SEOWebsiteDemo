@@ -9,18 +9,25 @@ export  default class information{
    constructor(){
        this.locationModalDom = "";
        this.city = null;
+       this.cache ={};
        fetchCity().then((data)=>{
            console.log(data);
            this.city = Object.keys(data.city);
            this.cacheCity = locationStorage().getLocationStorage("city");
-           this.currentCity = this.cacheCity? this.cacheCity : "广州市";
+           this.cache.city = this.cacheCity || "广州市";
+           this.currentRegion = data.city[this.cache.city];
            this.locationCode = data.locationCode;
-           $(".locationTxt").text(this.currentCity);
+           $(".locationTxt").text(this.cache.city);
            this.domEvent();
        })
    }
+    initBanner(){
+        let bannerCount = $(".bannerSwiper").length;
+        $(".bannerWrapper").css("width",bannerCount*100+"%");
+    }
    domEvent(){
         let self = this;
+        this.initBanner();
         let mySwiper = new Swiper('.swiper-container', {
             autoplay: 2000,
             pagination : '.swiper-pagination',
@@ -45,8 +52,10 @@ export  default class information{
         });
 
         evaluate();
-       footerData(this.currentCity);
-       this.initFooterData();
+       new footerData({
+           city:   this.cache.city,
+           area:  this.currentRegion
+       });
     }
    move(pageStep,dom,self) {
         if(self){

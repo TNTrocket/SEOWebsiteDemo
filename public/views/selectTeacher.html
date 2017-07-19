@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <link href="/build/style.css" rel="stylesheet"/>
-    <link rel="stylesheet" media="only screen and (min-width: 414px)" href="/build/pc.css"/>
-</head>
-<script src="/build/countRem.js"></script>
+<%- include('./componentViews/common/meta.html') %>
 <body data-pagetype="selectTeacher" id="pageType"  class="selectTeacher">
 <%- include('./componentViews/common/homePageHeader.html') %>
 <%- include('./componentViews/common/homePageNav.html',{active:"selectTeacher"}) %>
@@ -26,6 +19,7 @@
         <!--<input type="hidden" name="select"/>-->
     </div>
     <ul class="teacherData">
+        <% if(locals.list.length !== 0 ){ %>
         <% locals.list.forEach(function(item){ %>
         <li class="singleTeacher">
             <a style="display: block" href="/teacher/<%= item.t_id %>/<%= params.city %>">
@@ -51,8 +45,16 @@
             </a>
         </li>
         <% }) %>
+        <% }else{ %>
+        <li class="noData"> 没有数据</li>
+        <% } %>
     </ul>
-
+    <div class="selectTeacherBtn">
+        <div class="prev">
+            <a href="/teacher/list/<%= params.orderBy %>/<%= params.grade %>/<%= params.district %>/<%= params.subject %>/<%= params.teacherType %>/<%= params.tags %>/<%= params.gender %>/<%= params.city %>/<%= offset - 8 < 0 ? 0 : offset - 8 %>">上一页</a></div>
+        <div class="next">
+            <a href="/teacher/list/<%= params.orderBy %>/<%= params.grade %>/<%= params.district %>/<%= params.subject %>/<%= params.teacherType %>/<%= params.tags %>/<%= params.gender %>/<%= params.city %>/<%= offset + 8 %>">下一页</a></div>
+    </div>
 
 </section>
 <div class="footCommonBox">
@@ -92,7 +94,6 @@
      </ul>
     </div>
 </script>
-<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
 <script>
     var CONFIG = {
         queryName : "<%= locals.typeName %>",

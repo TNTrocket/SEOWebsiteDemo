@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <link href="/build/style.css" rel="stylesheet"/>
-    <link rel="stylesheet" media="only screen and (min-width: 414px)" href="/build/pc.css"/>
-</head>
+<%- include('./componentViews/common/meta.html') %>
+
 <% var render = locals.informationList.renderType %>
 
 <%
@@ -45,7 +40,7 @@ params : locals.params
 }
 console.log(locals.cacheData);
  %>
-<script src="/build/countRem.js"></script>
+
 <body data-pagetype="informationList" id="pageType" data-rendertype="<%= render %>" >
 <div class="informationList">
     <% if(render === "schoolList"){ %>

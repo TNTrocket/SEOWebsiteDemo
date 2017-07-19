@@ -13,9 +13,12 @@ export class footerData{
         $(".familyEducationBox .placeName").text(txt);
     }
     areaTextDom(option){
-        let dom = $("#footerAreaTpl").html();
+        let footerAreaTpl = $("#footerAreaTpl")
+        if(footerAreaTpl.length!==0){
+        let dom = footerAreaTpl.html();
         let temp = handlebars.compile(dom);
         let domHtml = temp(option.area);
         $(".footerBox").append(domHtml);
+        }
     }
 }

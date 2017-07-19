@@ -29,7 +29,10 @@ export default class successCase{
         navEvent();
         this.initLocation();
         this.buttonEvent();
-        footerData(this.cache.city);
+        new footerData({
+            city:   this.cache.city,
+            area:  this.currentRegion
+        });
         evaluate();
     }
     initLocation(){

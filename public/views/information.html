@@ -1,21 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="/build/style.css" rel="stylesheet"/>
-</head>
-<script src="/build/countRem.js"></script>
+<%- include('./componentViews/common/meta.html') %>
 <body data-pagetype="information" id="pageType" class="information">
 <%- include('./componentViews/common/homePageHeader.html',{params:params}) %>
 <%- include('./componentViews/common/homePageNav.html',{active:"information",params:params}) %>
 <%- include('./componentViews/common/navMoreList.html',{params:params}) %>
 <section class="homePageBanner">
     <div class="swiper-container">
-        <div class="swiper-wrapper">
+        <div class="swiper-wrapper bannerWrapper">
             <% banners.forEach(function(item){ %>
-            <div class="swiper-slide">
+            <div class="swiper-slide bannerSwiper">
                 <a style="display: block" target="_blank" href="<%= item.b_target %>">
                     <img src="<%= item.b_path %>" alt="<%= item.b_title %>"/>
                 </a>

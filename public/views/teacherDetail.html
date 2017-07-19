@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <link href="/build/style.css" rel="stylesheet"/>
-    <link rel="stylesheet" media="only screen and (min-width: 414px)" href="/build/pc.css"/>
-</head>
-<script src="/build/countRem.js"></script>
+<%- include('./componentViews/common/meta.html') %>
 <body data-pagetype="teacherDetail" id="pageType"  class="teacherDetail">
 <%- include('./componentViews/teacher/teacherDetailHeader.html',{name:teacher.t_name}) %>
 <% var all = teacher.t_good_comment+teacher.t_mid_comment +teacher.t_bad_comment;
@@ -160,7 +153,6 @@
                     <% } %>
                 </div>
             </div>
-<<<<<<< HEAD
             <% }) %>
             <% } else { %>
             <div class="noData"> 没有评价</div>
@@ -226,20 +218,6 @@
                     </p>
                     <% } %>
                 </div>
-=======
-            <div class="txtContent">
-                <p class="phoneAndName"><span>135****1545</span> <span class="name">深圳洪老师</span></p>
-                <p class="tags">
-                   <span>语文</span>
-                    <span>语文</span>
-                     <span>语文</span>
-                      <span>语文</span>
-                </p>
-                <p class="studentEval">老师讲得不错的，效果很好~发音很准确</p>
-                <p class ="replay">
-                  <span>老师</span>回复：善于引导善于引导善于引导，善于于引导善于引导善于引导，善于于引导善于引导善于引导，善于于引导善于引导善于引导，善于
-                </p>
->>>>>>> 86772b60ed29bf8b389294656fa2c700ccac4646
             </div>
             <% }) %>
             <% } else { %>
@@ -248,7 +226,11 @@
         </div>
     </div>
 </section>
-
+<div class="footCommonBox">
+    <%- include('./componentViews/common/advertiseBrand.html') %>
+    <%- include('./componentViews/common/evaluateList.html') %>
+    <%- include('./componentViews/common/familyEducationCase.html') %>
+</div>
 <%- include('./componentViews/common/footer.html') %>
 <script id="tpl" type="text/x-template">
     <ul class="teacherDetailQuery">

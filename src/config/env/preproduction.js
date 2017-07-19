@@ -9,7 +9,9 @@ module.exports = {
     env: 'preproduction',
     port: 3030,
     secret: '38b5e45908a64c6c94615f4371d348bf',
-    name: "选师无忧"
+    name: "选师无忧",
+    poxyHost: "http://120.25.67.145:3035",
+    viewCache : true
   },
   sequelize: {
     host: '39.108.86.180',

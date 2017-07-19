@@ -35,7 +35,11 @@ export  default  class locationModal extends modal {
                     }
                     self.hide();
                     typeof callback === "function" && callback(obj);
-                    if(!(pageType === "selectTeacher")){
+                    if(pageType === "selectTeacher"){
+
+                    }else if(pageType === "index"){
+                        window.location.href = city+"?local=true"
+                    }else{
                         window.location.href = city
                     }
                 }
