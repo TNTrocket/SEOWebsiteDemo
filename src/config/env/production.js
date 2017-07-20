@@ -10,11 +10,11 @@ module.exports = {
     secret: '38b5e45908a64c6c94615f4371d348bf',
     name: "选师无忧",
     poxyHost: "http://120.24.63.6:3035",
-    viewCache : true
+    viewCache: true
   },
   sequelize: {
-    host: '39.108.86.180',
-    userName: 'ian',
+    host: '10.30.255.183',
+    userName: 'xswy',
     password: 'xuanshi@2017',
     database: 'xswy_web_index',
     port: '3306',

@@ -34,21 +34,23 @@ export function fetchCity(){
 }
 export function searchCity() {
     return new Promise((resolve,reject)=>{
-        let citylocation = null;
-            //设置城市信息查询服务
-            citylocation = new qq.maps.CityService();
-            //请求成功回调函数
-            citylocation.setComplete(function(result) {
-                // alert(result.detail.name)
-                // CONFIG.city = result.detail.name
-                resolve(result.detail.name)
-            });
-            //请求失败回调函数
-            citylocation.setError(function() {
-                alert("城市定位出错");
+        let geolocation = new BMap.Geolocation();
+        let geocoder = new BMap.Geocoder();
+
+        geolocation.getCurrentPosition(function(r){
+            if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                // alert('您的位置：'+r.point.lng+','+r.point.lat);
+                let point = new BMap.Point(r.point.lng, r.point.lat);
+                geocoder.getLocation(point, function (result) {
+                    let city = result.addressComponents.city;
+                    resolve(city)
+                });
+            }
+            else {
+                // alert('failed'+this.getStatus());
                 reject({code:"fail"})
-            });
-            citylocation.searchLocalCity();
+            }
+        },{enableHighAccuracy: true})
     })
 
 }

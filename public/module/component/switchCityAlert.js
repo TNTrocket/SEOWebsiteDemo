@@ -14,14 +14,16 @@ export  default  class switchCityAlert extends modal {
         this.event = {
             "click:.mask" : function () {
                 self.hide();
+                self.touchMove = false;
                 self.callbackFn("cancel")
             },
             "click:.switchConfirm" : function () {
-                // self.hide();
+                self.touchMove = false;
                 self.callbackFn("confirm")
             },
             "click:.switchCancel" : function () {
                 self.hide();
+                self.touchMove = false;
                 self.callbackFn("cancel")
             },
         };

@@ -168,8 +168,10 @@
     <%- include('./componentViews/common/evaluateList.html') %>
     <%- include('./componentViews/common/familyEducationCase.html') %>
 </div>
+<%- include('./componentViews/common/floatingWindow.html') %>
 <%- include('./componentViews/common/footer.html') %>
-<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
+<!--<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>-->
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Y04faNoNlPdLqtqpvIjUFzgLdmlllzDj"></script>
 <script>
     var CONFIG = {
         queryName : "<%= locals.typeName %>",
