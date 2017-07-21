@@ -101,9 +101,18 @@ ul{
         &.title{
           margin-left: 20px;
         }
-      }
-      a{
-        color:@blueFontColor;
+        &.teacherName{
+         a{
+           width:240px;
+           overflow: hidden;
+           white-space: nowrap;
+           text-overflow: ellipsis;
+         }
+        }
+        a{
+          display: block;
+          color:@blueFontColor;
+        }
       }
     }
 }

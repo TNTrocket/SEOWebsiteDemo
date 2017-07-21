@@ -3,17 +3,19 @@
 <%- include('./componentViews/common/meta.html') %>
 <body data-pagetype="teacherDetail" id="pageType"  class="teacherDetail">
 <%- include('./componentViews/teacher/teacherDetailHeader.html',{name:teacher.t_name}) %>
-<% var all = teacher.t_good_comment+teacher.t_mid_comment +teacher.t_bad_comment;
-    if(all === 0){
-     all = 1
-     teacher.t_good_comment = 1
-    }
-    var goodComment =(teacher.t_good_comment/all).toFixed(2)
-
+<%
+   var all = teacher.t_good_comment+teacher.t_mid_comment +teacher.t_bad_comment;
+   var tempComment = teacher.t_good_comment/all;
+   var goodComment = null;
+    if(isNaN(tempComment)){
+       goodComment = 0;
+   }else{
+     goodComment =(teacher.t_good_comment/all).toFixed(2);
+   }
 %>
 <section class="teacherDetailContent">
  <div class="t_case">
-   <div class="img"><img src="http://ortr4se0b.bkt.clouddn.com/<%= teacher.t_headimg %>"/></div>
+   <div class="img"><img src="http://cdn.seo.51xuanshi.com/<%= teacher.t_headimg %>"/></div>
    <div class="t_content">
        <div class="t_name"><%= teacher.t_name %></div>
        <div class="t_approve">
@@ -130,7 +132,7 @@
             <% t_comment.good_comment.forEach(function(item){ %>
             <div class="evaluateSingle">
                 <div class="pic">
-                    <img src="http://ortr4se0b.bkt.clouddn.com/<%= teacher.t_headimg %>"/>
+                    <img src="http://cdn.seo.51xuanshi.com/<%= teacher.t_headimg %>"/>
                 </div>
                 <div class="txtContent">
                     <p class="phoneAndName">
@@ -163,7 +165,7 @@
             <% t_comment.mid_comment.forEach(function(item){ %>
             <div class="evaluateSingle">
                 <div class="pic">
-                    <img src="http://ortr4se0b.bkt.clouddn.com/<%= teacher.t_headimg %>"/>
+                    <img src="http://cdn.seo.51xuanshi.com/<%= teacher.t_headimg %>"/>
                 </div>
                 <div class="txtContent">
                     <p class="phoneAndName">
@@ -196,7 +198,7 @@
             <% t_comment.bad_comment.forEach(function(item){ %>
             <div class="evaluateSingle">
                 <div class="pic">
-                    <img src="http://ortr4se0b.bkt.clouddn.com/<%= teacher.t_headimg %>"/>
+                    <img src="http://cdn.seo.51xuanshi.com/<%= teacher.t_headimg %>"/>
                 </div>
                 <div class="txtContent">
                     <p class="phoneAndName">

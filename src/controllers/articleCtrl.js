@@ -168,11 +168,13 @@ class ArticleCtrl extends BaseCtrl {
       dictionCtrl.careFreeInfo.gkzn.id
     ];
 
-    let offset = parseInt(Math.random() * 10);
+    let offset = parseInt(Math.random() * 100);
     let limit = 3;
-
     let { list } = await this.list(null, null, null, type, offset, limit);
-
+    list.forEach(i => {
+      let index = parseInt(Math.random() * 10) + 1;
+      i.longImgUrl = 'http://cdn.seo.51xuanshi.com/longIMG' + index + '.png';
+    });
     return list;
   }
 

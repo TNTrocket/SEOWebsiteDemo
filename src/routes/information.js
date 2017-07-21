@@ -34,7 +34,7 @@ router.get('/parentsQaList/:grade/:city/:offset', async(ctx, next) => {
   informationList.prevRenderType = informationList.renderType;
   informationList.renderType = 'parentsQaList';
   data.informationList = informationList;
-  console.log('/parentsQaList/:grade/:offset--data====', data);
+  // console.log('/parentsQaList/:grade/:offset--data====', data);
 
   return await ctx.render("informationList", data)
 });
@@ -60,7 +60,7 @@ router.get('/studyNewsList/:type/:city/:offset', async(ctx, next) => {
   data.informationList = informationList;
   data.typeName = typeName;
 
-  console.log('/studyNewsList/:offset/:type/:page===', data);
+  // console.log('/studyNewsList/:offset/:type/:page===', data);
   return await ctx.render("informationList", data)
 });
 
@@ -87,9 +87,9 @@ router.get('/dataDownloadList/:grade/:subject/:city/:offset', async(ctx, next) =
   informationList.renderType = "dataDownloadList";
   data.informationList = informationList;
 
-  console.log('/dataDownloadList/:grade/:subject/:offset---data==', data);
+  // console.log('/dataDownloadList/:grade/:subject/:offset---data==', data);
 
-  return await ctx.render("informationList", data)
+  return await ctx.render("informationList", data);
 });
 
 //文章详情
@@ -103,7 +103,7 @@ router.get('/article/:city/:id', async(ctx, next) => {
   informationList.renderType = "article";
   data.informationList = informationList;
   data.params = { id, city };
-  console.log('/article/:id===', data);
+  // console.log('/article/:id===', data);
 
   return await ctx.render("informationList", data);
 });
@@ -123,7 +123,7 @@ router.get('/schoolList/:category/:level/:city/:region/:offset', async(ctx, next
   data.informationList = informationList;
 
   data.params = params;
-  console.log('/schoolList/:grade/:city/:region/:level/:offset---data===', data);
+  // console.log('/schoolList/:grade/:city/:region/:level/:offset---data===', data);
 
   return await ctx.render("informationList", data)
 });
@@ -142,7 +142,7 @@ router.get('/school/detail/:city/:schoolID', async(ctx, next) => {
   informationList.renderType = "schoolDetail";
   data.informationList = informationList;
   data.params = params;
-  console.log('/schoolDetail/:city/:schoolID---data===', data);
+  // console.log('/schoolDetail/:city/:schoolID---data===', data);
 
   return await ctx.render("informationList", data)
 });

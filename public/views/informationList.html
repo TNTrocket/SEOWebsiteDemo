@@ -62,7 +62,7 @@ console.log(locals.cacheData);
         <% article.threeTitles.forEach(function(item){ %>
         <a href="/information/article/<%= params.city %>/<%= item.id %>">
         <div class="imgBannerPic">
-            <img src="/img/banner1.png">
+            <img src="<%= item.longImgUrl %>">
             <div class="w-f-txt"><%= item.title %></div>
             <span class="w-f-txtBg"></span>
         </div>

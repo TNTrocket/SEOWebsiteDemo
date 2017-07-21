@@ -27,7 +27,7 @@ router.get('/list/:orderBy/:grade/:district/:subject/:teacherType/:tags/:gender/
   let data = await teacherCtrl.listTeacher(params);
   data.params = paramsOld;
   data.renderType = "selectTeacher";
-  console.log('/list/:orderBy/:grade/:district/:subject/:teacherType/:tags/:gender/:offset', data.list);
+  // console.log('/list/:orderBy/:grade/:district/:subject/:teacherType/:tags/:gender/:offset', data.list);
   return await ctx.render("selectTeacher", data)
 });
 /**
@@ -40,8 +40,8 @@ router.get('/:teacherID/:city', async(ctx, next) => {
   teacherID = parseInt(teacherID);
   let data = await teacherCtrl.getTeacherInfo({ teacherID, cityId: city });
   data.params = { teacherID, city };
-  console.log('/:teacherID   data.teacher=====', data.teacher);
-  console.log('/:teacherID   data.latestComments=====', data.latestComments);
+  // console.log('/:teacherID   data.teacher=====', data.teacher);
+  // console.log('/:teacherID   data.latestComments=====', data.latestComments);
 
   data.renderType = "teacherDetail";
   return await ctx.render("teacherDetail", data)
@@ -56,10 +56,10 @@ router.get('/teacher/comments/:teacherId/:city', async(ctx, next) => {
   let params = { city, teacherId };
   let data = await teacherCtrl.getTeacherCommentsByTeacherId({ teacherID: teacherId, cityId: city });
   data.params = params;
-  console.log('/teacher/comments/:teacherId  data.comments====', data.comments);
-  console.log('/teacher/comments/:teacherId  data.latestComments====', data.latestComments);
-  console.log('/teacher/comments/:teacherId  data.headImg====', data.headImg);
-  console.log('/teacher/comments/:teacherId  data.name====', data.name);
+  // console.log('/teacher/comments/:teacherId  data.comments====', data.comments);
+  // console.log('/teacher/comments/:teacherId  data.latestComments====', data.latestComments);
+  // console.log('/teacher/comments/:teacherId  data.headImg====', data.headImg);
+  // console.log('/teacher/comments/:teacherId  data.name====', data.name);
   data.renderType = "teacherEvaluate";
   return await ctx.render("teacherEvaluate", data)
 });
