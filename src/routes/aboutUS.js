@@ -9,7 +9,7 @@ router.get('/:city', async(ctx, next) => {
   data.latestComments = latestComments;
   data.params = { city };
   data.renderType = "aboutUS";
-  return await ctx.render("aboutUS", data)
+  return await ctx.render("mobile/aboutUS", data)
 });
 
 module.exports = router;

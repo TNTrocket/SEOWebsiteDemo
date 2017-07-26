@@ -12,7 +12,7 @@ router.get('/:city', async(ctx, next) => {
   let latestComments = await teacherCtrl.getLatestComments();
   data.latestComments = latestComments;
   data.renderType = "contactUS";
-  return await ctx.render("contactUS", data);
+  return await ctx.render("mobile/contactUS", data);
 });
 
 module.exports = router

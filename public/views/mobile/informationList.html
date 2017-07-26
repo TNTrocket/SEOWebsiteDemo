@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./componentViews/common/meta.html') %>
+
+<% var render = locals.informationList.renderType %>
+
+<%
+
+var h2Link = null;
+if(render === "article"){
+ h2Link = {
+  link : "/unlimit/"+params.city+"/0"
+  }
+}else if (render ==="schoolDetail"){
+ h2Link = {
+ link : "/unlimit/unlimit/"+params.city+"unlimit/0"
+ }
+}
+var prevRenderTypeName = locals.informationList.prevRenderType;
+if(prevRenderTypeName == "" || prevRenderTypeName == undefined){
+ prevRenderTypeName =render
+}
+
+var listHeader ={
+txt : locals.informationList[render],
+listH1 : informationList.listH1,
+renderType : render,
+h2Link : h2Link,
+prevRenderType: prevRenderTypeName,
+h2Name: locals.informationList[prevRenderTypeName].headerTxt.h2
+}
+var queryCondition ={
+listTxt:locals.informationList[render],
+list: locals.list,
+page: locals.page,
+diction: locals.diction,
+total: locals.total,
+renderType : render,
+params : locals.params
+}
+console.log(locals.cacheData);
+ %>
+
+<body data-pagetype="informationList" id="pageType" data-rendertype="<%= render %>" >
+<div class="informationList">
+    <% if(render === "schoolList"){ %>
+    <%- include("./componentViews/information/schoolListHeader.html",listHeader ) %>
+    <% } else if(render === "schoolDetail") {%>
+    <%- include("./componentViews/information/schoolDetailHeader.html",{listHeader: listHeader, schoolName: locals.school.name} ) %>
+    <% } else{ %>
+    <%- include("./componentViews/information/listHeader.html",listHeader ) %>
+    <% } %>
+    <% if( render === 'article'){ %>
+    <article class="listContentArticle">
+        <h3><%= article.a_content_title %></h3>
+        <p class="tip1"><%= article.a_update_time %></p>
+        <p class="content">
+            <%- article.a_content %>
+        </p>
+    </article>
+    <div class="imgInfoBanner">
+        <% article.threeTitles.forEach(function(item){ %>
+        <a href="/information/article/<%= params.city %>/<%= item.id %>">
+        <div class="imgBannerPic">
+            <img src="<%= item.longImgUrl %>">
+            <div class="w-f-txt"><%= item.title %></div>
+            <span class="w-f-txtBg"></span>
+        </div>
+        </a>
+        <%  }) %>
+    </div>
+    <% }else if( render === 'schoolDetail'){ %>
+    <div class="schoolDetailContent">
+        <%- include("./componentViews/information/schoolDetail.html",school) %>
+    </div>
+    <% }else{ %>
+    <%- include("./componentViews/information/queryCondition.html",queryCondition)%>
+     <% } %>
+
+    <div class="QRcodeArea eachListTitle">
+        <div>
+            <span class="icon"></span>
+            <span class="txt">选师无忧微信号</span>
+        </div>
+        <div class="QRcode">
+            <img src="/img/qrCode.png"/>
+        </div>
+        <p class="QRTxt">关注选师无忧公众账号，快速提升学习成绩</p>
+    </div>
+    <div class="hotArticle eachListTitle">
+        <div>
+            <span class="icon"></span>
+            <% if ( render === 'schoolList'){ %>
+            <span class="txt">热门学校</span>
+            <% }else { %>
+            <span class="txt">热门推荐</span>
+            <% } %>
+        </div>
+        <% if( render === 'article'){ %>
+        <%- include('./componentViews/common/list.html',{ dataList:article.hotInfos}) %>
+        <% } else if(render === 'schoolList') { %>
+        <%- include('./componentViews/information/hotSchool.html',{ dataList:hotSchools,city:locals.params.city}) %>
+        <% }else{ %>
+        <%- include('./componentViews/common/list.html',{ dataList:hotInfos}) %>
+        <% } %>
+    </div>
+    <div class="lastNews eachListTitle">
+        <div>
+            <span class="icon"></span>
+            <span class="txt">最新资料</span>
+        </div>
+        <%- include('./componentViews/common/list.html',{dataList:materials}) %>
+    </div>
+    <div class="teacherRecommended eachListTitle">
+        <div>
+            <span class="icon"></span>
+            <span class="txt">名师推荐</span>
+        </div>
+        <%- include('./componentViews/information/recommendTeacher.html',{famousTeachers : locals.famousTeachers }) %>
+    </div>
+    <%- include('./componentViews/common/advertiseBrand.html') %>
+    <%- include('./componentViews/common/evaluateList.html',latestComments) %>
+    <%- include('./componentViews/common/familyEducationCase.html') %>
+    <%- include('./componentViews/common/floatingWindow.html') %>
+    <%- include('./componentViews/common/footer.html') %>
+</div>
+<script>
+    var CONFIG = {
+        queryName : "<%= locals.typeName %>",
+        location : "",
+        cacheData: JSON.parse('<%- JSON.stringify(locals.params)%>') || {},
+        cityID : "<%= params.city %>"
+    }
+</script>
+<script src="/build/main.js"></script>
+</body>
+</html>

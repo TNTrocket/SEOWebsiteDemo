@@ -11,7 +11,7 @@ router.get('/:city', async(ctx, next) => {
   data.latestComments = latestComments;
   data.params = { city }
   data.renderType = "appDownload"
-  return await ctx.render("appDownload", data)
+  return await ctx.render("mobile/appDownload", data)
 });
 
 module.exports = router;

@@ -20,8 +20,10 @@ const successCase = require("./routes/successCase");
 const contactUS = require("./routes/contactUS");
 const joinUS = require("./routes/joinUS");
 const aboutUS = require("./routes/aboutUS");
-const article = require("./routes/api/articleApi");
 const teacher = require("./routes/teacherRoute");
+
+const articleApi = require("./routes/api/articleApi");
+const areaApi = require("./routes/api/areaApi");
 
 
 app.name = config.app.name;
@@ -55,12 +57,12 @@ app.use(proxy({
   match: /^\/api\//
 }));
 
-router.all('/', async(ctx, next) => {
-  ctx.redirect('/user');
-  ctx.status = 301;
-});
+// router.all('', async(ctx, next) => {
+//   ctx.redirect('/');
+//   ctx.status = 302;
+// });
 
-router.use('/user', index.routes(), index.allowedMethods());
+router.use('', index.routes(), index.allowedMethods());
 router.use('/information', information.routes(), information.allowedMethods());
 router.use('/foreignTeacher', foreignTeacher.routes(), foreignTeacher.allowedMethods());
 router.use('/appDownload', appDownload.routes(), appDownload.allowedMethods());
@@ -68,10 +70,11 @@ router.use('/successCase', successCase.routes(), successCase.allowedMethods());
 router.use('/contactUS', contactUS.routes(), contactUS.allowedMethods());
 router.use('/joinUS', joinUS.routes(), joinUS.allowedMethods());
 router.use('/aboutUS', aboutUS.routes(), aboutUS.allowedMethods());
-router.use('/article', article.routes(), router.allowedMethods());
 router.use('/teacher', teacher.routes(), router.allowedMethods());
 
 
+router.use('/article', articleApi.routes(), router.allowedMethods());
+router.use('/area', areaApi.routes(), router.allowedMethods());
 
 app.use(router.routes()).use(router.allowedMethods());
 

@@ -9,8 +9,8 @@ router.get('/:city', async(ctx, next) => {
   let data = {};
   let latestComments = await teacherCtrl.getLatestComments();
   data.latestComments = latestComments;
-  data.params = { city }
-  return await ctx.render("foreignTeacher", data)
+  data.params = { city };
+  return await ctx.render("mobile/foreignTeacher", data)
 });
 
 module.exports = router;

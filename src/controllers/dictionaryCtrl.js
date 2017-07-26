@@ -248,5 +248,12 @@ module.exports = {
     a_shortName: '广州',
     a_pinyin: 'Guangzhou',
     a_parentID: 440000
+  },
+
+  cityLevel: {
+    country: { name: 'country', level: 0 },
+    province: { name: 'province', level: 1 },
+    city: { name: 'city', level: 2 },
+    district: { name: 'district', level: 3 }
   }
 };

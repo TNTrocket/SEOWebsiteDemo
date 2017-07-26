@@ -28,7 +28,7 @@ router.get('/list/:orderBy/:grade/:district/:subject/:teacherType/:tags/:gender/
   data.params = paramsOld;
   data.renderType = "selectTeacher";
   // console.log('/list/:orderBy/:grade/:district/:subject/:teacherType/:tags/:gender/:offset', data.list);
-  return await ctx.render("selectTeacher", data)
+  return await ctx.render("mobile/selectTeacher", data)
 });
 /**
  * 通过老师ID 获取老师信息
@@ -44,7 +44,7 @@ router.get('/:teacherID/:city', async(ctx, next) => {
   // console.log('/:teacherID   data.latestComments=====', data.latestComments);
 
   data.renderType = "teacherDetail";
-  return await ctx.render("teacherDetail", data)
+  return await ctx.render("mobile/teacherDetail", data)
 });
 
 /**
@@ -61,7 +61,7 @@ router.get('/teacher/comments/:teacherId/:city', async(ctx, next) => {
   // console.log('/teacher/comments/:teacherId  data.headImg====', data.headImg);
   // console.log('/teacher/comments/:teacherId  data.name====', data.name);
   data.renderType = "teacherEvaluate";
-  return await ctx.render("teacherEvaluate", data)
+  return await ctx.render("mobile/teacherEvaluate", data)
 });
 
 module.exports = router;

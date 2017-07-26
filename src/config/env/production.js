@@ -7,17 +7,17 @@ module.exports = {
   app: {
     env: 'production',
     port: 3030,
-    secret: '38b5e45908a64c6c94615f4371d348bf',
+    secret: '',
     name: "选师无忧",
-    poxyHost: "http://120.24.63.6:3035",
+    poxyHost: "",
     viewCache: true
   },
   sequelize: {
-    host: '10.30.255.183',
-    userName: 'xswy',
-    password: 'xuanshi@2017',
-    database: 'xswy_web_index',
-    port: '3306',
+    host: '',
+    userName: '',
+    password: '',
+    database: '',
+    port: '',
     dialect: 'mysql',
     pool: {
       max: 10,

@@ -12,7 +12,7 @@ router.get('/:city', async(ctx, next) => {
   let data = await articleCtrl.index(params);
   data.params = params;
   console.log('router.get(/ ====', data);
-  return await ctx.render("information", data);
+  return await ctx.render("mobile/information", data);
 });
 
 router.get('/parentsQaList/:grade/:city/:offset', async(ctx, next) => {
@@ -36,7 +36,7 @@ router.get('/parentsQaList/:grade/:city/:offset', async(ctx, next) => {
   data.informationList = informationList;
   // console.log('/parentsQaList/:grade/:offset--data====', data);
 
-  return await ctx.render("informationList", data)
+  return await ctx.render("mobile/informationList", data)
 });
 
 //无忧资讯
@@ -61,7 +61,7 @@ router.get('/studyNewsList/:type/:city/:offset', async(ctx, next) => {
   data.typeName = typeName;
 
   // console.log('/studyNewsList/:offset/:type/:page===', data);
-  return await ctx.render("informationList", data)
+  return await ctx.render("mobile/informationList", data)
 });
 
 
@@ -89,7 +89,7 @@ router.get('/dataDownloadList/:grade/:subject/:city/:offset', async(ctx, next) =
 
   // console.log('/dataDownloadList/:grade/:subject/:offset---data==', data);
 
-  return await ctx.render("informationList", data);
+  return await ctx.render("mobile/informationList", data);
 });
 
 //文章详情
@@ -105,7 +105,7 @@ router.get('/article/:city/:id', async(ctx, next) => {
   data.params = { id, city };
   // console.log('/article/:id===', data);
 
-  return await ctx.render("informationList", data);
+  return await ctx.render("mobile/informationList", data);
 });
 
 
@@ -125,7 +125,7 @@ router.get('/schoolList/:category/:level/:city/:region/:offset', async(ctx, next
   data.params = params;
   // console.log('/schoolList/:grade/:city/:region/:level/:offset---data===', data);
 
-  return await ctx.render("informationList", data)
+  return await ctx.render("mobile/informationList", data)
 });
 
 router.get('/school/detail/:city/:schoolID', async(ctx, next) => {
@@ -144,7 +144,7 @@ router.get('/school/detail/:city/:schoolID', async(ctx, next) => {
   data.params = params;
   // console.log('/schoolDetail/:city/:schoolID---data===', data);
 
-  return await ctx.render("informationList", data)
+  return await ctx.render("mobile/informationList", data)
 });
 
 module.exports = router;

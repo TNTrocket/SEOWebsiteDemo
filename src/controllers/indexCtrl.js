@@ -5,29 +5,16 @@ const request = require("request");
 const BannerModel = require('../models/bannerModel');
 const areaCtrl = require('../controllers/areaCtrl');
 const teacherCtrl = require('../controllers/teacherCtrl');
+const dictionCtrl = require('../controllers/dictionaryCtrl');
 class IndexCtrl {
   constructor() {
 
   }
 
-  /**
-   * 验证手机号码
-   */
-  async verifyPhoneNO() {
-
-  }
-
-  /**
-   * 保存手机号码
-   * @param phoneNO
-   */
-  async save(phoneNO, areaID) {
-
-  }
-
   async index(params) {
     let { city } = params;
-    let banners = await this.getBanners(city);
+    city = await areaCtrl.getCityByPinyin(city, dictionCtrl.cityLevel.city.level);
+    let banners = await this.getBanners(city.a_id);
     let comments = await teacherCtrl.getLatestComments();
     let latestComments = await teacherCtrl.getLatestComments();
     return { latestComments, banners, comments };

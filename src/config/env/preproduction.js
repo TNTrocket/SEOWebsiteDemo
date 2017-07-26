@@ -10,16 +10,16 @@ module.exports = {
     port: 3030,
     secret: '38b5e45908a64c6c94615f4371d348bf',
     name: "选师无忧",
-    poxyHost: "http://120.25.67.145:3035",
+    poxyHost: "",
     viewCache : true
   },
   sequelize: {
-    host: '39.108.86.180',
-    userName: 'ian',
-    password: 'xuanshi@2017',
-    database: 'xswy_web_index',
-    port: '3306',
-    dialect: 'mysql',
+    host: '',
+    userName: '',
+    password: '',
+    database: '',
+    port: '',
+    dialect: '',
     pool: {
       max: 10,
       min: 0,

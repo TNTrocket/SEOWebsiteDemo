@@ -43,6 +43,7 @@ class AreaCtrl extends BaseCtrl {
   }
 
   /**
+   * 如果出现两个地区名字相同则获取第一个
    * 城市名字  或 区名字
    * @param name
    */
@@ -52,7 +53,17 @@ class AreaCtrl extends BaseCtrl {
     return city[0];
   }
 
-
+  /**
+   * 如果出现两个地区级别和拼音相同则获取第一个
+   * @param pinyin
+   * @param level
+   * @returns {*}
+   */
+  async getCityByPinyin(pinyin, level) {
+    let area = await AreaModel.findAll({ where: { a_pinyin: pinyin, a_level: level } });
+    assert(area.length > 0, '不存在该地区');
+    return area[0];
+  }
 
 }
 
