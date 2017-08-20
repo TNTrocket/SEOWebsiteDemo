@@ -22,7 +22,7 @@
         <% if(locals.list.length !== 0 ){ %>
         <% locals.list.forEach(function(item){ %>
         <li class="singleTeacher">
-            <a style="display: block" href="/teacher/<%= item.t_id %>/<%= params.city %>">
+            <a style="display: block" href="/teacher/te<%= item.t_id %>.html">
             <div class="img">
                 <img src="http://cdn.seo.51xuanshi.com/<%= item.t_headimg %>"/>
             </div>
@@ -49,11 +49,19 @@
         <li class="noData"> 没有数据</li>
         <% } %>
     </ul>
+    <%
+    var page ="";
+    if(!params.page){
+    page ="p1"
+    }else{
+    page = params.page
+    }
+    %>
     <div class="selectTeacherBtn">
         <div class="prev">
-            <a href="/teacher/list/<%= params.orderBy %>/<%= params.grade %>/<%= params.district %>/<%= params.subject %>/<%= params.teacherType %>/<%= params.tags %>/<%= params.gender %>/<%= params.city %>/<%= offset - 8 < 0 ? 0 : offset - 8 %>">上一页</a></div>
+            <a href="/teachers/<%= params.city %>/<%= params.queryString %>/p<%= (parseInt(page.substring(1)) -1) <=0 ? 1 :  parseInt(page.substring(1)) -1  %>">上一页</a></div>
         <div class="next">
-            <a href="/teacher/list/<%= params.orderBy %>/<%= params.grade %>/<%= params.district %>/<%= params.subject %>/<%= params.teacherType %>/<%= params.tags %>/<%= params.gender %>/<%= params.city %>/<%= offset + 8 %>">下一页</a></div>
+            <a href="/teachers/<%= params.city %>/<%= params.queryString %>/p<%= parseInt(page.substring(1)) +1 %>">下一页</a></div>
     </div>
 
 </section>
@@ -66,17 +74,20 @@
 <%- include('./componentViews/common/footer.html') %>
 <script id="tpl" type="text/x-template">
     <div class="queryTeacher globalModal {{target}}">
-        {{#each queryType}}
+        {{#each selectDataArr}}
         <section class="s_t_queryItem">
             <div class="titleBox">
                 <div class="icon"></div>
                 <span>{{name}}</span>
             </div>
             <ul class="queryItemLi">
-                {{#each queryItem}}
-                <li data-{{ ../category}}="{{code}}">{{itemName}}</li>
+                {{#each item}}
+                <li data-code="{{code}}" data-typeno="{{typeno}}" {{#if ../inputName}}data-{{../inputName}} {{/if}}>{{name}}</li>
                 {{/each}}
             </ul>
+            {{#if inputName}}
+             <input type="hidden" name="{{inputName}}"/>
+            {{/if}}
         </section>
         {{/each}}
         {{#if target}}
@@ -87,21 +98,19 @@
 <script id="intelligentTpl" type="text/x-template">
     <div class="queryTeacher globalModal intelligentModal">
      <ul class="intelligent">
-         <li data-orderby="auto">智能排序</li>
-         <li data-orderby="goodComment">评价最好</li>
-         <li data-orderby="highPrice">价格最高</li>
-         <li data-orderby="lowPrice">价格最低</li>
-         <li data-orderby="longCource">课时最长</li>
+         {{#each this}}
+         <li data-orderby="{{code}}" data-typeno="{{typeno}}">{{name}}</li>
+         {{/each}}
      </ul>
     </div>
 </script>
 <script>
-    var CONFIG = {
-        queryName : "<%= locals.typeName %>",
-        city : "",
-        cacheData: JSON.parse('<%- JSON.stringify(params)%>') || {},
-        cityID : "<%= params.city %>"
-    }
+  var CONFIG = {
+    queryName : "<%= locals.typeName %>",
+    location : "",
+    cacheData: JSON.parse('<%- JSON.stringify(locals.params)%>') || {},
+    cityPinyin : "<%= params.city %>"
+  }
 </script>
 <script src="/build/main.js"></script>
 </body>

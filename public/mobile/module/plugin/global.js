@@ -69,3 +69,47 @@ export function isEmptyObject(e) {
     return true
 }
 
+export function cookie() {
+  function set(name, value, days) {
+    let expires = "";
+    if (days) {
+      let date = new Date();
+      date.setTime(date.getTime() + (days*24*60*60*1000));
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+  }
+  function get(name) {
+    let nameEQ = name + "=";
+    let ca = document.cookie.split(';');
+    for(let i=0;i < ca.length;i++) {
+      let c = ca[i];
+      while (c.charAt(0)==' ') c = c.substring(1,c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+  }
+  function clear(name) {
+    set(name,'',-1)
+  }
+  return{
+      set : set,
+      get : get,
+      clear : clear
+  }
+}
+
+export  function parseParams(queryString){
+  if (!queryString){
+    return [];
+  }
+  let alphabets = queryString.match(/[a-z]+/g);
+  let params = queryString.match(/\d+/g);
+  let obj = {};
+  obj.arr =[];
+  for (let i = 0; i < params.length; i++) {
+    obj.arr.push(alphabets[i] + params[i])
+    obj[alphabets[i]] = alphabets[i] + params[i]
+  }
+  return obj;
+}

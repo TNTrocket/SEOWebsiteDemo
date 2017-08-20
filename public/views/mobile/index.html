@@ -10,7 +10,7 @@
         <div class="swiper-wrapper bannerWrapper">
             <% banners.forEach(function(item){ %>
             <div class="swiper-slide bannerSwiper">
-                <a style="display: block" target="_blank" href="<%= item.b_target %>">
+                <a style="display: block" target="_blank">
                     <img src="<%= item.b_path %>" alt="<%= item.b_title %>"/>
                 </a>
             </div>
@@ -173,11 +173,12 @@
 <!--<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>-->
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Y04faNoNlPdLqtqpvIjUFzgLdmlllzDj"></script>
 <script>
-    var CONFIG = {
-        queryName : "<%= locals.typeName %>",
-        location : ""
-    }
-
+  var CONFIG = {
+    queryName : "<%= locals.typeName %>",
+    location : "",
+    cacheData: JSON.parse('<%- JSON.stringify(locals.params)%>') || {},
+    city : "<%= params.city %>"
+  }
 </script>
 <script src="/build/main.js"></script>
 </body>

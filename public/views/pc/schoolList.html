@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./componentViews/common/meta.html') %>
+<body id="pageType" data-pagetype="schoolList" class="schoolList">
+<%- include('./componentViews/common/header.html') %>
+<div class="content">
+    <div class="leftContent">
+        <div class="navAndQuery">
+            <div class="nav">
+                <span><a href="/<%= params.city%>">首页</a></span>
+                <span class="arrow"></span>
+                <span><a href="/<%= params.city %>/zixun">升学资讯</a></span>
+                <span class="arrow"></span>
+                <span><a>学校列表</a></span>
+            </div>
+            <% console.log("locals.diction=======",locals.diction) %>
+            <div class="query">
+                <% if(locals.diction){ %>
+                <% diction.forEach(function(result){ %>
+                <div class="queryType">
+                    <div class="title"><%= result.category %></div>
+                    <ul>
+                        <% Object.keys(result.item).forEach(function(a,index){
+                        var typeno = result.item[a].bNO || result.item[a].aNO || result.item[a].cNO;
+                        var  queryTypeno = "";
+                        if(params.queryString){
+                        var queryString = params.queryString.substring(7)
+                        var alphabets = queryString.match(/[a-z]+\d+/g);
+                        var arr =[];
+                        if(!alphabets){
+                        alphabets =[]
+                        }
+                        for (let i = 0; i < alphabets.length; i++) {
+                        arr.push(alphabets[i])
+                        }
+
+                        queryTypeno = arr.join("");
+                        var typeArr = typeno.match(/[a-z]+/g);
+                        typeArr = typeArr.join("")
+                        var reg = new RegExp(typeArr+"\\d+")
+                        queryTypeno = queryTypeno.replace(reg,typeno)
+
+                        if(queryTypeno.indexOf(typeno)===-1){
+                        queryTypeno = queryTypeno+typeno
+                        }
+                        }
+
+                        %>
+                        <% if(index === 0){
+                        var unlimit =  params.queryString.replace(reg,"");
+                        %>
+                        <li><a href="/schools/<%= params.city %>/<%=unlimit%>/"
+                            <% if (unlimit === params.queryString){ %>
+                            class="queryListActive"
+                            <% } %>
+                            >不限</a></li>
+                        <% } %>
+                        <li><a href="/schools/<%= params.city %>/school-<%= queryTypeno %>/"
+                            <% if ("school-"+queryTypeno === params.queryString){ %>
+                            class="queryListActive"
+                            <% } %>
+                            ><%= result.item[a].name %></a></li>
+                        <% }) %>
+                    </ul>
+                </div>
+                <% }) %>
+                <% } %>
+            </div>
+        </div>
+        <div class="articleList">
+            <% if (list.length > 0 ) {%>
+            <% list.forEach(function(item){ %>
+            <div class="singleArticle">
+                <a href="/school/rp<%= item.id %>.html">
+                    <div class="pic"><img src="<%= item.url %>"/></div>
+                    <div class="txtBox">
+                        <p class="title"><span><%= item.title %></span></p>
+                        <!--<p class="txt">在上海参加高考，怎么脱颖而出</p>-->
+                    </div>
+                    <div class="dateTime"></div>
+                </a>
+            </div>
+            <% }) %>
+            <% }else{ %>
+            <div class="noData">没有数据</div>
+            <% } %>
+            <%
+            var pageCount =1
+            var currentPage = 1
+            var mathCount = null
+            if(locals.total){
+            mathCount = Math.ceil(total/8)
+            pageCount =  mathCount <=1 ? 1 : mathCount
+            }
+            if(params.page){
+            currentPage= parseInt(params.page.substring(1))
+            }
+            var count = 6;
+            var nf = count/2;
+            var start = "";
+            var end =""
+            if(currentPage + nf >= pageCount){
+            start = pageCount - count
+            end =  pageCount
+            }else{
+            start = currentPage > nf ? currentPage - nf : 1
+            end = currentPage > nf ? currentPage + nf : 6
+            }
+            if(start <= 0){
+            start = 1
+            }
+            %>
+            <div class="pagingBox">
+                <div class="first"><a href="/schools/<%= params.city %>/<%= params.queryString %>/p1/">首页</a></div>
+                <ul>
+                    <% if(start > 2){ %>
+                    <li><a href="/schools/<%= params.city %>/<%= params.queryString %>/p1/">1</a></li>
+                    <li>...</li>
+                    <% } %>
+                    <%
+                    while(start <= end){
+                    %>
+                    <li><a href="/schools/<%= params.city %>/<%= params.queryString %>/p<%= start %>/"
+                        <%if(start === currentPage){%>
+                        class="queryListActive"
+                        <% } %>
+                        ><%= start %></a></li>
+                    <%
+                    start++
+                    } %>
+                    <% if(start >= count && end!== pageCount){ %>
+                    <li>...</li>
+                    <li><a href="/schools/<%= params.city %>/<%= params.queryString %>/p<%= pageCount %>/"><%= pageCount %></a></li>
+                    <% } %>
+                </ul>
+                <div class="end"><a href="/schools/<%= params.city %>/<%= params.queryString %>/p<%= pageCount %>/">末页</a></div>
+            </div>
+        </div>
+        <%- include('./componentViews/common/recommendTeacher.html') %>
+        <%- include('./componentViews/common/brand.html') %>
+        <%- include('./componentViews/common/footerTeacherQuery.html') %>
+    </div>
+    <div class="rightContent">
+        <%- include('./componentViews/common/qrCode.html') %>
+        <%- include('./componentViews/common/hotSchools.html') %>
+        <%- include('./componentViews/common/newestData.html') %>
+    </div>
+</div>
+<%- include('./componentViews/common/footer.html') %>
+<script id="regionTpl" type="text/x-template">
+    <div class="queryType">
+        <div class="title">地区：</div>
+        <ul>
+            {{#each this}}
+            {{#unless  @index }}
+            <li><a href="/schools/Guangzhou/school-{{typeno}}/" {{#if active}}
+                   class="queryListActive"
+                   {{/if}} >不限</a></li>
+            {{/unless}}
+            <li><a href="/schools/<%= params.city %>/school-{{typeno}}/" {{#if active}}
+                   class="queryListActive"
+                   {{/if}} data-code="{{code}}">{{name}}</a></li>
+            {{/each}}
+        </ul>
+    </div>
+</script>
+<%- include('./componentViews/common/config.html') %>
+<script src="/build/pcMain.js"></script>
+</body>
+</html>

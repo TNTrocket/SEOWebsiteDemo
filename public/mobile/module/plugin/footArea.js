@@ -17,7 +17,12 @@ export class footerData{
         if(footerAreaTpl.length!==0){
         let dom = footerAreaTpl.html();
         let temp = handlebars.compile(dom);
-        let domHtml = temp(option.area);
+        let area =[]
+        option.area.forEach(function (value,index) {
+          let tempArea={itemName :value.itemName,code:value.code,typeno:"c"+(index+1)}
+          area.push(tempArea);
+        });
+        let domHtml = temp(area);
         $(".footerBox").append(domHtml);
         }
     }

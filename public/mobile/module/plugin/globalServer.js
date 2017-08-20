@@ -4,7 +4,7 @@
 import { apiCall } from "../plugin/xhr"
 export function fetchCity(){
     return new Promise((resolve,reject)=>{
-        apiCall.simpleCall("/area/open",{method:"get"}).then((data)=>{
+        apiCall.simpleCall("/area/open/city",{method:"get"}).then((data)=>{
             let dataResult = data;
             let obj = {};
             let allObj = {};
@@ -13,7 +13,9 @@ export function fetchCity(){
             for(let item of dataResult){
                 let temp ={};
                 obj[item.a_name] = [];
-                allObj.cityCode[item.a_name] = item.a_id;
+                allObj.cityCode[item.a_name] ={};
+                allObj.cityCode[item.a_name].code = item.a_id;
+                allObj.cityCode[item.a_name].pinyin = item.a_pinyin;
                 temp.name = item.a_name;
                 temp.code = item.a_pinyin;
                 allObj.locationCode.push(temp);
@@ -77,3 +79,64 @@ export function findTeacherWithSmsCode(options) {
         })
     })
 }
+
+export function selectDownload(options) {
+  return new Promise((resolve,reject)=>{
+    apiCall.simpleCall("/diction/select/download",options).then((data)=>{
+      console.log(data);
+      resolve(data)
+    },()=>{
+      reject()
+    })
+  })
+}
+
+export function selectTeacherAPI(options) {
+  return new Promise((resolve,reject)=>{
+    apiCall.simpleCall("/diction/select/teacher",options).then((data)=>{
+      console.log(data);
+      let obj ={}
+      let temp = {}
+      for(let sa of Object.keys(data)){
+       obj[sa] = [];
+       if(sa === "c"){
+         data[sa].forEach(function (value,index) {
+             temp = {code:value.a_id, name :value.a_name,pinyin:value.a_pinyin,typeno:"c"+(index+1)}
+             obj[sa].push(temp)
+         })
+       }else if(sa === "e"){
+         for (let ba in data[sa]){
+           temp = {typeno:data[sa][ba][sa+"NO"], code :data[sa][ba].type_id,name:data[sa][ba].name}
+           obj[sa].push(temp)
+         }
+       }else if(sa === "d"){
+         for (let ba in data[sa]){
+           let name = "";
+           if(data[sa][ba].name ==="female"){
+             name = "女性"
+           }else{
+             name = "男性"
+           }
+           temp = {typeno:data[sa][ba][sa+"NO"], code :data[sa][ba].code,name:name }
+           obj[sa].push(temp)
+         }
+
+       }else if(sa ==="f"){
+         for (let ba in data[sa]){
+           temp = {typeno:data[sa][ba][sa+"NO"], code :data[sa][ba].t_id,name:data[sa][ba].t_name}
+           obj[sa].push(temp)
+         }
+       }else{
+         for (let ba in data[sa]){
+           temp = {typeno:data[sa][ba][sa+"NO"], code :data[sa][ba].code,name:data[sa][ba].name}
+           obj[sa].push(temp)
+         }
+       }
+      }
+      resolve(obj)
+    },()=>{
+      reject()
+    })
+  })
+}
+

@@ -25,7 +25,7 @@
         <span class="icon"></span>
         <span class="txt">热门资讯</span>
     </div>
-    <%- include("./componentViews/common/list.html",{dataList : hotInfos,needTime:true,params:params}) %>
+    <%- include("./componentViews/common/list.html",{dataList : hotInfos,needTime:true,params:params,listType:'wuyou'}) %>
     <!--<div class="viewMore hotInfo">-->
         <!--查看更多-->
     <!--</div>-->
@@ -39,19 +39,19 @@
     <div style="background: #ffffff;">
         <ul class="paginationUL">
             <li data-information="eduInfo" data-step="0">
-                <a  href="/information/studyNewsList/sxgl/<%= params.city %>/0?searchName=升学攻略">升学攻略</a>
+                <a  href="/<%= params.city %>/wuyou/wuyou-sxgl/">升学攻略</a>
             </li>
             <li data-information="entranceStrategy" data-step="1">
-                <a href="/information/studyNewsList/gkzn/<%= params.city %>/0?searchName=高考指南">高考指南</a>
+                <a href="/<%= params.city %>/wuyou/wuyou-gkzn/">高考指南</a>
             </li>
             <li data-information="cupInfo" data-step="2">
-                <a href="/information/studyNewsList/bsxx/<%= params.city %>/0?searchName=杯赛信息">杯赛信息</a>
+                <a href="/<%= params.city %>/wuyou/wuyou-bsxx/">杯赛信息</a>
             </li>
             <li data-information="attainment" data-step="3">
-                <a href="/information/studyNewsList/jzxd/<%= params.city %>/0?searchName=家长心得">家长心得</a>
+                <a href="/<%= params.city %>/wuyou/wuyou-jzxd/">家长心得</a>
             </li>
             <li data-information="recommend" data-step="4">
-                <a href="/information/studyNewsList/qzcf/<%= params.city %>/0?searchName=亲子厨房">亲子厨房</a>
+                <a href="/<%= params.city %>/wuyou/wuyou-qzcf/">亲子厨房</a>
             </li>
         </ul>
     </div>
@@ -60,7 +60,7 @@
             <div class="pageSide1 slide">
                 <% careFreeHotInfos.forEach(function(item){%>
                 <div class="sideList">
-                    <a href="/information/article/<%= params.city %>/<%= item.id %>">
+                    <a href="/wuyou/sd<%= item.id %>.html">
                     <div class="w_f_i_pic">
                         <img src="<%= item.url%>"/>
                     </div>
@@ -80,7 +80,7 @@
     </div>
     <div class="imgInfoBanner">
         <% threeInfos.forEach(function(item){ %>
-        <a href="/information/article/<%= params.city %>/<%= item.id %>">
+        <a href="/wuyou/sd<%= item.id %>.html">
         <div class="imgBannerPic">
             <img src="<%= item.longImgUrl %>">
             <div class="w-f-txt"><%= item.title %></div>
@@ -98,18 +98,18 @@
     </div>
     <ul class="paginationUL">
         <li data-information="psData" data-step="0">
-            <a href="/information/dataDownloadList/grade1/unlimit/<%= params.city %>/0?grade=grade6&subject=unlimit">小学</a>
+            <a href="/xiazai/<%= params.city %>/download-a6/">小学</a>
         </li>
         <li data-information="jhsData" data-step="1">
-            <a href="/information/dataDownloadList/grade1/unlimit/<%= params.city %>/0?grade=grade9&subject=unlimit">初中</a>
+            <a href="/xiazai/<%= params.city %>/download-a9/">初中</a>
         </li>
         <li data-information="shsData" data-step="2">
-            <a href="/information/dataDownloadList/grade1/unlimit/<%= params.city %>/0?grade=grade12&subject=unlimit">高中</a>
+            <a href="/xiazai/<%= params.city %>/download-a12/">高中</a>
         </li>
     </ul>
     <div class="downloadList slideWarpper">
         <div class="pageSide1 slide textList">
-            <%- include('./componentViews/common/list.html',{dataList:materials}) %>
+            <%- include('./componentViews/common/list.html',{dataList:materials,listType:'download'}) %>
         </div>
     </div>
 </section>
@@ -146,7 +146,12 @@
 <%- include('./componentViews/common/footer.html') %>
 
 <script>
-    var CONFIG = {city:""}
+  var CONFIG = {
+    queryName : "<%= locals.typeName %>",
+    location : "",
+    cacheData: JSON.parse('<%- JSON.stringify(locals.params)%>') || {},
+    city : "<%= params.city %>"
+  }
 </script>
 <script src="/build/main.js"></script>
 </body>

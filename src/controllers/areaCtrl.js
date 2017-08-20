@@ -20,8 +20,10 @@ class AreaCtrl extends BaseCtrl {
     }
     let districts = await AreaModel.findAll({ where: { a_parentID: ids } });
 
-    for (let d of districts) {
-      for (let c of citys) {
+    for (let i = 0; i < districts.length; i++) {
+      let d = districts[i];
+      for (let x = 0; x < citys.length; x++) {
+        let c = citys[x];
         if (c.a_id == d.a_parentID) {
           c.dataValues.districts.push(d);
         }
@@ -37,9 +39,21 @@ class AreaCtrl extends BaseCtrl {
    */
   async getCityById(cityID) {
     let area = await AreaModel.findById(cityID);
-    let districts = await AreaModel.findAll({ where: { a_parentID: cityID } });
+    let districts = await AreaModel.findAll({ where: { a_parentID: cityID }, order: 'a_id asc' });
     area.dataValues.districts = districts;
     return area;
+  }
+
+  /**
+   * 获得城市的区
+   * @param cityID
+   * @returns {*}
+   */
+  async getDistrictsByCityId(cityID) {
+    assert(parseInt(cityID), '城市id有误');
+    cityID = parseInt(cityID);
+    let districts = await AreaModel.findAll({ where: { a_parentID: cityID }, order: 'a_id asc' });
+    return districts;
   }
 
   /**

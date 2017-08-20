@@ -95,6 +95,14 @@ link : locals.renderType
 </div>
 <%- include('./componentViews/common/floatingWindow.html') %>
 <%- include('./componentViews/common/footer.html') %>
+<script>
+  var CONFIG = {
+    queryName : "<%= locals.typeName %>",
+    location : "",
+    cacheData: JSON.parse('<%- JSON.stringify(locals.params)%>') || {},
+    city : "<%= params.city %>"
+  }
+</script>
 <script src="/build/main.js"></script>
 </body>
 </html>

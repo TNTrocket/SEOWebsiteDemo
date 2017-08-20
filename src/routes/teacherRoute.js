@@ -8,60 +8,98 @@ const informationList = dictionCtrl.informationList;
 const assert = require('assert');
 const teacherCtrl = require("../controllers/teacherCtrl");
 const areaCtrl = require('../controllers/areaCtrl');
+const isMobile = require("./../common/checkUA");
 
 /**
  * 获取老师列表
- * orderBy 顺序 grade 年级 district 区域
- * subject 科目 teacherType 老师类型  tags 老师特点
  */
-router.get('/list/:orderBy/:grade/:district/:subject/:teacherType/:tags/:gender/:city/:offset', async(ctx, next) => {
-  let { orderBy, grade, district, subject, teacherType, gender, tags, offset, city } =ctx.params;
-  let paramsOld = { orderBy, grade, district, subject, teacherType, gender, tags, offset, city };
-  if (tags != 'unlimit') {
-    tags = tags.split("+");
+router.get('/teachers/:cityPinyin/:queryString/', async(ctx, next) => {
+
+  let { cityPinyin, queryString = 's-' } = ctx.params;
+  let paramsOld = { city: cityPinyin, queryString };
+  queryString = queryString.substr(2, queryString.length - 2);
+  let params = { cityPinyin, queryString };
+  let data = await teacherCtrl.listTeacher(params);
+  data.params = paramsOld;
+
+  data.renderType = "selectTeacher";
+  // console.log('/list/:orderBy/:grade/:district/:subject/:teacherType/:tags/:gender/:offset', data.list);
+  if (isMobile(ctx.request)) {
+    return await ctx.render("mobile/selectTeacher", data);
   } else {
-    tags = [];
+    return await ctx.render("pc/selectTeacher", data);
   }
-  offset = parseInt(offset);
-  let params = { orderBy, grade, district, subject, teacherType, gender, tags, offset, city };
+});
+
+
+/**
+ * 获取老师列表，分页路由
+ */
+router.get('/teachers/:cityPinyin/:queryString/:page/', async(ctx, next) => {
+
+  let { cityPinyin, page = 'p2', queryString = 's-' } = ctx.params;
+  let paramsOld = { page, city: cityPinyin, queryString };
+  queryString = queryString.substr(2, queryString.length - 2);
+  page = page.substring(1, page.length);
+  let offset = 0;
+  if (parseInt(page)) {
+    offset = (parseInt(page) - 1) * 10;
+  }
+
+  let params = { page, cityPinyin, queryString, offset };
+
   let data = await teacherCtrl.listTeacher(params);
   data.params = paramsOld;
   data.renderType = "selectTeacher";
   // console.log('/list/:orderBy/:grade/:district/:subject/:teacherType/:tags/:gender/:offset', data.list);
-  return await ctx.render("mobile/selectTeacher", data)
+  if (isMobile(ctx.request)) {
+    return await ctx.render("mobile/selectTeacher", data);
+  } else {
+    return await ctx.render("pc/selectTeacher", data);
+  }
 });
+
 /**
  * 通过老师ID 获取老师信息
  */
-router.get('/:teacherID/:city', async(ctx, next) => {
-  let { teacherID, city = dictionCtrl.defaultCity.a_id } =ctx.params;
-  city = parseInt(city) || dictionCtrl.defaultCity.a_id;
+router.get('/teacher/:teacherID', async(ctx, next) => {
+  let { teacherID } = ctx.params;
+  let cityPinyin = ctx.cookies.get('cityPinyin') || dictionCtrl.defaultCity.a_pinyin;
+
+  teacherID = teacherID.substr(2, teacherID.length - 7);
+
   assert(parseInt(teacherID), '参数不正确');
   teacherID = parseInt(teacherID);
-  let data = await teacherCtrl.getTeacherInfo({ teacherID, cityId: city });
-  data.params = { teacherID, city };
-  // console.log('/:teacherID   data.teacher=====', data.teacher);
-  // console.log('/:teacherID   data.latestComments=====', data.latestComments);
-
+  let data = await teacherCtrl.getTeacherInfo({ teacherID, cityPinyin });
+  data.params = { teacherID, city: cityPinyin };
+  console.log("data=======",data);
   data.renderType = "teacherDetail";
-  return await ctx.render("mobile/teacherDetail", data)
+  if (isMobile(ctx.request)) {
+    return await ctx.render("mobile/teacherDetail", data);
+  } else {
+    return await ctx.render("pc/teacherDetail", data);
+  }
 });
 
 /**
  * 获取老师评价
  */
-router.get('/teacher/comments/:teacherId/:city', async(ctx, next) => {
-  let { teacherId, city = dictionCtrl.defaultCity.a_id } = ctx.params;
-  city = parseInt(city) || dictionCtrl.defaultCity.a_id;
-  let params = { city, teacherId };
-  let data = await teacherCtrl.getTeacherCommentsByTeacherId({ teacherID: teacherId, cityId: city });
+router.get('/teacher/:teacherId/dianping.html', async(ctx, next) => {
+  let { teacherId } = ctx.params;
+  let cityPinyin = ctx.cookies.get('cityPinyin') || dictionCtrl.defaultCity.a_pinyin;
+  let params = { city: cityPinyin, teacherId };
+  let data = await teacherCtrl.getTeacherCommentsByTeacherId({ teacherID: teacherId, cityPinyin: cityPinyin });
   data.params = params;
   // console.log('/teacher/comments/:teacherId  data.comments====', data.comments);
   // console.log('/teacher/comments/:teacherId  data.latestComments====', data.latestComments);
   // console.log('/teacher/comments/:teacherId  data.headImg====', data.headImg);
   // console.log('/teacher/comments/:teacherId  data.name====', data.name);
   data.renderType = "teacherEvaluate";
-  return await ctx.render("mobile/teacherEvaluate", data)
+  if (isMobile(ctx.request)) {
+    return await ctx.render("mobile/teacherEvaluate", data);
+  } else {
+    return await ctx.render("pc/teacherComments", data);
+  }
 });
 
 module.exports = router;

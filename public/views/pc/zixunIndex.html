@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./componentViews/common/meta.html') %>
+<body id="pageType" data-pagetype="zixunIndex" class="zixunIndex">
+<%- include('./componentViews/common/header.html',{active:"zixunIndex"}) %>
+<div class="content">
+    <div class="leftContent">
+        <div class="bannerImg">
+           <img src="/img/pc/zixunIndexBanner.png"/>
+        </div>
+        <div class="z_x_query">
+         <div class="grade">
+             <div class="title">授课年级</div>
+         </div>
+            <%
+            var careFreeInfoTypesArr = [];
+            var careFreeInfoTypesObj ={}
+            var temp = {};
+             for(var a in careFreeInfoTypes){
+              temp = {name : careFreeInfoTypes[a].at_name ,code : a }
+              careFreeInfoTypesArr.push(temp)
+              careFreeInfoTypesObj[a] =  careFreeInfoTypes[a].articles
+            }
+            %>
+            <div class="zixunType">
+                <div class="title">资讯类别</div>
+                <ul>
+                    <% for(var types of careFreeInfoTypesArr){ %>
+                    <li><a href="/<%=params.city %>/wuyou/wuyou-<%= types.code %>/"><%= types.name %></a></li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+        <div class="z_x_wuyou">
+            <div class="z_x_title">
+                <div class="txt">无忧资讯</div>
+                <ul class="queryList">
+                    <% careFreeInfoTypesArr.forEach(function(item,index){ %>
+                    <li data-wuyoustep="<%= index %>" <% if (index ===0) {%>
+                    class="blueColor"
+                    <% }%>
+                    ><%= item.name %></li>
+                    <% }) %>
+                    <li><a href="/<%= params.city %>/wuyou/wuyou-/">更多</a></li>
+                </ul>
+            </div>
+            <div class="z_x_container  z_wuyou_box">
+            <% for (var b in careFreeInfoTypesObj){ %>
+            <div class="z_x_box">
+                <div class="z_x_single">
+               <div class="z_x_desc">
+                   <a href="/wuyou/sd<%= careFreeInfoTypesObj[b].list[0].id %>.html">
+                   <div class="img">
+                       <img src="<%= careFreeInfoTypesObj[b].list[0].url %>"/>
+                   </div>
+                   <div class="txt">
+                       <%= careFreeInfoTypesObj[b].list[0].title %>
+                   </div>
+                   </a>
+               </div>
+                <div class="z_x_list">
+                    <ul>
+                        <%
+                        careFreeInfoTypesObj[b].list.shift()
+                        %>
+                        <% careFreeInfoTypesObj[b].list.forEach(function(item){ %>
+                        <li><a href="/wuyou/sd<%= item.id %>.html"><span class="txt"><%= item.title %></span> <span class="dateTime"><%= item.time %></span></a></li>
+                        <% }) %>
+                    </ul>
+                </div>
+                </div>
+            </div>
+            <% } %>
+            </div>
+        </div>
+        <div class="z_x_xiazai">
+            <div class="z_x_title">
+                <div class="txt">资料下载</div>
+                <ul class="queryList">
+                    <li data-xiazai="0" class="blueColor">小学</li>
+                    <!--<li data-xiazai="1">初中</li>-->
+                    <!--<li data-xiazai="2">高中</li>-->
+                    <li><a href="/xiazai/<%=params.city %>/download-/">更多</a></li>
+                </ul>
+            </div>
+            <div class="z_x_container z_xiazai_box">
+                <% for (var c in materials){ %>
+                <% if(materials[c].length > 0){ %>
+                <div class="z_x_box">
+                    <div class="z_x_single">
+                        <div class="z_x_desc">
+                            <a href="/download/np<%= materials[c][0].id %>.html">
+                            <div class="img">
+                                <img src="<%= materials[c][0].url %>"/>
+                            </div>
+                            <div class="txt">
+                                <%= materials[c][0].title %>
+                            </div>
+                            </a>
+                        </div>
+                        <div class="z_x_list">
+                            <ul>
+                                <%
+                                materials[c].shift()
+                                %>
+                                <% materials[c].forEach(function(item){ %>
+                                <li><a href="/download/np<%= item.id %>.html"><span class="txt"><%= item.title %></span> <span class="dateTime"><%= item.time %></span></a></li>
+                                <% }) %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <%} %>
+                <% } %>
+            </div>
+        </div>
+        <div class="z_x_schoolList">
+            <div class="z_x_title">
+                <div class="txt">学校列表</div>
+                <ul class="queryList">
+                    <li data-school="0" class="blueColor">小学</li>
+                    <li data-school="1">中学</li>
+                    <li data-school="2">省一级</li>
+                    <li data-school="3">市一级</li>
+                    <li data-school="4">区一级</li>
+                    <li><a href="/schools/<%= params.city %>/school-/">更多</a></li>
+                </ul>
+            </div>
+            <%
+            var newSchools = {};
+            for(var s of Object.keys(schools)){
+              newSchools[s] = [];
+              schools[s].forEach(function(item){
+              let temp = {
+               name : item.name,
+               url : item.header_image_url,
+               id : item.id
+               }
+               newSchools[s].push(temp);
+
+            })
+            }
+            %>
+            <div class="z_x_container z_schoolList_box">
+                <% for (var d in newSchools){%>
+                <% if(newSchools[d].length > 0){ %>
+                <div class="z_x_box">
+                    <div class="z_x_single">
+                        <div class="z_x_desc">
+                            <a href="/school/rp<%= newSchools[d][0].id %>.html">
+                            <div class="img">
+                                <img src="<%= newSchools[d][0].url || 'https://file.sxkid.com/images/school/sImg/logo/2aa36c13-10cb-4d6a-bb7c-54635aaf3f36.jpg'%>"/>
+                            </div>
+                            <div class="txt">
+                                <%= newSchools[d][0].name %>
+                            </div>
+                            </a>
+                        </div>
+                        <div class="z_x_list">
+                            <ul>
+                                <%
+                                newSchools[d].shift()
+                                %>
+                                <% newSchools[d].forEach(function(item){ %>
+                                <li><a href="/school/rp<%= item.id %>.html"><span class="txt"><%= item.name %></span> <span class="dateTime"></span></a></li>
+                                <% }) %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <%} %>
+                <% } %>
+            </div>
+        </div>
+        <%- include('./componentViews/common/recommendTeacher.html') %>
+        <%- include('./componentViews/common/brand.html') %>
+        <%- include('./componentViews/common/footerTeacherQuery.html') %>
+    </div>
+    <div class="rightContent">
+        <%- include('./componentViews/common/rightDemandForm.html') %>
+        <%- include('./componentViews/common/rightBanner.html') %>
+        <%- include('./componentViews/common/qrCode.html') %>
+        <%- include('./componentViews/common/hotArticles.html') %>
+        <%- include('./componentViews/common/rightComments.html') %>
+    </div>
+</div>
+<%- include('./componentViews/common/footer.html') %>
+<script type="text/x-handlebars-template" id="zixunIndexTpl">
+    <ul>
+        {{#each this}}
+        <li><a href="/teachers/<%= params.city %>/s-{{typeno}}/">{{name}}</a></li>
+        {{/each}}
+    </ul>
+</script>
+<%- include('./componentViews/common/config.html') %>
+<script src="/build/pcMain.js"></script>
+</body>
+</html>

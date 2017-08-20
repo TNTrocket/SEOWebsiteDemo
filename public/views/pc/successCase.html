@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./componentViews/common/meta.html') %>
+<body id="pageType" data-pagetype="successCase" class="successCase">
+<%- include('./componentViews/common/header.html',{active:"successCase"}) %>
+
+<div class="content">
+    <div class="banner">
+        <img src="/img/pc/zixunIndexBanner.png"/>
+    </div>
+    <div class="nav">
+        <div class="homePage">
+            <a href="/<%= params.city %>">首页</a>
+        </div>
+        <div class="arrow"></div>
+        <div>
+            <a>提分案例</a>
+        </div>
+    </div>
+    <% var picCount = 12 %>
+    <div class="contentBanner">
+       <div class="box">
+           <div class="swiper-container">
+               <div class="swiper-wrapper">
+                   <%
+                   var index = 1;
+                    while (index < picCount){ %>
+                  <div class="b_slide swiper-slide">
+                   <div class="pic">
+                     <img src="/img/pc/phone<%=index %>.png"/>
+                    </div>
+                   <div class="pic">
+                       <% index++ %>
+                       <img src="/img/pc/phone<%=index %>.png"/>
+                    </div>
+                  </div>
+                   <% index++ } %>
+               </div>
+           </div>
+           <div class="left"></div>
+           <div class="right"></div>
+       </div>
+        <div class="s_button bannerBtn">
+         立即提分
+        </div>
+    </div>
+    <div class="listCase">
+        <div class="singleCase">
+          <div class="picImg">
+              <img src="/img/pc/case1.jpg">
+          </div>
+            <div class="textBox">
+                <div class="txt">
+                    <span class="name">马同学，初三学生</span>
+                    <span class="tips">辅导前数学76分，辅导后中考112分</span>
+                </div>
+                <div class="desc">该学生数学基础薄弱，理解能力偏差，学习状况不理想，对学习缺乏兴趣，没有很好的学习方法和计划。缺乏解题技巧，数学基本概念、应用大题、综合运算能力比较薄弱；科学公式、概念、基本知识的掌握和运用也不够。
+                    1、了解学生的薄弱环节，有针对性的梳理知识点，加强薄弱点。耐心教授解题技巧和应试技巧，使学生能融入学习。2、夯实数学基础知识，及时巩固重难点，树立学习的兴趣和信心，进行同步的基础夯实，经常与家长沟通，配合，使其在中考有较稳定的发挥。</div>
+                <div class="s_button">立即提分</div>
+            </div>
+        </div>
+        <div class="singleCase">
+            <div class="picImg">
+                <img src="/img/pc/case2.jpg">
+            </div>
+            <div class="textBox">
+                <div class="txt">
+                    <span class="name">程同学，四年级学生</span>
+                    <span class="tips">辅导后语文进步20多分</span>
+                </div>
+                <div class="desc">刚接手她的学习时，她的语文成绩七十分左右，主要问题是基础知识掌握不牢固，写字不端正，不爱学习，讨厌写作文。针对小红的这些情况，通过1对1交流的方式，引导她端正学习态度，培养良好的学习习惯。传授写作技巧的同时，让她爱上写作文。经过一段时间的学习，小红转变了原来的学习态度，学习积极性也提高了，语文成绩也由原来的七十分左右进步到九十多分</div>
+                <div class="s_button">立即提分</div>
+            </div>
+        </div>
+        <div class="singleCase">
+            <div class="picImg">
+                <img src="/img/pc/case3.jpg">
+            </div>
+            <div class="textBox">
+                <div class="txt">
+                    <span class="name">刘同学， 五学生</span>
+                    <span class="tips">辅导后英语进步30多分</span>
+                </div>
+                <div class="desc">学生容易健忘，对于课文中的生词和句型，有较强的短时记忆能力，可是过两、三天或一个多星期之后，遗忘程度是百分之百。并且孩子对英语兴致缺乏，根本就不能明确认识到英语作为一门实用语言的意义，对于这样的孩子教学的一个显著特点就是不断反复。除了把近期所学的课本内容反反复复的通过默写、背诵进行强化之外，在教授新知识的同时，把以往几个学期里所学过的知识点在课堂里有机的结合，进行书面和笔头的训练也是很有必要的。同时兴趣是学习的强大动力和内在力量，是学生学习的主要动力，是开发智力的钥匙。信心能使个体的整个心理活动积极起来，处于最佳状态，顺利地接受各种信息;信心的衰减或丧失，将使英语学习事倍功半。</div>
+                <div class="s_button">立即提分</div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('./componentViews/common/brand.html') %>
+<%- include('./componentViews/common/footerTeacherQuery.html') %>
+<%- include('./componentViews/common/footer.html') %>
+<%- include('./componentViews/common/config.html') %>
+<script src="/build/pcMain.js"></script>
+</body>
+</html>

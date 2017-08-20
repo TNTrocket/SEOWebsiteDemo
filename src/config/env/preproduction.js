@@ -1,17 +1,14 @@
 /**
  * Created by tseian on 20/04/2017.
  */
-/**
- * Created by tseian on 15/06/2017.
- */
 module.exports = {
   app: {
     env: 'preproduction',
     port: 3030,
-    secret: '38b5e45908a64c6c94615f4371d348bf',
-    name: "选师无忧",
+    secret: '',
+    name: "",
     poxyHost: "",
-    viewCache : true
+    viewCache: true
   },
   sequelize: {
     host: '',
@@ -19,11 +16,17 @@ module.exports = {
     password: '',
     database: '',
     port: '',
-    dialect: '',
+    dialect: 'mysql',
     pool: {
       max: 10,
       min: 0,
       idle: 10000
     }
+  },
+  redis: {
+    port: 6379,
+    host: "127.0.0.1",
+    options: { auth_pass: 'xuanshi1activity2redis', db: 6 }
   }
+
 };

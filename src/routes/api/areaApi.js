@@ -11,7 +11,7 @@ const dictionCtrl = require('../../controllers/dictionaryCtrl');
 /**
  * 获取已开通城市
  */
-router.get('/open', async(ctx, next) => {
+router.get('/open/city', async(ctx, next) => {
   let citys = await areaCtrl.getCityDistrict();
   console.log("citys======", citys);
   ctx.response.body = citys;

@@ -1,0 +1,15 @@
+<div class="hotArticles">
+    <div class="title">
+        热门推荐
+    </div>
+    <div class="list">
+        <ul>
+            <%
+            var articleContent = locals.hotInfos || article.hotInfos
+            %>
+            <% articleContent.forEach(function(item){ %>
+            <li><a href="/wuyou/sd<%= item.id%>.html"><%= item.title %></a></li>
+            <% }) %>
+        </ul>
+    </div>
+</div>

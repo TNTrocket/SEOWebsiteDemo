@@ -6,3 +6,5 @@ npm-debug.log
 build
 public/temp
 config/env/development.js
+static/yidong/*.xml
+static/*.xml

@@ -1,7 +1,16 @@
 <ul class="commonListTitle">
+    <%
+      var listTypeName = listType;
+      var listTip = "";
+      if(listTypeName === "wuyou"){
+       listTip = "sd"
+    }else if(listTypeName === "download"){
+       listTip = "np"
+    }
+    %>
     <% if (locals.dataList){ %>
     <% locals.dataList.forEach(function(item){ %>
-    <li><a href="/information/article/<%= params.city %>/<%= item.id %>"><i></i><span class="listTxt"><%= item.title %></span>
+    <li><a href="/<%= listTypeName %>/<%= listTip %><%= item.id %>.html"><i></i><span class="listTxt"><%= item.title %></span>
         <% if (!locals.needTime) { %>
         <span class="dateTime"><%= item.time || ""%></span>
         <% } %>

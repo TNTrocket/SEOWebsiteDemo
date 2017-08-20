@@ -12,7 +12,10 @@
                     <div class="item">
                         <ul>
                            <% Object.keys(result.item).forEach(function(a){ %>
-                            <li><a data-queryitem="<%= a %>" data-itemname ="<%= result.item[a].name %>" data-querycategory = "<%= result.category.split('：')[0] %>"><%= result.item[a].name %></a></li>
+                            <li><a data-queryitem="<%= a %>" data-itemname ="<%= result.item[a].name %>"
+                                   data-querycategory = "<%= result.category.split('：')[0] %>"
+                            data-typeno="<%= result.item[a].bNO || result.item[a].aNO || result.item[a].cNO%>">
+                                <%= result.item[a].name %></a></li>
                             <% }) %>
                             <li style="visibility: hidden;height: 0px;margin: 0;padding: 0"></li>
                         </ul>
@@ -28,13 +31,49 @@
     </div>
     <div class="contentList">
         <div>
+            <%
+
+            var searchListName = {};
+            var url = ""
+            var page =""
+            var queryString = ""
+            var urlTip = ""
+            if(!params.page){
+            page ="p1"
+            }else{
+            page = params.page
+            }
+            if(renderType ==="studyNewsList"){
+            searchListName.type = "wuyou";
+            urlTip = "sd";
+            queryString = params.queryString || "wuyou-"
+            url = "wuyou"
+            }else if(renderType ==="dataDownloadList"){
+            searchListName.type = "download";
+            url = "xiazai"
+            urlTip = "np";
+            queryString = params.queryString || "download-"
+            } else if(renderType ==="schoolList"){
+            searchListName.type = "school";
+            url = "schools"
+            urlTip = "rp";
+            queryString = params.queryString || "school-"
+            }else if(renderType ==="parentsQaList"){
+            searchListName.type = "wenda";
+            url = "wd"
+            urlTip = "sp"
+            queryString = params.queryString || "wenda-"
+            }
+            %>
+
+
             <% if (list.length > 0 ) {%>
             <% list.forEach(function(item){ %>
               <% if (renderType ==="schoolList"){ %>
-            <a  href="/information/school/detail/<%= params.city %>/<%= item.id %>?city=<%= params.city%>" data-schoollist="schoolList">
+            <a  href="/school/rp<%= item.id %>.html" data-schoollist="schoolList">
                 <section>
                     <div class="newsCover">
-                        <img src="<%= item.url || '/img/newLogo.png'%>"/>
+                        <img src="<%= item.url || '/img/mobile/newLogo.png'%>"/>
                     </div>
                     <div class="newsTxt">
                         <span class="newsTitle"><%= item.title %> </span>
@@ -43,10 +82,10 @@
                 </section>
             </a>
                <% }else{ %>
-            <a href="/information/article/<%= params.city %>/<%= item.id %>">
+            <a href="/<%= searchListName.type %>/<%= urlTip %><%= item.id %>.html">
             <section>
                 <div class="newsCover">
-                    <img src="<%= item.url || '/img/newLogo.png'%>"/>
+                    <img src="<%= item.url || '/img/mobile/newLogo.png'%>"/>
                 </div>
                 <div class="newsTxt">
                     <span class="newsTitle"><%= item.title %> </span>
@@ -61,27 +100,13 @@
             <% } %>
         </div>
     </div>
-    <%
-    var url = "";
-    var search = "";
-    if(renderType =="studyNewsList"){
-      url = params.type
-    }else if(renderType =="dataDownloadList"){
-    url = params.grade+'/'+ params.subject
-    }else if(renderType =="parentsQaList"){
-    url = params.grade
-    }else if(renderType =="schoolList"){
-    url = params.category + '/'+ params.level
-    search = "?city="+(params.city || "unlimit")+"&region="+ (params.region || "unlimit")
-    }
-    %>
     <div class="newsButton next_page">
-        <% if (renderType =="schoolList"){ %>
-        <div class="prev"><a  href="/information/<%= renderType %>/<%= url %>/<%= params.city %>/<%= params.region %>/<%= page.offset - 8 < 0 ? 0 : page.offset - 8 %><%= search %>">上一页</a></div>
-        <div class="next"><a  href="/information/<%= renderType %>/<%= url %>/<%= params.city %>/<%= params.region %>/<%= page.offset + 8 %><%= search %>">下一页</a></div>
-        <% }else { %>
-        <div class="prev"><a  href="/information/<%= renderType %>/<%= url %>/<%= params.city %>/<%= page.offset - 8 < 0 ? 0 : page.offset - 8 %>">上一页</a></div>
-        <div class="next"><a  href="/information/<%= renderType %>/<%= url %>/<%= params.city %>/<%= page.offset + 8 %>">下一页</a></div>
-        <% } %>
+        <% if(renderType === "studyNewsList"){ %>
+        <div class="prev"><a  href="/<%= params.city %>/<%= url %>/<%= queryString %>/p<%= (parseInt(page.substring(1)) -1) ===0 ? 1 :  parseInt(page.substring(1)) -1 %>">上一页</a></div>
+        <div class="next"><a  href="/<%= params.city %>/<%= url %>/<%= queryString %>/p<%= parseInt(page.substring(1)) +1 %>">下一页</a></div>
+        <% }else{ %>
+        <div class="prev"><a  href="/<%= url %>/<%= params.city %>/<%= queryString %>/p<%= (parseInt(page.substring(1)) -1) ===0 ? 1 :  parseInt(page.substring(1)) -1  %>">上一页</a></div>
+        <div class="next"><a  href="/<%= url %>/<%= params.city %>/<%= queryString %>/p<%= parseInt(page.substring(1)) +1 %>">下一页</a></div>
+         <% } %>
     </div>
 </section>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./componentViews/common/meta.html') %>
+<body id="pageType" data-pagetype="appDownload" class="appDownload">
+<%- include('./componentViews/common/header.html',{active:"appDownload",isDisplaySwitchCity:true}) %>
+
+<div class="content">
+  <section class="banner1">
+      <div class="studentDownloadTips">
+         <h1>
+             海量学霸，名校名师等你来选
+         </h1>
+          <div class="btn">
+              <a href="#studentDownload">
+                  <i></i>
+                  <span>马上下载</span>
+              </a>
+
+          </div>
+      </div>
+  </section>
+    <section class="studentDownloadBox" id="studentDownload">
+        <div class="studentDownload">
+            <h1>我是家长</h1>
+            <div class="btnBox">
+                <div class="code">
+                    <img src="/img/pc/studentQRCode.png"/>
+                    <p class="tips">扫二维码下载家长端</p>
+                </div>
+                <div class="IOS">
+                    <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.xsw.student">
+                        <i class="iosIcon"></i>
+                        <span>iphone下载</span>
+                    </a>
+                </div>
+                <div class="android">
+                    <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.xsw.student">
+                        <i class="androidIcon"></i>
+                        <span>Android下载</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="banner2"></section>
+    <section class="banner3">
+        <div class="teacherDownloadTips">
+            <h1>
+                选师无忧邀你做家教老师
+            </h1>
+            <p>
+              擅长科目就能做，人人都是家教老师
+            </p>
+            <div class="beComeTeacher">
+                <a href="/<%= params.city %>/about/beComeTeacher.html">
+                    <i class="beComeTeacherIcon"></i>
+                    <span>成为老师</span>
+                </a>
+
+            </div>
+            <div class="btn">
+                <a href="#teacherDownload">
+                    <i class="downloadIcon"></i>
+                    <span>马上下载</span>
+                </a>
+
+            </div>
+        </div>
+    </section>
+    <section class="teacherDownloadBox" id="teacherDownload">
+        <div class="teacherDownload">
+            <h1>我是老师</h1>
+            <div class="btnBox">
+                <div class="code">
+                    <img src="/img/pc/teacherQRCode.png"/>
+                    <p class="tips">扫二维码下载老师端</p>
+                </div>
+                <div class="IOS">
+                    <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.xsw.teacher">
+                        <i class="iosIcon"></i>
+                        <span>iphone下载</span>
+                    </a>
+                </div>
+                <div class="android">
+                    <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.xsw.teacher">
+                        <i class="androidIcon"></i>
+                        <span>Android下载</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="banner4"></section>
+</div>
+<%- include('./componentViews/common/footer.html') %>
+<%- include('./componentViews/common/config.html') %>
+<script src="/build/pcMain.js"></script>
+</body>
+</html>

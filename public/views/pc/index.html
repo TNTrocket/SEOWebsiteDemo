@@ -1,10 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<%- include('./componentViews/common/meta.html') %>
+<body id="pageType" data-pagetype="homePage" class="homePage">
+<%- include('./componentViews/common/header.html',{homePage:true,active:"homePage"}) %>
 
+<div class="content">
+    <div class="homePageBanner">
+        <div class="swiper-container homeBanner">
+            <div class="swiper-wrapper bannerWrapper">
+                <% banners.forEach(function(item){ %>
+                <div class="swiper-slide bannerSwiper">
+                    <a style="display: block" target="_blank">
+                        <img src="<%= item.b_path %>" alt="<%= item.b_title %>"/>
+                    </a>
+                </div>
+                <% }) %>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+    <div class="h_teacherList">
+       <div class="txt">
+           <div class="title">
+               数万名师任你选来自知名机构或公校
+           </div>
+           <div class="tips">
+               选师无忧有着严苛的教师选聘制度，每个合作的老师都经过严格的资质审核，笔试和面试
+           </div>
+       </div>
+        <div class="h_teacherData">
+            <%
+              var time = 0;
+             for(var value of famousTeachers){
+             if(time>=4){
+             break;
+            }
+             time++;
+            %>
+            <div class="singleTeacher">
+                <a href="/teacher/te<%= value.id %>.html">
+                    <div class="img">
+                        <img src="<%=value.url %>">
+                    </div>
+                    <div class="teacherTxt">
+                        <div class="name"><%= value.title %></div>
+                        <div class="desc"><%= value.introduction %></div>
+                    </div>
+                </a>
+            </div>
+            <% } %>
+        </div>
+    </div>
+    <div class="h_banner1"></div>
+    <div class="h_banner2"></div>
+    <div class="h_banner3"></div>
+    <div class="h_phoneBox">
+        <div class="txt">
+            <p class="title"><span class="red">95%</span>学员辅导一个月后成绩显著提升，看家长们说</p>
+            <p class="tip">在家就能试听课程，<span class="red">试听满意</span>再付费，全程班主任保障服务，付费后不满意，<span class="red">零门槛</span>随时退</p>
+        </div>
+        <% var picCount = 12 %>
+        <div class="box">
+            <div class="swiper-container phoneBox_swiper">
+                <div class="swiper-wrapper phoneBox-wrapper">
+                    <%
+                    var index = 1;
+                    while (index < picCount){ %>
+                    <div class="b_slide swiper-slide">
+                        <div class="pic">
+                            <img src="/img/pc/phone<%=index %>.png"/>
+                        </div>
+                        <div class="pic">
+                            <% index++ %>
+                            <img src="/img/pc/phone<%=index %>.png"/>
+                        </div>
+                    </div>
+                    <% index++ } %>
+                </div>
+            </div>
+            <div class="left"></div>
+            <div class="right"></div>
+        </div>
+    </div>
+    <div class="h_case">
+       <div class="title">
+           2017中高考学习榜
+       </div>
+        <div class="tips">
+            选师无忧•优秀学员
+        </div>
+        <div class="studentList">
+            <div class="student1 singleStudent">
+                <div class="img">
+                    <img src="/img/pc/student1.png"/>
+                </div>
+                <div class="name">代同学</div>
+                <div class="desc">辅导语文成绩提升21分</div>
+            </div>
+            <div class="student2 singleStudent">
+                <div class="img">
+                    <img src="/img/pc/student2.png"/>
+                </div>
+                <div class="name">李同学</div>
+                <div class="desc">辅导英语成绩提升21分</div>
+            </div>
+            <div class="student3 singleStudent">
+                <div class="img">
+                    <img src="/img/pc/student3.png"/>
+                </div>
+                <div class="name">谢同学</div>
+                <div class="desc">辅导数学成绩提升52分</div>
+            </div>
+        </div>
+    </div>
+    <div class="h_wuyou">
+        <div class="navBox">
+            <div class="title"></div>
+            <div class="nav"></div>
+        </div>
+        <ul>
+            <li></li>
+        </ul>
+    </div>
+    <div class="h_hotAndSchool">
+        <div class="hotArticle">
+            <div class="title"></div>
+            <ul>
+                <li></li>
+            </ul>
+        </div>
+        <div class="hotSchool">
+            <div class="title"></div>
+            <ul>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+    <div class="h_linkHelp"></div>
+</div>
+<%- include('./componentViews/common/floatBottom.html') %>
+<%- include('./componentViews/common/rightFloatingWindow.html') %>
+<%- include('./componentViews/common/brand.html') %>
+<%- include('./componentViews/common/footerTeacherQuery.html') %>
+<%- include('./componentViews/common/footer.html') %>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Y04faNoNlPdLqtqpvIjUFzgLdmlllzDj"></script>
+<%- include('./componentViews/common/config.html') %>
+<script src="/build/pcMain.js"></script>
 </body>
 </html>

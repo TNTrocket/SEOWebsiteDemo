@@ -7,7 +7,7 @@
     <ul class="commonListTitle evaluateList">
         <% if (locals.latestComments && locals.latestComments.length !== 0){ %>
         <% locals.latestComments.forEach(function(item){ %>
-        <li><a href="/teacher/teacher/comments/<%= item.t_id %>/<%= params.city %>">
+        <li><a href="/teacher/<%= item.t_id %>/dianping.html">
             <% console.log(item.t_comment) %>
             <i></i><span class="listTxt"><%= item.t_name %>：
             <% if(item.t_comment) { %>

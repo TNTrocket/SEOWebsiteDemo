@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./componentViews/common/meta.html') %>
+<body id="pageType" data-pagetype="teacherDetail" class="teacherDetail">
+<%- include('./componentViews/common/header.html') %>
+<%
+var all = teacher.t_good_comment+teacher.t_mid_comment +teacher.t_bad_comment;
+var tempComment = teacher.t_good_comment/all;
+var goodComment = null;
+if(isNaN(tempComment)){
+goodComment = 0+"%";
+}else{
+goodComment =(teacher.t_good_comment/all).toFixed(2)*100+"%";
+}
+%>
+<div class="content">
+    <div class="navAndQuery">
+        <div class="nav">
+            <span><a href="/<%= params.city%>">首页</a></span>
+            <span class="arrow"></span>
+            <span><a href="/teachers/<%= params.city %>/s-/">名师库</a></span>
+            <span class="arrow"></span>
+            <span><a><%= teacher.t_name %></a></span>
+        </div>
+    </div>
+    <section class="teacherDetailData">
+        <div class="img">
+            <img src="http://cdn.seo.51xuanshi.com/<%= teacher.t_headimg %>" alt=""/>
+        </div>
+        <div class="data">
+            <div class="name">
+                <%= teacher.t_name %>
+            </div>
+            <div class="identification">
+                <span class="txt">无忧认证：</span>
+                <ul class="item">
+                    <li><i class="icon1"></i>实名认证</li>
+                    <li><i class="icon2"></i>学历认证</li>
+                    <li><i class="icon3"></i>教师认证</li>
+                </ul>
+            </div>
+            <div class="grade">
+                <span class="txt">授课年级：</span>
+                <ul class="itemTxt">
+                    <li><a data-grade="一年级">一年级</a></li>
+                    <li><a data-grade="二年级">二年级</a></li>
+                    <li><a data-grade="三年级">三年级</a></li>
+                    <li><a data-grade="四年级">四年级</a></li>
+                    <li><a data-grade="五年级">五年级</a></li>
+                    <li><a data-grade="六年级">六年级</a></li>
+                    <li><a data-grade="初一">初一</a></li>
+                    <li><a data-grade="初二">初二</a></li>
+                    <li><a data-grade="初三">初三</a></li>
+                    <li><a data-grade="高一">高一</a></li>
+                    <li><a data-grade="高二">高二</a></li>
+                    <li><a data-grade="高三">高三</a></li>
+                </ul>
+            </div>
+            <div class="area areaTemp">
+                <span class="txt">授课年级：</span>
+
+            </div>
+            <div class="t_btn">
+                <div class="bookBtn">
+                  <i></i>
+                    立即预约
+                </div>
+                <!--<div class="askBtn">-->
+                   <!--<i></i>-->
+                    <!--电话咨询-->
+                <!--</div>-->
+            </div>
+        </div>
+
+        <div class="teacherListData">
+             <div>
+                 <p class="txt"><%= goodComment %></p>
+                 <p>好评率</p>
+             </div>
+            <div>
+                <p class="txt"><%= teacher.t_teach_age %></p>
+                <p>教龄</p>
+            </div>
+            <div>
+                <p class="txt"><%= all %></p>
+                <p>评价</p>
+            </div>
+            <div>
+                <p class="txt"><%= teacher.t_subject %></p>
+                <p>课时</p>
+            </div>
+        </div>
+    </section>
+    <section class="teacherDetailList">
+        <div class="t_desc">
+            <div class="title">
+                <i class="descIcon"></i>
+                <span class="txt">个人简介</span>
+            </div>
+            <div class="t_content">
+                <article><%= teacher.t_introduction %></article>
+            </div>
+        </div>
+        <% if(teacher.t_case){ %>
+        <div class="t_successCase">
+            <div class="title">
+                <i class="successCaseIcon"></i>
+                <span class="txt">成功案例</span>
+            </div>
+            <div class="t_content">
+                <article><%= teacher.t_case %></article>
+            </div>
+        </div>
+        <% } %>
+        <% if(teacher.t_university) { %>
+        <div class="t_school">
+            <div class="title">
+                <i class="schoolIcon"></i>
+                <span class="txt">毕业院校</span>
+            </div>
+            <div class="t_content">
+                <article><%= teacher.t_university %></article>
+            </div>
+        </div>
+        <% } %>
+        <div class="t_comments">
+            <div class="title">
+                <i class="commentsIcon"></i>
+                <span class="txt">学生评价</span>
+            </div>
+        </div>
+        <div class="commentsList">
+            <ul>
+                <li data-comment="good" class="queryListActive">好评（<%=teacher.t_good_comment%>）</li>
+                <li data-comment="mid">中评（<%=teacher.t_mid_comment%>）</li>
+                <li data-comment="bad">差评（<%=teacher.t_bad_comment%>）</li>
+            </ul>
+            <% var t_comment = JSON.parse(teacher.t_comment) %>
+            <div class="t_commentsList">
+                <div class="goodCommentList">
+                    <% if(t_comment.good_comment.length !== 0){ %>
+                    <% t_comment.good_comment.forEach(function(item){ %>
+                    <div class="singleList">
+                        <div class="pic">
+                            <img src="http://cdn.seo.51xuanshi.com/<%= teacher.t_headimg %>"/>
+                        </div>
+                        <div class="txtContent">
+                            <div class="phoneAndName">
+                                <span class="phone"><%= item.student_phone %></span>
+                                <span class="name"><%= item.student_name %></span>
+                                <span class="tags">
+                                    <span><%= item.course_name %></span>
+                                    <span><%= item.grade_name %></span>
+                                    <span><%= item.teacher_type %></span>
+                                </span>
+                            </div>
+                            <p class="studentEvaluate">
+                                <%= item.student_appraise_info %>
+                            </p>
+                            <% if (item.teacher_appraise_info) { %>
+                            <p class="reply">
+                                <span class="teacher">老师</span>&nbsp;回复：<%= item.teacher_appraise_info %>
+                            </p>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% })}else{ %>
+                    <div class="noData"> 没有评价</div>
+                    <% } %>
+                </div>
+                <div class="midCommentList">
+                    <% if(t_comment.mid_comment.length !== 0){ %>
+                    <% t_comment.mid_comment.forEach(function(item){ %>
+                    <div class="singleList">
+                        <div class="pic">
+                            <img src="http://cdn.seo.51xuanshi.com/<%= teacher.t_headimg %>"/>
+                        </div>
+                        <div class="txtContent">
+                            <div class="phoneAndName">
+                                <span class="phone"><%= item.student_phone %></span>
+                                <span class="name"><%= item.student_name %></span>
+                                <span class="tags">
+                                    <span><%= item.course_name %></span>
+                                    <span><%= item.grade_name %></span>
+                                    <span><%= item.teacher_type %></span>
+                                </span>
+                            </div>
+
+                            <p class="studentEvaluate">
+                                <%= item.student_appraise_info %>
+                            </p>
+                            <% if (item.teacher_appraise_info) { %>
+                            <p class="reply">
+                                <span class="teacher">老师</span>&nbsp;回复：<%= item.teacher_appraise_info %>
+                            </p>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% })}else{ %>
+                    <div class="noData"> 没有评价</div>
+                    <% } %>
+                </div>
+                <div class="badCommentList">
+                    <% if(t_comment.bad_comment.length !== 0){ %>
+                    <% t_comment.bad_comment.forEach(function(item){ %>
+                    <div class="singleList">
+                        <div class="pic">
+                            <img src="http://cdn.seo.51xuanshi.com/<%= teacher.t_headimg %>"/>
+                        </div>
+                        <div class="txtContent">
+                            <div class="phoneAndName">
+                                <span class="phone"><%= item.student_phone %></span>
+                                <span class="name"><%= item.student_name %></span>
+                                <span class="tags">
+                                    <span><%= item.course_name %></span>
+                                    <span><%= item.grade_name %></span>
+                                    <span><%= item.teacher_type %></span>
+                                </span>
+                            </div>
+                            <p class="studentEvaluate">
+                                <%= item.student_appraise_info %>
+                            </p>
+                            <% if (item.teacher_appraise_info) { %>
+                            <p class="reply">
+                                <span class="teacher">老师</span>&nbsp;回复：<%= item.teacher_appraise_info %>
+                            </p>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% })}else{ %>
+                    <div class="noData"> 没有评价</div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%- include('./componentViews/common/brand.html') %>
+    <%- include('./componentViews/common/footerTeacherQuery.html') %>
+</div>
+<%- include('./componentViews/common/footer.html') %>
+<script id="areaTpl" type="text/x-template">
+    <ul class="itemTxt">
+        {{#each this}}
+        <li><a  data-areacode="{{code}}">{{itemName}}</a></li>
+        {{/each}}
+    </ul>
+</script>
+<%- include('./componentViews/common/config.html') %>
+<script src="/build/pcMain.js"></script>
+</body>
+</html>

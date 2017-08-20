@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./componentViews/common/meta.html') %>
+<body id="pageType" data-pagetype="newsArticle" class="newsArticle">
+<%- include('./componentViews/common/header.html',{isDisplaySwitchCity:true}) %>
+<div class="content">
+    <div class="leftContent">
+        <div class="navAndQuery">
+            <div class="nav">
+                <span><a href="/<%= params.city%>">首页</a></span>
+                <span class="arrow"></span>
+                <span><a href="/<%= params.city %>/zixun">升学资讯</a></span>
+                <span class="arrow"></span>
+                <span><a><%=article.a_content_title %></a></span>
+            </div>
+        </div>
+        <article class="articleContent">
+            <h3><%= article.a_content_title %></h3>
+            <p class="tip1"><%= article.a_update_time %></p>
+            <div class="a_content">
+                <%- article.a_content %>
+            </div>
+        </article>
+        <div class="articleConcatTitle">
+            <div class="title">
+                本文相关推荐
+            </div>
+            <ul>
+                <% article.threeTitles.forEach(function(item){ %>
+                <li><a href="/wuyou/sd<%= item.id %>.html"><%= item.title %></a></li>
+                <%  }) %>
+            </ul>
+        </div>
+    </div>
+    <div class="rightContent">
+        <%- include('./componentViews/common/rightBanner.html') %>
+        <%- include('./componentViews/common/qrCode.html') %>
+        <%- include('./componentViews/common/hotArticles.html') %>
+    </div>
+</div>
+<%- include('./componentViews/common/footer.html') %>
+<%- include('./componentViews/common/config.html') %>
+<script src="/build/pcMain.js"></script>
+</body>
+</html>

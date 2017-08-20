@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./componentViews/common/meta.html') %>
+<body id="pageType" data-pagetype="schoolArticle" class="schoolArticle">
+<%- include('./componentViews/common/header.html') %>
+<div class="content">
+    <div class="leftContent">
+        <div class="schoolDetail">
+          <div class="details">
+           <div class="pic">
+               <img src="<%= school.header_image_url %>" alt="">
+           </div>
+           <div class="txtBox">
+               <div class="schoolName">
+                   <span><%= school.name %></span>
+                   <span class="category"><%= school.category %></span>
+                   <% if (school.level){ %>
+                   <span class="level"><%= school.level %></span>
+                   <% } %>
+               </div>
+               <div class="area">所在区域：<span><%= school.region %></span></div>
+               <div class="score">
+                   <% if(school.hardware_score > 0){ %>
+                   <span class="ruxue">
+                       入学难度
+                       <%
+                       var ruxue = 0
+                       while(ruxue < school.hardware_score){
+                       %>
+                       <span class="star"></span>
+                       <%
+                       ruxue++;
+                       }%>
+                   </span>
+                   <% } %>
+                   <% if(school.teach_score> 0){ %>
+                   <span class="gaokao">
+                        高考分数
+                         <%
+                       var gaokao = 0
+                       while(gaokao < school.teach_score){
+                       %>
+                       <span class="star"></span>
+                       <%
+                       gaokao++;
+                       }%>
+                   </span>
+                   <% } %>
+               </div>
+               <div class="address">学校地址：<span><%= school.address %></span></div>
+               <div class="phone">联系电话：<span><%= school.phone %></span></div>
+               <% if (school.main_page){ %>
+               <div class="website">官方网站：<span><%= school.main_page %></span></div>
+               <% } %>
+           </div>
+          </div>
+            <% if(school.desc){ %>
+          <div class="overview">
+              <div class="title">
+                  <span class="icon"></span>
+                  <span class="txt">学校简介</span>
+              </div>
+              <article>
+                  <%= school.desc %>
+              </article>
+          </div>
+            <% } %>
+        </div>
+        <% if(locals.hotInfos){ %>
+        <div class="schoolContact">
+            <div class="title">相关阅读</div>
+            <ul>
+                <% hotInfos.forEach(function(item){ %>
+                <li><a href="/wuyou/sd<%= item.id%>.html"><%= item.title %></a></li>
+                <% }) %>
+            </ul>
+        </div>
+        <% } %>
+        <%- include('./componentViews/common/recommendTeacher.html') %>
+        <%- include('./componentViews/common/brand.html') %>
+        <%- include('./componentViews/common/footerTeacherQuery.html') %>
+    </div>
+    <div class="rightContent">
+        <%- include('./componentViews/common/qrCode.html') %>
+        <%- include('./componentViews/common/hotSchools.html') %>
+        <%- include('./componentViews/common/newestData.html') %>
+    </div>
+</div>
+<%- include('./componentViews/common/footer.html') %>
+<%- include('./componentViews/common/config.html') %>
+<script src="/build/pcMain.js"></script>
+</body>
+</html>

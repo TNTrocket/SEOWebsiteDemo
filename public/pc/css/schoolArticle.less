@@ -1,0 +1,140 @@
+.schoolArticle{
+  .content{
+    width: 1000px;
+    margin: 33px auto 0 auto;
+    .leftContent{
+      .schoolDetail{
+        .details{
+          padding: 30px 15px;
+          background: #ffffff;
+          .pic{
+            display: inline-block;
+            width: 152px;
+            height: 151px;
+            vertical-align: text-top;
+            img{
+              width: 100%;
+              height: 100%;
+            }
+          }
+          .txtBox{
+            padding-left: 16px;
+            width: 77%;
+            display: inline-block;
+            vertical-align: text-top;
+            color: #999999;
+            .category{
+              font-size: 14px;
+              color: #ff8f78!important;
+              border-radius: 5px;
+              padding: 5px;
+              border:1px solid #ff8f78;
+              margin-left: 10px;
+            }
+            .level{
+              font-size: 14px;
+              color: #2295f2!important;
+              border-radius: 5px;
+              padding: 5px;
+              border:1px solid #2295f2;
+              margin-left: 10px;
+            }
+            .score{
+              >span{
+                display: inline-block;
+                color: #999999;
+                &.gaokao{
+                  margin-left: 10px;
+                }
+                .star{
+                  .backgroundPic("star.png");
+                  width: 14px;
+                  height: 13px;
+                  display: inline-block;
+                }
+              }
+            }
+            span{
+              color: #666666;
+            }
+            >div{
+              margin-bottom: 15px;
+              &:last-child{
+                margin-bottom: 0;
+              }
+            }
+            .schoolName{
+              font-size: 18px;
+              span{
+                color: #333333;
+              }
+            }
+
+          }
+        }
+        .overview{
+          background: #ffffff;
+          margin-top: 20px;
+          padding: 23px 15px;
+          .title{
+            .icon{
+              width: 23px;
+              height: 23px;
+              display: inline-block;
+              vertical-align: middle;
+              .backgroundPic("schoolDescPic.png");
+            }
+            .txt{
+              display: inline-block;
+              vertical-align: middle;
+              margin-left: 15px;
+              font-size: 16px;
+              color: #333333;
+            }
+          }
+          >article{
+            margin-top: 31px;
+            padding-left: 42px;
+            text-align: justify;
+            font-size: 14px;
+            color: #666666;
+            line-height: 25px;
+          }
+        }
+      }
+      .schoolContact{
+        background: #ffffff;
+        margin-top: 23px;
+        margin-bottom: 29px;
+        .title{
+          padding: 17px 0 17px 15px;
+          border-bottom:1px solid #dedede ;
+          color: #333333;
+          font-size: 16px;
+        }
+        ul{
+          margin-top: 31px;
+          overflow: hidden;
+          padding: 0 20px;
+          li{
+            float: left;
+            padding-bottom: 20px;
+            width: 50%;
+            a{
+              padding-left: 20px;
+              color: #666666;
+              display: block;
+              text-align: left;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+    }
+    .rightContent{
+
+    }
+  }
+}

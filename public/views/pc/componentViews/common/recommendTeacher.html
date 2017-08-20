@@ -1,0 +1,40 @@
+<%
+ var temp ={};
+ temp.arr =[]
+ var teacherlist = famousTeachers.map(function(value,index){
+    temp.arr.push(value)
+    if((index+1)%3 === 0){
+     var arr = temp.arr;
+     temp.arr = [];
+     return {item: arr}
+    }
+}).filter(function(item){
+  return item
+})
+console.log("teacherlist=========",teacherlist)
+%>
+<div class="teacherListBox">
+    <div class="title">名师推荐</div>
+    <div class="contentList">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <% teacherlist.forEach(function(result){ %>
+                <div class="teacherPage swiper-slide">
+                    <% result.item.forEach(function(item){ %>
+                    <div class="singleTeacher">
+                        <div class="pic">
+                            <img src="<%= item.url %>"/>
+                        </div>
+                        <div class="name"><%= item.title %></div>
+                        <div class="desc"><%= item.introduction %></div>
+                        <div class="buttonNow"><span class="btn"><a href="/teacher/te<%= item.id %>.html">立即查看</a></span></div>
+                    </div>
+                    <% }) %>
+                </div>
+            <% }) %>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+    </div>
+</div>

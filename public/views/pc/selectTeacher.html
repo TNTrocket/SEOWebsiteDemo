@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./componentViews/common/meta.html') %>
+<body id="pageType" data-pagetype="selectTeacher" class="selectTeacher">
+<%- include('./componentViews/common/header.html') %>
+<div class="content">
+    <div class="navAndQuery">
+        <div class="nav">
+            <span><a href="/<%= params.city%>">首页</a></span>
+            <span class="arrow"></span>
+            <span><a>名师库</a></span>
+        </div>
+        <div class="query teacherQuery">
+
+
+        </div>
+    </div>
+    <div class="s_teacherList">
+       <div class="orderByQuery">
+
+       </div>
+        <div class="s_teacherListBox">
+            <% if(locals.list.length !== 0 ){ %>
+            <% locals.list.forEach(function(item,index){ %>
+            <%
+            var all = item.t_good_comment+item.t_mid_comment +item.t_bad_comment;
+            var tempComment = item.t_good_comment/all;
+            var goodComment = null;
+            if(isNaN(tempComment)){
+            goodComment = 0+"%";
+            }else{
+            goodComment =(item.t_good_comment/all).toFixed(2)*100+"%";
+            }
+            %>
+            <div class="singleTeacher">
+                <a href="/teacher/te<%= item.t_id %>.html">
+                <div class="img">
+                  <img src="http://cdn.seo.51xuanshi.com/<%= item.t_headimg %>">
+                </div>
+                <div class="teacherData">
+                    <div class="name"><%= item.t_name %></div>
+                    <div class="desc"><%= item.previous("t_introduction") %></div>
+                    <div class="tags">
+                        <% item.t_tags.forEach(function(tag){ %>
+                        <span class="item"><span><%= tag %></span></span>
+                        <% }) %>
+                    </div>
+                </div>
+                <div class="priceAndComment">
+                    <div class="price">
+                        ￥ <span class="number"><%= item.t_price %></span> 小时
+                    </div>
+                    <div class="comment">
+                      <%= goodComment %>好评
+                    </div>
+                </div>
+                </a>
+            </div>
+            <% }) %>
+            <% }else{ %>
+            <div class="noData"> 没有数据</div>
+            <% } %>
+            <%
+            var pageCount =1
+            var currentPage = 1
+            var mathCount = null
+            if(locals.total){
+            mathCount = Math.ceil(total/10)
+            pageCount =  mathCount <=1 ? 1 : mathCount
+            }
+            if(params.page){
+            currentPage= parseInt(params.page.substring(1))
+            }
+            var count = 6;
+            var nf = count/2;
+            var start = "";
+            var end =""
+            if(currentPage + nf >= pageCount){
+            start = pageCount - count
+            end =  pageCount
+            }else{
+            start = currentPage > nf ? currentPage - nf : 1
+            end = currentPage > nf ? currentPage + nf : 6
+            }
+            if(start <= 0){
+            start = 1
+            }
+            %>
+            <div class="pagingBox">
+                <ul>
+                    <% if(start > 2){ %>
+                    <li><a href="/teachers/<%= params.city %>/<%= params.queryString %>/p1/">1</a></li>
+                    <li>...</li>
+                    <% } %>
+                    <%
+                    while(start <= end){
+                    %>
+                    <li><a href="/teachers/<%= params.city %>/<%= params.queryString %>/p<%= start %>/"
+                        <%if(start === currentPage){%>
+                        class="queryListActive"
+                        <% } %>
+                        ><%= start %></a></li>
+                    <%
+                    start++
+                    } %>
+                    <% if(start >= count && end!== pageCount){ %>
+                    <li>...</li>
+                    <li><a href="/teachers/<%= params.city %>/<%= params.queryString %>/p<%= pageCount %>/"><%= pageCount %></a></li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <%- include('./componentViews/common/brand.html') %>
+    <%- include('./componentViews/common/footerTeacherQuery.html') %>
+</div>
+<%- include('./componentViews/common/footer.html') %>
+<script id="teacherQueryTpl" type="text/x-template">
+    {{#each teacherQueryArr}}
+    <div class="queryType">
+        <div class="title">{{name}}</div>
+        <ul>
+            {{#each item}}
+            {{#unless  @index }}
+            <li><a href="/teachers/<%= params.city %>/s-{{typeno}}/"
+           {{#if active}} class="queryListActive" {{/if}}
+            >不限</a></li>
+            {{else}}
+            <li class="{{../inputName}}"><a href="/teachers/<%= params.city %>/s-{{typeno}}/"
+                                            {{#if active}} class="queryListActive" {{/if}} data-code="{{code}}">{{name}}</a></li>
+            {{/unless}}
+            {{/each}}
+        </ul>
+    </div>
+    {{/each}}
+</script>
+<script id="orderByTpl" type="text/x-template">
+
+     <ul>
+         {{#each item}}
+
+         <li><a href="/teachers/<%= params.city %>/s-{{typeno}}/"
+                {{#if active}} class="active" {{/if}}
+         >{{name}}<i></i></a></li>
+
+         {{/each}}
+     </ul>
+</script>
+<%- include('./componentViews/common/config.html') %>
+<script src="/build/pcMain.js"></script>
+</body>
+</html>
