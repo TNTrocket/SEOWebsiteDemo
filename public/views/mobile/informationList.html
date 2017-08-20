@@ -27,7 +27,8 @@ listH1 : informationList.listH1,
 renderType : render,
 h2Link : h2Link,
 prevRenderType: prevRenderTypeName,
-h2Name: locals.informationList[prevRenderTypeName].headerTxt.h2
+h2Name: locals.informationList[prevRenderTypeName].headerTxt.h2,
+params : locals.params
 }
 var queryCondition ={
 listTxt:locals.informationList[render],
@@ -38,7 +39,7 @@ total: locals.total,
 renderType : render,
 params : locals.params
 }
-console.log(locals.cacheData);
+console.log("locals.informationList[render]======",render);
  %>
 
 <body data-pagetype="informationList" id="pageType" data-rendertype="<%= render %>" >
@@ -54,13 +55,13 @@ console.log(locals.cacheData);
     <article class="listContentArticle">
         <h3><%= article.a_content_title %></h3>
         <p class="tip1"><%= article.a_update_time %></p>
-        <p class="content">
+        <div class="content">
             <%- article.a_content %>
-        </p>
+        </div>
     </article>
     <div class="imgInfoBanner">
         <% article.threeTitles.forEach(function(item){ %>
-        <a href="/information/article/<%= params.city %>/<%= item.id %>">
+        <a href="/wuyou/sd<%= item.id %>.html">
         <div class="imgBannerPic">
             <img src="<%= item.longImgUrl %>">
             <div class="w-f-txt"><%= item.title %></div>
@@ -83,7 +84,7 @@ console.log(locals.cacheData);
             <span class="txt">选师无忧微信号</span>
         </div>
         <div class="QRcode">
-            <img src="/img/qrCode.png"/>
+            <img src="/img/mobile/qrCode.png"/>
         </div>
         <p class="QRTxt">关注选师无忧公众账号，快速提升学习成绩</p>
     </div>
@@ -97,11 +98,11 @@ console.log(locals.cacheData);
             <% } %>
         </div>
         <% if( render === 'article'){ %>
-        <%- include('./componentViews/common/list.html',{ dataList:article.hotInfos}) %>
+        <%- include('./componentViews/common/list.html',{ dataList:article.hotInfos, listType:'wuyou'}) %>
         <% } else if(render === 'schoolList') { %>
         <%- include('./componentViews/information/hotSchool.html',{ dataList:hotSchools,city:locals.params.city}) %>
         <% }else{ %>
-        <%- include('./componentViews/common/list.html',{ dataList:hotInfos}) %>
+        <%- include('./componentViews/common/list.html',{ dataList:hotInfos, listType:'wuyou'}) %>
         <% } %>
     </div>
     <div class="lastNews eachListTitle">
@@ -109,7 +110,7 @@ console.log(locals.cacheData);
             <span class="icon"></span>
             <span class="txt">最新资料</span>
         </div>
-        <%- include('./componentViews/common/list.html',{dataList:materials}) %>
+        <%- include('./componentViews/common/list.html',{dataList:materials, listType:'download'}) %>
     </div>
     <div class="teacherRecommended eachListTitle">
         <div>
@@ -129,7 +130,7 @@ console.log(locals.cacheData);
         queryName : "<%= locals.typeName %>",
         location : "",
         cacheData: JSON.parse('<%- JSON.stringify(locals.params)%>') || {},
-        cityID : "<%= params.city %>"
+        city : "<%= params.city %>"
     }
 </script>
 <script src="/build/main.js"></script>

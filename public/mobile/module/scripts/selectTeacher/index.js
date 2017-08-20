@@ -3,84 +3,94 @@
  */
 import $ from 'jquery'
 import handlebars from 'handlebars'
-import { fetchCity } from '../../plugin/globalServer'
-import { selectTeacherData, orderbyData } from './selectTeacherData'
+import { fetchCity, selectTeacherAPI } from '../../plugin/globalServer'
 import selectTeacherAlert from '../../component/selectTeacherAlert'
-import { navEvent, locationStorage, isEmptyObject, evaluate } from '../../plugin/global'
+import { navEvent, locationStorage, evaluate, parseParams } from '../../plugin/global'
 import locationModal from '../../component/locationModal'
 import {  footerData } from '../../plugin/footArea'
+import { cookieCity, localCity }from '../../plugin/urlCity'
 
 export default class selectTeacher{
     constructor(){
-        let cacheData = CONFIG.cacheData || locationStorage().get("select");
-        let cacheCity = locationStorage().get("city");
-        this.cache = cacheData ||  {} ;
-        this.cache.city =  cacheCity ? cacheCity : "广州市";
         this.querySelect = null;
         this.touchMove = false;
-        this.queryData =Object.assign({},this.cache);
         this.currentRegion =[];
-        this.selectsubject = "unlimit";
-        this.selectteachertype = "unlimit";
-        this.selectteachergender = "unlimit";
-        this.selectteacherfeature ="";
-        this.allTags =this.cache.tags ==="unlimit" ? "":this.cache.tags ;
+        this.data = {};
         fetchCity().then((data)=>{
-            this.area = data.city;
-            this.city = Object.keys(data.city);
-            this.cityCode = data.cityCode;
-            this.locationCode = data.locationCode;
-            this.currentRegion = data.city[this.cache.city];
-            this.domEvent();
-            this.initCacheData();
-            this.initLocation();
+          cookieCity();
+          localCity(data.locationCode);
+          let cacheData = CONFIG.cacheData;
+          let localStorage = locationStorage().get("currentCity") || "{}";
+          let cacheCity = JSON.parse(localStorage).city;
+          this.cache = JSON.parse(JSON.stringify(cacheData)) ||  {} ;
+          this.cache.city =  cacheCity ? cacheCity : "广州市";
+          this.cache.querySelectData = {};
+          this.cache.querySelectData.arr = [];
+          this.cache.queryString = this.cache.queryString.substring(2)
+          this.area = data.city;
+          this.city = Object.keys(data.city);
+          this.cityCode = data.cityCode;
+          this.locationCode = data.locationCode;
+          this.currentRegion = data.city[this.cache.city];
+              selectTeacherAPI(  {
+                method : "get",
+                data:{ "cityPinyin" : this.cityCode[this.cache.city].pinyin
+                }}).then((teacherData)=>{
+                  console.log(teacherData)
+                  this.data.grade = teacherData.a;
+                  this.data.subject = teacherData.b;
+                  this.data.area = teacherData.c;
+                  this.data.gender = teacherData.d;
+                  this.data.teacherType = teacherData.e;
+                  this.data.tags = teacherData.f;
+                  this.data.orderBy = teacherData.g;
+                  this.initCacheData();
+                  this.domEvent();
+                  this.initLocation();
+                })
+
         })
-    }
-    initRegion(){
-        // if(this.cache.city !== locationStorage().get("city")){
-        //     let intelligentTxt = $(".areaTxt");
-        //     intelligentTxt.text("区域");
-        //     this.cache.selectarea = "unlimit"
-        // }
     }
     initLocation(){
         let self = this;
         $(".locationTxt").text(self.cache.city );
         $(".locationArea").click(function () {
-            // let temp = handlebars.compile(locationTemp);
-            // let dom = temp(self.cityCode);
             new locationModal({
                 locationCode: self.locationCode
-            },function (option) {
-                window.location.href = "/teacher/list/auto/unlimit/unlimit/unlimit/unlimit/unlimit/unlimit/" +
-                    option.city+"/0"
             });
         });
     }
     initCacheData(){
-        console.log(this.cache)
-        if(this.cache.orderBy){
-            let intelligentTxt = $(".intelligentTxt");
-            intelligentTxt.text(orderbyData[this.cache.orderBy]);
+      let param = parseParams(this.cache.queryString);
+      let intelligentTxt = $(".intelligentTxt");
+      let gradeTxt = $(".gradeTxt");
+      let areaTxt = $(".areaTxt");
+      console.log(param)
+      if(param.g){
+        for(let g of this.data.orderBy){
+          if(g.typeno === param.g){
+            intelligentTxt.text(g.name);
+            break;
+          }
         }
-        if(this.cache.grade!=="unlimit" && this.cache.grade){
-            let intelligentTxt = $(".gradeTxt");
-            intelligentTxt.text(orderbyData[this.cache.grade]);
+      }
+      if(param.a){
+        for(let a of this.data.grade){
+          if(a.typeno === param.a){
+            gradeTxt.text(a.name);
+            break;
+          }
         }
-        if(this.cache.district!=="unlimit" && this.cache.district){
-            let name ="";
-            for(let region of this.currentRegion){
-                if(this.cache.district == region.code){
-                    name = region.itemName
-                    break;
-                }else{
-                    name = "区域"
-                }
-            }
-            let intelligentTxt = $(".areaTxt");
-            console.log(name);
-            intelligentTxt.text(name);
+      }
+      if(param.c){
+        for(let c of this.data.area){
+          if(c.typeno === param.c){
+            areaTxt.text(c.name);
+            break;
+          }
         }
+      }
+      this.cache.querySelectData = param;
     }
     domEvent(){
         let self = this;
@@ -92,18 +102,30 @@ export default class selectTeacher{
         });
         $("[data-selecttype]").click(function () {
            let selecttype = $(this).data("selecttype");
+           let selectData ={};
+            selectData.selectDataArr =[];
+          let queryItem  = {}
            switch (selecttype){
                case "grade":
-                   self.querySelectDom(selectTeacherData.grade);
+                   queryItem.name = "年级"
+                   queryItem.item = self.data.grade
+                   selectData.selectDataArr.push(queryItem)
+                   self.querySelectDom(selectData);
                    break;
                case "area":
-                   self.currentRegion = self.area[locationStorage().get("city")];
-                   selectTeacherData.area.queryType[0].queryItem = self.currentRegion;
-                   console.log(selectTeacherData.area)
-                   self.querySelectDom(selectTeacherData.area);
+                   queryItem.name = "地区"
+                   queryItem.item = self.data.area
+                   selectData.selectDataArr.push(queryItem)
+                   self.querySelectDom(selectData);
                    break;
                case "select":
-                   self.querySelectDom(selectTeacherData.select,"select");
+                  let obj1 = {name:"科目",item:self.data.subject,inputName:"subject"}
+                  let obj2 = {name:"老师类型",item:self.data.teacherType,inputName:"teachertype"}
+                  let obj3 = {name:"老师特点",item:self.data.tags,inputName:"teachertags"}
+                  let obj4 = {name:"性别",item:self.data.gender,inputName:"teachergender"}
+                 selectData.selectDataArr.push(obj1,obj2,obj3,obj4);
+                  selectData.target = "select"
+                   self.querySelectDom(selectData,"select");
                    break;
                case "intelligent":
                    self.intelligentDom();
@@ -114,26 +136,29 @@ export default class selectTeacher{
     intelligentDom(){
         let self = this;
         let temp = handlebars.compile($("#intelligentTpl").html());
-        let html = temp({});
+        let html = temp(self.data.orderBy);
         self.querySelect = new selectTeacherAlert({html:html,mask:true});
         self.hideMask();
 
         $("[data-orderby]").click(function () {
-            let orderBy = $(this).data("orderby");
-
-            self.queryData.orderBy= orderBy
-            // locationStorage().set("select",self.queryData);
+            let orderBy = $(this).data("typeno");
             self.querySelect.hide();
-             window.location.href = "/teacher/list/"+self.queryData.orderBy
-                +"/"+(self.cache.grade || "unlimit" )+"/"+
-                 (self.cache.district || "unlimit") +
-                "/"+(self.cache.subject || "unlimit")+
-                "/"+(self.cache.teacherType || "unlimit")+"/"+
-                 (self.cache.tags || "unlimit")+"/"+
-                 (self.cache.gender || "unlimit")+
-                  "/"+CONFIG.cityID
-                 +"/0"
+            let query = self.replaceQuery(orderBy);
+             window.location.href = "/teachers/"+CONFIG.cityPinyin+"/s-"+query+"/"
         })
+    }
+    replaceQuery(query){
+      let paramQuery = parseParams(query);
+      let newQuery =""
+      let obj =Object.assign(this.cache.querySelectData,paramQuery);
+      for(let key of Object.keys(obj)){
+        if(key ==="arr"){
+          continue
+        }
+        newQuery += obj[key]
+      }
+      console.log(newQuery);
+      return newQuery;
     }
     querySelectDom(data,type){
         let temp = handlebars.compile($("#tpl").html());
@@ -149,99 +174,75 @@ export default class selectTeacher{
             this.touchMove =true;
             this.forbidTouch();
         }
-        $("[data-selectsubject="+this.cache.subject+"]").addClass("activeListClickQuery");
-        $("[data-selectteachertype="+this.cache.teacherType+"]").addClass("activeListClickQuery");
-        $("[data-selectteachergender="+this.cache.gender+"]").addClass("activeListClickQuery");
-        if(this.cache.tags){
-            let tag= this.cache.tags.split("+");
-            tag.forEach(function (value) {
-                $("[data-selectteacherfeature="+value+"]").addClass("activeListClickQuery");
-            })
-        }
         this.hideMask();
     }
     querySelectDomEvent(){
         let self = this;
-        $("[data-selectgrade]").click(function () {
-            $(this).addClass("activeListClickQuery");
-             self.querySelect.hide();
-             self.querySelect = null;
-            self.queryData.grade= $(this).data("selectgrade");
-            // locationStorage().set("select",self.queryData);
-            window.location.href = "/teacher/list/"+(self.cache.orderBy || "unlimit")
-                +"/"+self.queryData.grade+"/"+
-                (self.cache.district || "unlimit") +
-                "/"+(self.cache.subject || "unlimit")+
-                "/"+(self.cache.teacherType || "unlimit")+"/"+
-                (self.cache.tags || "unlimit")+"/"+
-                (self.cache.gender || "unlimit")+"/"+CONFIG.cityID
-                +"/0"
-        })
-        $("[data-selectarea]").click(function () {
-            $(this).addClass("activeListClickQuery");
-            self.querySelect.hide();
-            self.querySelect = null;
-            self.queryData.district= $(this).data("selectarea");
-            // locationStorage().set("select",self.queryData);
-            window.location.href = "/teacher/list/"+(self.cache.orderBy || "unlimit")
-                +"/"+(self.cache.grade || "unlimit" )+"/"+
-                (self.queryData.district || "unlimit") +
-                "/"+(self.cache.subject || "unlimit")+
-                "/"+(self.cache.teacherType || "unlimit")+"/"+
-                (self.cache.tags || "unlimit")+"/"+
-                (self.cache.gender || "unlimit")+"/"+CONFIG.cityID
-                +"/0"
+        $("[data-typeno]").click(function () {
+              $(this).addClass("activeListClickQuery");
+               self.querySelect.hide();
+               self.querySelect = null;
+                let query = $(this).data("typeno");
+                 query = self.replaceQuery(query);
+            window.location.href = "/teachers/"+CONFIG.cityPinyin+"/s-"+query+"/"
         })
     }
     selectEvent(){
         let self = this;
-        $(".queryItemLi>li").off("click").click(function (e) {
-            e.stopPropagation();
-            e.preventDefault();
-            let tagData = $(this).data("selectteacherfeature");
-            let selectsubject = $(this).data("selectsubject") || self.cache.subject;
-            let selectteachertype = $(this).data("selectteachertype") || self.cache.teacherType;
-            let selectteacherfeature = tagData || self.cache.tags;
-            let selectteachergender = $(this).data("selectteachergender")|| self.cache.gender;
-            if( tagData){
-                if($(this).hasClass('activeListClickQuery')){
-                   if(self.allTags.indexOf(selectteacherfeature)>-1 ){
-                       $(this).removeClass("activeListClickQuery");
-                       self.allTags = self.allTags.replace(selectteacherfeature,"").replace("++","+")
-                           .replace(/^\+|\+$/,"");
-                   }
-                }else{
-                    $(this).addClass("activeListClickQuery");
-                    self.allTags = self.allTags ? self.allTags +"+"+selectteacherfeature : self.allTags +selectteacherfeature;
-                    console.log( self.selectteacherfeature);
-                }
-            }else{
-                if(!$(this).hasClass('activeListClickQuery')){
-                    $(this).addClass("activeListClickQuery");
-                    $(this).siblings("li").removeClass("activeListClickQuery");
-                }
-            }
-            self.selectsubject = selectsubject ||  "unlimit";
-            self.selectteachertype = selectteachertype ||" unlimit";
-            self.selectteachergender = selectteachergender || "unlimit";
-            self.selectteacherfeature =  self.allTags || "unlimit";
+       if(self.cache.querySelectData.arr){
+         for(let data of self.cache.querySelectData.arr){
+           $("[data-typeno="+data+"]").addClass("activeListClickQuery")
+         }
+       }
+        $("[data-subject]").click(function (e) {
+              e.stopPropagation();
+              e.preventDefault();
+          if(!$(this).hasClass('activeListClickQuery')){
+              let subject = $(this).data("typeno")
+              $("input[name='subject']").val(subject);
+             $(this).addClass("activeListClickQuery");
+             $(this).siblings("li").removeClass("activeListClickQuery");
+         }
         })
-        $(".queryBtn").click(function () {
-            self.querySelect.hide();
-            self.queryData.subject = self.selectsubject;
-            self.queryData.teacherType =  self.selectteachertype;
-            self.queryData.tags =  self.selectteacherfeature || self.cache.tags;
-            self.queryData.gender =  self.selectteachergender;
+      $("[data-teachertype]").click(function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        if(!$(this).hasClass('activeListClickQuery')){
+          let teachertype = $(this).data("typeno")
+          $("input[name='teachertype']").val(teachertype);
+          $(this).addClass("activeListClickQuery");
+          $(this).siblings("li").removeClass("activeListClickQuery");
+        }
+      })
+      $("[data-teachertags]").click(function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        if(!$(this).hasClass('activeListClickQuery')){
+          let teachertags = $(this).data("typeno")
+          $("input[name='teachertags']").val(teachertags);
+          $(this).addClass("activeListClickQuery");
+          $(this).siblings("li").removeClass("activeListClickQuery");
+        }
+      })
+      $("[data-teachergender]").click(function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        if(!$(this).hasClass('activeListClickQuery')){
+          let teachergender = $(this).data("typeno")
+          $("input[name='teachergender']").val(teachergender);
+          $(this).addClass("activeListClickQuery");
+          $(this).siblings("li").removeClass("activeListClickQuery");
+        }
+      })
 
-            self.querySelect = null;
-            window.location.href = "/teacher/list/"+(self.cache.orderBy || "unlimit")
-                +"/"+(self.cache.grade || "unlimit" )+"/"+
-                (self.cache.district || "unlimit") +
-                "/"+(self.queryData.subject || "unlimit")+
-                "/"+(self.queryData.teacherType || "unlimit")+"/"+
-                (self.queryData.tags || "unlimit")+"/"+
-                (self.queryData.gender || "unlimit")+"/"+CONFIG.cityID
-                +"/0"
+        $(".queryBtn").click(function () {
+          let subject = $("input[name='subject']").val() || "";
+          let teachertype = $("input[name='teachertype']").val() || "";
+          let teachertags = $("input[name='teachertags']").val() || "";
+          let teachergender = $("input[name='teachergender']").val() || "";
+          let query = subject + teachertype + teachertags +teachergender
+          query = self.replaceQuery(query);
+          window.location.href = "/teachers/"+CONFIG.cityPinyin+"/s-"+query+"/"
         })
     }
     forbidTouch(){
@@ -257,8 +258,8 @@ export default class selectTeacher{
         let self = this;
         mask.click(function () {
             if( self.querySelect){
+                // self.querySelect = null;
                 self.querySelect.hide();
-                self.querySelect = null;
             }
         })
     }

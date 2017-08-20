@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./componentViews/common/meta.html') %>
+<body id="pageType" data-pagetype="contactUS" class="contactUS">
+<%- include('./componentViews/common/header.html',{isDisplaySwitchCity:true}) %>
+
+<div class="content">
+    <div class="c_banner"></div>
+    <div class="c_content">
+        <div class="c_nav">
+            <span><a href="/<%= params.city%>">首页</a></span>
+            <span class="arrow">></span>
+            <span><a>联系我们</a></span>
+        </div>
+        <div class="addressList">
+            <div class="title">联系我们</div>
+            <ul class="address">
+                <li>
+                    <p class="name">广州岗顶总部</p>
+                    <p>广州市天河区五山路1号华晟大厦1502室</p>
+                    <p>咨询热线：020-87530298</p>
+                </li>
+                <li>
+                    <p class="name">广州农讲所体验中心</p>
+                    <p>广州市越秀区中山四路217号东鸣轩517A</p>
+                    <p>咨询热线：020-83702492</p>
+                </li>
+                <li>
+                    <p class="name">广州鹭江体验中心</p>
+                    <p>广州市海珠区新港西路181号中电数码城601</p>
+                    <p>咨询热线：020-89115251</p>
+                </li>
+                <li>
+                    <p class="name">广州市桥体验中心</p>
+                    <p>广州市番禺区光明北路147号</p>
+                    <p>咨询热线：400-612-5351</p>
+                </li>
+                <li>
+                    <p class="name">深圳百花体验中心</p>
+                    <p>深圳福田区百花二路百花新天地B121铺</p>
+                    <p>咨询热线：0755-88377520</p>
+                </li>
+                <li>
+                    <p class="name">深圳石厦体验中心</p>
+                    <p>福田区石厦马成时代广场220铺</p>
+                    <p>咨询热线：0755-82795380</p>
+                </li>
+                <li>
+                    <p class="name">深圳宝安体验中心</p>
+                    <p>深圳宝安区新安街道新湖路东侧天悦龙庭A栋117号铺</p>
+                    <p>咨询热线：0755-29993832</p>
+                </li>
+                <li>
+                    <p class="name">珠海丹田广场体验中心</p>
+                    <p>珠海市香洲区凤凰北路1015号丹田广场410房</p>
+                    <p>咨询热线：0756-2127286</p>
+                </li>
+                <li>
+                    <p class="name">珠海新香洲体验中心</p>
+                    <p>珠海市新香洲安福街70号安居园33栋城轩商厦一楼</p>
+                    <p>咨询热线：0756-2275328</p>
+                </li>
+                <li>
+                    <p class="name">梅州市兴宁体验中心</p>
+                    <p>广东省兴宁市技工学校电商大楼202房</p>
+                    <p>咨询热线：0753-3337171</p>
+                </li>
+                <li>
+                    <p class="commonPhone">全国热线：400-612-5351</p>
+                </li>
+            </ul>
+        </div>
+        <div class="map" id="allmap"></div>
+    </div>
+</div>
+<%- include('./componentViews/common/rightFloatingWindow.html') %>
+<%- include('./componentViews/common/footer.html') %>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Y04faNoNlPdLqtqpvIjUFzgLdmlllzDj"></script>
+<script>
+
+  var map = new BMap.Map("allmap");
+  console.log(map);
+  var point = new BMap.Point(113.34913, 23.142316);
+  map.enableScrollWheelZoom();
+  var marker = new BMap.Marker(point); // 创建标注
+  map.addOverlay(marker); // 将标注添加到地图中
+  map.centerAndZoom(point, 18);
+  var opts = {
+    width: 344, // 信息窗口宽度
+    height: 126, // 信息窗口高度
+    title: "广州市熙励教育信息咨询有限公司", // 信息窗口标题
+    enableMessage: true, //设置允许信息窗发送短息
+  }
+  var infoWindow = new BMap.InfoWindow("地址：广州市天河区五山路1号华晟大厦1506<br>电话：400-612-5351<br>邮编：510000", opts); // 创建信息窗口对象
+  marker.addEventListener("click", function() {
+    map.openInfoWindow(infoWindow, point); //开启信息窗口
+  });
+</script>
+<%- include('./componentViews/common/config.html') %>
+<script src="/build/pcMain.js"></script>
+</body>
+</html>

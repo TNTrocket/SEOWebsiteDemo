@@ -8,15 +8,20 @@ import {  locationStorage } from '../../plugin/global'
 import {  footerData } from '../../plugin/footArea'
 import experienceAlert from '../../component/experienceAlert'
 import locationModal from '../../component/locationModal'
+import { cookieCity, localCity }from '../../plugin/urlCity'
 
 export default class successCase{
     constructor(){
         this.cache = {};
         this.currentRegionCode = "";
         this.gradeName = "";
-        let cacheCity = locationStorage().get("city");
-        this.cache.city =  cacheCity || "广州市";
+
         fetchCity().then((data)=>{
+            cookieCity();
+            localCity(data.locationCode);
+            let localStorage = locationStorage().get("currentCity") || "{}";
+            let cacheCity = JSON.parse(localStorage).city;
+            this.cache.city =  cacheCity || "广州市";
             this.area = data.city;
             this.city = Object.keys(data.city);
             this.cityCode = data.cityCode;
@@ -42,7 +47,7 @@ export default class successCase{
             new locationModal({
                 locationCode: self.locationCode
             },function () {
-                self.initRegion()
+
             });
         });
     }

@@ -96,6 +96,7 @@
             <!--蒋同学去年刚从山东老家转到深圳读书，由于在老家不考历史，成绩很差，考试经常不及格。我不仅帮他讲解历史概念及前因后果，还传授记忆方法和解题技巧，他的成绩提高很快。-->
         <!--</p>-->
     <!--</div>-->
+    <% if(teacher.t_university) { %>
     <div class="t_school">
         <p class="title">
             毕业院校
@@ -107,8 +108,9 @@
           <%= teacher.t_university %>
         </p>
     </div>
+    <% } %>
     <div class="studentAssessment">
-        <a class="title" href="/teacher/teacher/comments/<%= teacher.t_id %>/<%= params.city %>">
+        <a class="title" href="/teacher/<%= teacher.t_id %>/dianping.html">
            学生评价
             <span class="arrowRight"></span>
 
@@ -242,12 +244,13 @@
         {{/each}}
     </ul>
 </script>
-<!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Y04faNoNlPdLqtqpvIjUFzgLdmlllzDj"></script>-->
 <script>
-    var CONFIG = {
-        queryName : "<%= locals.typeName %>",
-        city : ""
-    }
+  var CONFIG = {
+    queryName : "<%= locals.typeName %>",
+    location : "",
+    cacheData: JSON.parse('<%- JSON.stringify(locals.params)%>') || {},
+    city : "<%= params.city %>"
+  }
 </script>
 <script src="/build/main.js"></script>
 </body>

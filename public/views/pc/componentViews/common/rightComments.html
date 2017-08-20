@@ -1,0 +1,19 @@
+<div class="rightComments">
+    <div class="title">
+        评论区
+    </div>
+    <div class="list">
+        <ul>
+            <% if (locals.latestComments && locals.latestComments.length !== 0){ %>
+            <% locals.latestComments.forEach(function(item){ %>
+            <li><a href="/teacher/<%= item.t_id %>/dianping.html">
+                <%= item.t_name %>：
+                <% if(item.t_comment) { %>
+                <%= item.t_comment.student_appraise_info %>
+                <% } %>
+            </a></li>
+            <% }) %>
+            <% } %>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+User-agent: *
+
+Disallow: /*?
+Disallow: /.css
+Disallow: /build/*.css
+Disallow: /build/*.js
+Disallow: /ASSETS/JS/*.js
+Disallow: /ASSETS/*
+Disallow: /assets/*
+Disallow: /build/*
+

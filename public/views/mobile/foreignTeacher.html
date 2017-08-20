@@ -74,7 +74,7 @@
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 <figure class="swiper-slide">
-                    <img src="/img/SusanMum.png"/>
+                    <img src="/img/mobile/SusanMum.png"/>
                     <article>
                         <h2><p>Susan妈妈</p></h2>
                         <h2><p class="detailTxt">
@@ -83,7 +83,7 @@
                     </article>
                 </figure>
                 <figure class="swiper-slide">
-                    <img src="/img/kimdad.png"/>
+                    <img src="/img/mobile/kimdad.png"/>
                     <article>
                         <h2><p>Kim爸爸</p></h2>
                         <h2><p class="detailTxt">
@@ -92,7 +92,7 @@
                     </article>
                 </figure>
                 <figure class="swiper-slide">
-                    <img src="/img/tonyMom.png"/>
+                    <img src="/img/mobile/tonyMom.png"/>
                     <article>
                         <h2><p>Tony妈妈</p></h2>
                         <h2><p class="detailTxt">
@@ -101,7 +101,7 @@
                     </article>
                 </figure>
                 <figure class="swiper-slide">
-                    <img src="/img/samMom.png"/>
+                    <img src="/img/mobile/samMom.png"/>
                     <article>
                         <h2><p>Sam妈妈</p></h2>
                         <h2><p class="detailTxt">
@@ -159,6 +159,14 @@
     <%- include('./componentViews/common/floatingWindow.html') %>
     <%- include('./componentViews/common/footer.html') %>
 </div>
+<script>
+  var CONFIG = {
+    queryName : "<%= locals.typeName %>",
+    location : "",
+    cacheData: JSON.parse('<%- JSON.stringify(locals.params)%>') || {},
+    city : "<%= params.city %>"
+  }
+</script>
 <script src="/build/main.js"></script>
 </body>
 </html>

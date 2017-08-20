@@ -32,13 +32,41 @@ var name = {
           </div>
           <div>
               <p class="name"> 广州鹭江体验中心</p>
-              <p class="place">地址:  广州市海珠区新港西路181号中电数码城405</p>
+              <p class="place">地址:  广州市海珠区新港西路181号中电数码城601</p>
               <p class="phone">咨询热线:  020-89115251</p>
           </div>
           <div>
-              <p class="name"> 深圳福田体验中心</p>
-              <p class="place">地址:  深圳市福田区华强北路4002号圣苑酒店B座写字楼1701</p>
-              <p class="phone">咨询热线:  020-89115251</p>
+              <p class="name"> 广州市桥体验中心</p>
+              <p class="place">地址:  广州市番禺区光明北路147号</p>
+              <p class="phone">咨询热线:  400-612-5351</p>
+          </div>
+          <div>
+              <p class="name"> 深圳百花体验中心</p>
+              <p class="place">地址:  深圳福田区百花二路百花新天地B121铺</p>
+              <p class="phone">咨询热线:  0755-88377520</p>
+          </div>
+          <div>
+              <p class="name"> 深圳石厦体验中心</p>
+              <p class="place">地址:  福田区石厦马成时代广场220铺</p>
+              <p class="phone">咨询热线:  0755-82795380</p>
+          </div>
+          <div>
+              <p class="name"> 深圳宝安体验中心</p>
+              <p class="place">地址:  深圳宝安区新安街道新湖路东侧天悦龙庭A栋117号铺</p>
+              <p class="phone">咨询热线:  0755-29993832</p>
+          </div>
+          <div>
+              <p class="name"> 珠海丹田广场体验中心</p>
+              <p class="place">地址:  珠海市香洲区凤凰北路1015号丹田广场410房</p>
+              <p class="phone">咨询热线:  0756-2127286</p>
+          </div>
+          <div>
+              <p class="name"> 珠海新香洲体验中心</p>
+              <p class="place">地址:  珠海市新香洲安福街70号安居园33栋城轩商厦一楼</p>
+              <p class="phone">咨询热线:  0756-2275328</p>
+          </div>
+          <div>
+              <p class="phone">全国热线： 400-612-5351</p>
           </div>
       </div>
   </article>
@@ -51,6 +79,14 @@ var name = {
 </div>
 <%- include('./componentViews/common/floatingWindow.html') %>
 <%- include('./componentViews/common/footer.html') %>
+<script>
+  var CONFIG = {
+    queryName : "<%= locals.typeName %>",
+    location : "",
+    cacheData: JSON.parse('<%- JSON.stringify(locals.params)%>') || {},
+    city : "<%= params.city %>"
+  }
+</script>
 <script src="/build/main.js"></script>
 </body>
 </html>

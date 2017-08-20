@@ -8,7 +8,7 @@ module.exports = {
     env: 'production',
     port: 3030,
     secret: '',
-    name: "选师无忧",
+    name: "",
     poxyHost: "",
     viewCache: true
   },
@@ -24,5 +24,10 @@ module.exports = {
       min: 0,
       idle: 10000
     }
-  }
+  },
+  redis: {
+    port: 6379,
+    host: "127.0.0.1",
+    options: {}
+  },
 };

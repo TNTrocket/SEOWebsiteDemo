@@ -8,6 +8,8 @@ import { teacherDetailData, orderbyData } from './teacherDetailData'
 import {  locationStorage, evaluate } from '../../plugin/global'
 import experienceAlert from '../../component/experienceAlert'
 import {  footerData } from '../../plugin/footArea'
+import { cookieCity, localCity }from '../../plugin/urlCity'
+
 
 export default class teacherDetail{
     constructor(){
@@ -18,8 +20,11 @@ export default class teacherDetail{
             this.area = data.city;
             this.city = Object.keys(data.city);
             this.cityCode = data.cityCode;
-            this.cache.City = locationStorage().get("city") || "广州市";
-            this.currentRegion = data.city[ this.cache.City];
+            cookieCity();
+            localCity(data.locationCode);
+            let localStorage = locationStorage().get("currentCity") || "{}";
+            this.cache.city = JSON.parse(localStorage).city || "广州市";
+            this.currentRegion = data.city[ this.cache.city];
             this.domEvent();
         })
     }

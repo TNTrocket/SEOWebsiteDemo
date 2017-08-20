@@ -2,6 +2,7 @@ import $ from 'jquery'
 import { fetchCity } from '../../plugin/globalServer'
 import {  locationStorage, evaluate } from '../../plugin/global'
 import {  footerData } from '../../plugin/footArea'
+import { cookieCity, localCity }from '../../plugin/urlCity'
 
 export default class teacherEvaluate{
     constructor(){
@@ -9,7 +10,10 @@ export default class teacherEvaluate{
         fetchCity().then((data)=>{
             console.log(data);
             this.city = Object.keys(data.city);
-            this.cacheCity = locationStorage().get("city");
+            cookieCity();
+            localCity(data.locationCode);
+            let localStorage = locationStorage().get("currentCity") || "{}";
+            this.cacheCity = JSON.parse(localStorage).city;
             this.cache.city = this.cacheCity || "广州市";
             this.currentRegion = data.city[this.cache.city];
             this.locationCode = data.locationCode;

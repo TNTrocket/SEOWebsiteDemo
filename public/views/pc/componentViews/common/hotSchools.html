@@ -1,0 +1,12 @@
+<div class="hotArticles">
+    <div class="title">
+        热门学校
+    </div>
+    <div class="list">
+        <ul>
+            <% hotSchools.forEach(function(item){ %>
+            <li><a href="/school/rp<%= item.id %>.html"><%= item.name %></a></li>
+            <% }) %>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./componentViews/common/meta.html') %>
+<body id="pageType" data-pagetype="teacherComments" class="teacherComments">
+<%- include('./componentViews/common/header.html') %>
+
+<div class="content">
+    <div class="navAndQuery">
+        <div class="nav">
+            <span><a href="/<%= params.city%>">首页</a></span>
+            <span class="arrow"></span>
+            <span><a href="/teachers/<%= params.city %>/s-/">名师库</a></span>
+            <span class="arrow"></span>
+            <span><a href="/teacher/te<%= params.teacherId %>.html"><%= name %></a></span>
+            <span class="arrow"></span>
+            <span><a>课程评价</a></span>
+        </div>
+    </div>
+    <section class="teacherCommentsList">
+        <div class="t_comments">
+            <div class="title">
+                <i class="commentsIcon"></i>
+                <span class="txt"><%=name%>  课程评价</span>
+            </div>
+        </div>
+        <div class="commentsList">
+            <ul>
+                <li data-comment="good" class="queryListActive">好评（<%=comments.goodCount%>）</li>
+                <li data-comment="mid">中评（<%= comments.midCount %>）</li>
+                <li data-comment="bad">差评（<%=comments.badCount%>）</li>
+            </ul>
+
+            <div class="t_commentsList">
+                <div class="goodCommentList">
+                    <% if(comments.goodComment.length !== 0){ %>
+                    <% comments.goodComment.forEach(function(item){ %>
+                    <div class="singleList">
+                        <div class="pic">
+                            <img src="http://cdn.seo.51xuanshi.com/<%= headImg %>"/>
+                        </div>
+                        <div class="txtContent">
+                            <div class="phoneAndName">
+                                <span class="phone"><%= item.student_phone %></span>
+                                <span class="name"><%= item.student_name %></span>
+                                <span class="tags">
+                                    <span><%= item.course_name %></span>
+                                    <span><%= item.grade_name %></span>
+                                    <span><%= item.teacher_type %></span>
+                                </span>
+                            </div>
+                            <p class="studentEvaluate">
+                                <%= item.student_appraise_info %>
+                            </p>
+                            <% if (item.teacher_appraise_info) { %>
+                            <p class="reply">
+                                <span class="teacher">老师</span>&nbsp;回复：<%= item.teacher_appraise_info %>
+                            </p>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% })}else{ %>
+                    <div class="noData"> 没有评价</div>
+                    <% } %>
+                </div>
+                <div class="midCommentList">
+                    <% if(comments.midComment.length !== 0){ %>
+                    <% comments.midComment.forEach(function(item){ %>
+                    <div class="singleList">
+                        <div class="pic">
+                            <img src="http://cdn.seo.51xuanshi.com/<%= headImg %>"/>
+                        </div>
+                        <div class="txtContent">
+                            <div class="phoneAndName">
+                                <span class="phone"><%= item.student_phone %></span>
+                                <span class="name"><%= item.student_name %></span>
+                                <span class="tags">
+                                    <span><%= item.course_name %></span>
+                                    <span><%= item.grade_name %></span>
+                                    <span><%= item.teacher_type %></span>
+                                </span>
+                            </div>
+
+                            <p class="studentEvaluate">
+                                <%= item.student_appraise_info %>
+                            </p>
+                            <% if (item.teacher_appraise_info) { %>
+                            <p class="reply">
+                                <span class="teacher">老师</span>&nbsp;回复：<%= item.teacher_appraise_info %>
+                            </p>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% })}else{ %>
+                    <div class="noData"> 没有评价</div>
+                    <% } %>
+                </div>
+                <div class="badCommentList">
+                    <% if(comments.badComment.length !== 0){ %>
+                    <% comments.badComment.forEach(function(item){ %>
+                    <div class="singleList">
+                        <div class="pic">
+                            <img src="http://cdn.seo.51xuanshi.com/<%= headImg %>"/>
+                        </div>
+                        <div class="txtContent">
+                            <div class="phoneAndName">
+                                <span class="phone"><%= item.student_phone %></span>
+                                <span class="name"><%= item.student_name %></span>
+                                <span class="tags">
+                                    <span><%= item.course_name %></span>
+                                    <span><%= item.grade_name %></span>
+                                    <span><%= item.teacher_type %></span>
+                                </span>
+                            </div>
+                            <p class="studentEvaluate">
+                                <%= item.student_appraise_info %>
+                            </p>
+                            <% if (item.teacher_appraise_info) { %>
+                            <p class="reply">
+                                <span class="teacher">老师</span>&nbsp;回复：<%= item.teacher_appraise_info %>
+                            </p>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% })}else{ %>
+                    <div class="noData"> 没有评价</div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <div class="viewMoreList">
+            查看更多
+        </div>
+    </section>
+
+    <%- include('./componentViews/common/brand.html') %>
+    <%- include('./componentViews/common/footerTeacherQuery.html') %>
+</div>
+<%- include('./componentViews/common/footer.html') %>
+<%- include('./componentViews/common/config.html') %>
+<script src="/build/pcMain.js"></script>
+</body>
+</html>

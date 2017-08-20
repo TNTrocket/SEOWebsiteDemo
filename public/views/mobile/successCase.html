@@ -12,28 +12,28 @@
     </div>
     <div class="studentData">
       <div class="singleStudent">
-          <div class="img"><img src="/img/student.png"/></div>
+          <div class="img"><img src="/img/mobile/student.png"/></div>
           <div class="txt">
               <p class="name">戴同学</p>
               <p>辅导语文成绩提升21分</p>
           </div>
       </div>
       <div class="singleStudent">
-            <div class="img"><img src="/img/student3.png"/></div>
+            <div class="img"><img src="/img/mobile/student3.png"/></div>
             <div class="txt">
                 <p class="name">谢同学</p>
                 <p>辅导数学成绩提升52分</p>
             </div>
       </div>
       <div class="singleStudent student2">
-            <div class="img"><img src="/img/student2.png"/></div>
+            <div class="img"><img src="/img/mobile/student2.png"/></div>
             <div class="txt">
                 <p class="name">李同学</p>
                 <p>辅导英语成绩提升21分</p>
             </div>
       </div>
       <div class="singleStudent">
-            <div class="img"><img src="/img/student4.png"/></div>
+            <div class="img"><img src="/img/mobile/student4.png"/></div>
             <div class="txt">
                 <p class="name">黄同学</p>
                 <p>辅导化学成绩提升40分</p>
@@ -49,7 +49,7 @@
     </article>
     <div class="phonePic">
       <div class="singlePic">
-          <img src="/img/successPhone.png"/>
+          <img src="/img/mobile/successPhone.png"/>
       </div>
     </div>
     <div class="button btnNOW">
@@ -64,10 +64,12 @@
 <%- include('./componentViews/common/floatingWindow.html') %>
 <%- include('./componentViews/common/footer.html') %>
 <script>
-    var CONFIG = {
-        queryName : "<%= locals.typeName %>",
-        city : ""
-    }
+  var CONFIG = {
+    queryName : "<%= locals.typeName %>",
+    location : "",
+    cacheData: JSON.parse('<%- JSON.stringify(locals.params)%>') || {},
+    city : "<%= params.city %>"
+  }
 </script>
 <script src="/build/main.js"></script>
 </body>

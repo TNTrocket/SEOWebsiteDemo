@@ -6,14 +6,18 @@ import { navEvent, locationStorage, evaluate } from '../../plugin/global'
 import { fetchCity } from '../../plugin/globalServer'
 import {  footerData } from '../../plugin/footArea'
 import locationModal from '../../component/locationModal'
+import { cookieCity, localCity }from '../../plugin/urlCity'
 
 export default class aboutUS{
     constructor(){
-        this.cache = {}
+        this.cache = {};
         fetchCity().then((data)=>{
             console.log(data);
             this.city = Object.keys(data.city);
-            this.cacheCity = locationStorage().get("city");
+            cookieCity();
+            localCity(data.locationCode);
+            let localStorage = locationStorage().get("currentCity") || "{}";
+            this.cacheCity = JSON.parse(localStorage).city;
             this.cache.city = this.cacheCity || "广州市";
             this.currentRegion = data.city[this.cache.city];
             this.locationCode = data.locationCode;

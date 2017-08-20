@@ -1,12 +1,13 @@
 import $ from 'jquery'
 import Swiper from 'swiper'
-import {  navEvent, locationStorage, evaluate, getQueryString } from '../../plugin/global'
+import {  navEvent, locationStorage, evaluate, getQueryString, cookie } from '../../plugin/global'
 import locationModal from '../../component/locationModal'
 import experienceAlert from  '../../component/experienceAlert'
 import switchCityAlert from  '../../component/switchCityAlert'
 import { fetchCity, searchCity } from '../../plugin/globalServer'
 import { footerData } from '../../plugin/footArea'
 import { needSearchCity }from '../../plugin/needSearchCity'
+import { cookieCity, localCity }from '../../plugin/urlCity'
 
 export default class homePage{
     constructor(){
@@ -17,6 +18,7 @@ export default class homePage{
             this.locationCode = data.locationCode;
             this.currentRegion = [];
             this.location = {};
+            localCity(data.locationCode);
             let storageCity = locationStorage().get("currentCity") ||"{}";
             this.location.cacheCity = JSON.parse(storageCity).city || "广州市";
             this.location.city = locationStorage().get("city") || "广州市";
@@ -46,7 +48,7 @@ export default class homePage{
                       console.log(this);
                       if (type === "confirm") {
                         locationStorage().set("currentCity", JSON.stringify(currentObj));
-                        window.location.href = "/user/" + this.cityCode[this.currentCity]
+                        window.location.href = "/" + this.cityCode[this.currentCity].pinyin
                       } else {
 
                         currentObj.city = this.location.cacheCity;
@@ -70,15 +72,18 @@ export default class homePage{
               }, (error) => {
                 this.currentCity =  this.location.cacheCity;
                 $(".locationTxt").text(this.currentCity);
+                this.currentRegion = data.city[this.currentCity];
                 this.domEvent();
               })
             }else{
 
               this.currentCity =  this.location.cacheCity;
               $(".locationTxt").text(this.currentCity);
+              this.currentRegion = data.city[this.currentCity];
               this.domEvent();
 
             }
+            cookieCity();
         })
     }
     footEvent(){
@@ -104,10 +109,10 @@ export default class homePage{
             autoplayDisableOnInteraction : false
         })
         $(".i_e_button").click(function () {
-            let city = locationStorage().get("city");
+            let city = JSON.parse(locationStorage().get("currentCity")).city;
             new experienceAlert({
                 mask:true,
-                areaId:self.cityCode[city]
+                areaId:self.cityCode[city].code
             })
         });
         $(".locationArea").click(function () {

@@ -6,8 +6,8 @@ let sequelize = require("../config/sequelize");
 let Tags = sequelize.define("Tags", {
   t_id: { type: Sequelize.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true },
   t_name: { type: Sequelize.STRING(500) },
+  t_pinyin: { type: Sequelize.STRING(200) },
   t_status: { type: Sequelize.INTEGER },
-
   t_update_time: { type: Sequelize.BIGINT },
   t_create_time: { type: Sequelize.BIGINT }
 }, {

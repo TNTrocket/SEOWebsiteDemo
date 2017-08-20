@@ -6,18 +6,18 @@ const BannerModel = require('../models/bannerModel');
 const areaCtrl = require('../controllers/areaCtrl');
 const teacherCtrl = require('../controllers/teacherCtrl');
 const dictionCtrl = require('../controllers/dictionaryCtrl');
-class IndexCtrl {
-  constructor() {
+const BaseCtrl = require('../controllers/baseCtrl');
+class IndexCtrl extends BaseCtrl {
 
-  }
 
   async index(params) {
     let { city } = params;
-    city = await areaCtrl.getCityByPinyin(city, dictionCtrl.cityLevel.city.level);
+    city = await areaCtrl.getCityByPinyin(city, dictionCtrl.areaLevel.city.level);
     let banners = await this.getBanners(city.a_id);
     let comments = await teacherCtrl.getLatestComments();
     let latestComments = await teacherCtrl.getLatestComments();
-    return { latestComments, banners, comments };
+    let famousTeachers = await teacherCtrl.famousTeacher();
+    return { latestComments, banners, comments, famousTeachers };
   }
 
   /**

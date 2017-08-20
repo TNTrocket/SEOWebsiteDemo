@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./componentViews/common/meta.html') %>
+<body id="pageType" data-pagetype="joinUS" class="joinUS">
+<%- include('./componentViews/common/header.html',{isDisplaySwitchCity:true}) %>
+
+<div class="content">
+  <div class="j_banner"></div>
+    <div class="j_content">
+        <div class="j_nav">
+            <span><a href="/<%= params.city%>">首页</a></span>
+            <span class="arrow">></span>
+            <span><a>加入我们</a></span>
+        </div>
+        <div class="j_title">
+            加入我们
+        </div>
+        <div class="j_email">
+            <span class="icon"></span>
+            <span>hr@51xuanshi.com</span>
+        </div>
+        <div class="jobList">
+            <div class="item">
+                <p class="title">高级产品经理</p>
+                <p>1、负责选师无忧app产品策划，分析线上运营产品情况，结合用户需求规划产品需求文档，推动和协调开发部门开发，跟进产品上线。</p>
+                <p>2、负责公司app产品的完善和持续优化改进；</p>
+                <p>3、定期进行市场分析、竞品分析和用户研究，为产品改进提供指导；</p>
+            </div>
+            <div class="item">
+                <p class="title">web前端开发工程师</p>
+                <p>1. 负责 Web 前端开发工作，进行系统优化，设计并完善前端基础服务架构；</p>
+                <p>2. 熟练地进行 Web 页面维护，保证移动端和PC端的兼容性；</p>
+                <p>3. 与后台开发人员保持良好沟通，快速理解、消化各方需求，并落实为具体的开发工作。</p>
+            </div>
+            <div class="item">
+                <p class="title">课程顾问</p>
+                <p>1、接受学生、家长咨询，分析学生学习情况以及问题所在，为学生匹配合适的老师；</p>
+                <p>2、宣传推广选师无忧app，增加网站注册量；</p>
+                <p>3、与技术部、网络运营部协调配合工作，以确保服务链的通畅，为客户提供最方便快捷的服务资讯</p>
+            </div>
+            <div class="item">
+                <p class="title">客服专员</p>
+                <p>1、400电话接听及问题跟进处理，维护公司企业及品牌形象；</p>
+                <p>2、通过客服系统处理微信、APP的客户问题，回答相关咨询、服务；</p>
+                <p>3、日常家教需求登记、失败订单跟进；</p>
+                <p>4、师资审核，配合市场推广工作；</p>
+                <p>5、试听课、活动电话邀请</p>
+            </div>
+            <div class="item">
+                <p class="title">活动策划</p>
+                <p>1、围绕品牌目标、APP用户/公众号粉丝目标、招生目标，能够独立完成推广传播方案；</p>
+                <p>2、负责活动策划和执行，包括线上线下互动、讲座、开业、促销、公关、品牌活动等；</p>
+                <p>3、负责活动相关物料、宣传品的把控，现场活动进度执行、管控及跟进（包括场地、设备等，提交活动记录和总结）；</p>
+                <p>4、负责媒介传播策划，广告策划。</p>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('./componentViews/common/rightFloatingWindow.html') %>
+<%- include('./componentViews/common/footer.html') %>
+<%- include('./componentViews/common/config.html') %>
+<script src="/build/pcMain.js"></script>
+</body>
+</html>

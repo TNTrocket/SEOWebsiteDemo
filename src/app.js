@@ -8,40 +8,36 @@ const bodyparser = require('koa-bodyparser');
 const path = require("path");
 const serve = require('koa-static');
 const config = require("./config/config");
-const error = require('koa-json-error');
 const jwt = require('koa-jwt');
 const proxy = require('koa-proxy');
 
-const index = require("./routes/index");
-const information = require("./routes/information");
-const foreignTeacher = require("./routes/foreignTeacher");
-const appDownload = require("./routes/appDownload");
-const successCase = require("./routes/successCase");
-const contactUS = require("./routes/contactUS");
-const joinUS = require("./routes/joinUS");
-const aboutUS = require("./routes/aboutUS");
+
+const index = require("./routes/indexRoute");
+const information = require("./routes/informationRoute");
+const foreignTeacher = require("./routes/foreignTeacherRoute");
+const successCase = require("./routes/successCaseRoute");
+const about = require("./routes/aboutRoute");
 const teacher = require("./routes/teacherRoute");
 
 const articleApi = require("./routes/api/articleApi");
 const areaApi = require("./routes/api/areaApi");
+const dictionaryApi = require("./routes/api/dictionaryApi");
+const columnApi = require("./routes/api/columnApi");
+const relateUrlApi = require("./routes/api/relatedUrlApi");
 
+const initSys = require("./common/initSys");
+initSys.init();
 
 app.name = config.app.name;
 app.env = config.app.env;
 app.poxyHost = config.app.poxyHost;
 app.viewCache = config.app.viewCache;
 app.use(serve(path.join(__dirname, '../public')));
+app.use(serve(path.join(__dirname, '../static')));
 app.use(bodyparser());
 app.use(json());
 app.use(cors());
-app.use(error(function formatError(err) {
-  return {
-    status: err.status,
-    message: err.message,
-    success: false,
-    reason: 'Unexpected'
-  }
-}));
+
 
 
 ejs(app, {
@@ -62,25 +58,28 @@ app.use(proxy({
 //   ctx.status = 302;
 // });
 
-router.use('', index.routes(), index.allowedMethods());
-router.use('/information', information.routes(), information.allowedMethods());
-router.use('/foreignTeacher', foreignTeacher.routes(), foreignTeacher.allowedMethods());
-router.use('/appDownload', appDownload.routes(), appDownload.allowedMethods());
-router.use('/successCase', successCase.routes(), successCase.allowedMethods());
-router.use('/contactUS', contactUS.routes(), contactUS.allowedMethods());
-router.use('/joinUS', joinUS.routes(), joinUS.allowedMethods());
-router.use('/aboutUS', aboutUS.routes(), aboutUS.allowedMethods());
-router.use('/teacher', teacher.routes(), router.allowedMethods());
 
+router.use('', index.routes(), index.allowedMethods());
+router.use('', information.routes(), information.allowedMethods());
+router.use('', foreignTeacher.routes(), foreignTeacher.allowedMethods());
+router.use('', successCase.routes(), successCase.allowedMethods());
+router.use('', teacher.routes(), router.allowedMethods());
+router.use('', about.routes(), about.allowedMethods());
 
 router.use('/article', articleApi.routes(), router.allowedMethods());
 router.use('/area', areaApi.routes(), router.allowedMethods());
+router.use('/diction', dictionaryApi.routes(), router.allowedMethods());
+router.use('/column', columnApi.routes(), columnApi.allowedMethods());
+router.use('/related/url', relateUrlApi.routes(), relateUrlApi.allowedMethods());
 
 app.use(router.routes()).use(router.allowedMethods());
 
+app.use((ctx, next) => {
+  if (ctx.status == '404') {
+    return ctx.redirect('/Guangzhou/');
+  }
+});
 
 app.listen(config.app.port);
 
-
-
-
+console.log('127.0.0.1:' + config.app.port);

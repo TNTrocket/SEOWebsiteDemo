@@ -1,0 +1,17 @@
+<header class="header">
+    <div class="headerBox">
+        <div class="logo"></div>
+        <div class="box"></div>
+        <% if(!locals.isDisplaySwitchCity){ %>
+        <div class="cityBox switchCity">
+            <p class="city"></p>
+            <p>切换城市</p>
+        </div>
+        <% } %>
+        <span class="phoneBox">
+    <span class="icon"></span>
+    <span class="txt"><a>客服电话：400-612-5351</a></span>
+     </span>
+    </div>
+</header>
+<%- include("./nav.html",{homePage:locals.homePage}) %>

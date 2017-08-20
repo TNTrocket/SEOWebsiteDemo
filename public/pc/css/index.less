@@ -1,0 +1,322 @@
+.homePage{
+  [data-course='homePage']{
+    position: relative;
+    cursor: pointer;
+    >a{
+      >i{
+        display: inline-block;
+        .backgroundPic("navArrow.png");
+        width: 7px;
+        height: 6px;
+        vertical-align: middle;
+        margin-left: 5px;
+      }
+    }
+  }
+  .allCourse{
+    display: none;
+    background: #ffffff;
+    position: absolute;
+    z-index: 998;
+    width: 148px;
+    text-align: center;
+    top:55px;
+    left: 0;
+    border: 1px solid #dedede;
+    >div{
+      color: #666666;
+      padding: 20px 0;
+      cursor: pointer;
+    }
+  }
+
+  .h_primaryUL,.h_midUL,.h_highUL{
+    border: 1px solid #dedede;
+    display: none;
+    overflow: hidden;
+    position: absolute;
+    z-index: 998;
+    top:0;
+    left: 147px;
+    background: #ffffff;
+    width: 557px;
+    font-size: 14px;
+    padding: 23px 20px 16px 20px;
+    li{
+      overflow: hidden;
+      margin-bottom: 25px;
+      &:last-child{
+        margin: 0;
+      }
+      >span{
+        float: left;
+        margin-right: 20px;
+        &:first-child{
+          padding-right: 20px;
+          border-right:1px solid #dedede ;
+          color: #2295f2;
+        }
+        &:last-child{
+          margin: 0;
+        }
+        a{
+          cursor: pointer;
+          color: #646464;
+          display: block;
+          padding: 0 5px;
+          &:hover{
+            background: #2295f2;
+            color: #ffffff;
+          }
+        }
+      }
+
+    }
+  }
+  .h_midUL{
+    top:20px;
+  }
+  .h_highUL{
+    top:40px;
+  }
+  .h_primaryUL{
+    display: block;
+  }
+  .content{
+    .homePageBanner{
+      width: 100%;
+      height: 464px;
+      position: relative;
+      .swiper-container{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        overflow: hidden;
+        .swiper-wrapper{
+          //width: 400%;
+          display: flex;
+        }
+        .swiper-pagination{
+          position: absolute;
+          bottom:20px;
+          left: 50%;
+          transform: translateX(-50%);
+          span{
+            width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            background: #ffffff;
+            display: inline-block;
+            margin-left: 20px;
+            &.swiper-pagination-bullet-active{
+              background:#2295f2;
+            }
+          }
+        }
+        .swiper-slide{
+          flex: 1;
+          img{
+            width: 100%;
+            height: 464px;
+          }
+        }
+      }
+    }
+    .h_teacherList{
+      width: 1000px;
+      margin: 30px auto;
+      text-align: center;
+      .txt{
+        .title{
+          font-size: 26px;
+          color: #444444;
+        }
+        .tips{
+          margin-top: 23px;
+          font-size: 16px;
+          color: #666666;
+        }
+      }
+      .h_teacherData{
+        margin-top: 37px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .singleTeacher{
+         background: #ffffff;
+         flex-basis: 221px;
+          a{
+            .img{
+              img{
+                width: 100%;
+                height: 221px;
+              }
+            }
+            .teacherTxt{
+              padding: 30px 15px;
+              .name{
+                font-size: 18px;
+                color: #333333;
+              }
+              .desc{
+                font-size: 14px;
+                height: 100px;
+                overflow: hidden;
+                color: #666666;
+                margin-top: 15px;
+                //&:after{
+                //  content: "...";
+                //  display: inline-block;
+                //}
+              }
+            }
+          }
+        }
+      }
+    }
+    .h_banner1{
+      .backgroundPic("h_banner1.png");
+      height: 690px;
+      width: 100%;
+      background-position: center;
+      background-size: cover;
+    }
+    .h_banner2{
+      .backgroundPic("h_banner2.png");
+      height: 534px;
+      width: 100%;
+      background-position: center;
+      background-size: cover;
+    }
+    .h_banner3{
+      .backgroundPic("h_banner3.png");
+      height: 765px;
+      width: 100%;
+      background-position: center;
+      background-size: cover;
+    }
+    .h_phoneBox{
+      .backgroundPic("h_phoneBox.png");
+      text-align: center;
+      height: 978px;
+      width: 100%;
+      background-position: center;
+      background-size: cover;
+      overflow: hidden;
+      .txt{
+        margin-top: 35px;
+        .title{
+          color: #ffffff;
+          font-size: 28px;
+
+        }
+        .tip{
+          margin-top: 35px;
+          color: #ffffff;
+          font-size: 18px;
+
+        }
+        .red{
+          color: red;
+        }
+      }
+      .box{
+        position: relative;
+        max-width: 900px;
+        max-height: 811px;
+        margin: 30px auto 0 auto ;
+        .b_slide{
+          width: 900px;
+          text-align: center;
+          overflow: hidden;
+          float: left;
+          .pic{
+            display: inline-block;
+            width: 410px;
+            img{
+              width:100%;
+              height:100%;
+            }
+          }
+        }
+        .swiper-container{
+          height: 811px;
+          overflow: hidden;
+          .swiper-wrapper{
+            height: 811px;
+          }
+        }
+        .left{
+          position: absolute;
+          top:50%;
+          .backgroundPic("s_left.png");
+          width: 67px;
+          height: 67px;
+          transform: translateY(-50%);
+          left: -40px;
+        }
+        .right{
+          position: absolute;
+          top:50%;
+          .backgroundPic("s_right.png");
+          width: 67px;
+          height: 67px;
+          transform: translateY(-50%);
+          right: -40px;
+        }
+      }
+    }
+    .h_case{
+      width: 1000px;
+      text-align: center;
+      margin: 30px auto 20px auto;
+      .title{
+        font-size: 32px;
+        color: #333333;
+      }
+      .tips{
+        margin-top: 20px;
+        font-size: 26px;
+        color: #666666;
+      }
+      .studentList{
+        margin-top: 26px;
+        display: flex;
+        justify-content: space-between;
+        .singleStudent{
+          flex-basis: 317px;
+          background: #ffffff;
+          text-align: center;
+
+          .img{
+            img{
+              width: 317px;
+              height: 324px;
+            }
+           }
+          .name{
+            color: #2295f2;
+            font-size: 18px;
+            margin-top: 22px;
+          }
+          .desc{
+            margin: 17px 0 25px 0;
+            color: #666666;
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+  .brand{
+    width: 1000px;
+    margin: 0 auto;
+  }
+  .footerQuery{
+    width: 1000px;
+    margin: 0 auto;
+  }
+  footer{
+    margin-bottom: 88px;
+  }
+}

@@ -1,11 +1,11 @@
 <nav class="homePageNav">
     <ul>
         <li><a data-nav="teacher"  <% if (locals.active === "selectTeacher"){%> class="blueColor" <% }%>
-               href="/teacher/list/auto/unlimit/unlimit/unlimit/unlimit/unlimit/unlimit/<%= params.city %>/0">名师库</a></li>
-        <li><a data-nav="information" href="/information/<%= params.city %>"
+               href="/teachers/<%= params.city %>/s-/">名师库</a></li>
+        <li><a data-nav="information" href="/<%= params.city %>/zixun"
             <% if (locals.active === "information"){%> class="blueColor" <% }%>
         >升学资讯</a></li>
-        <li><a data-nav="example" href="/successCase/<%= params.city %>"
+        <li><a data-nav="example" href="/<%= params.city %>/case"
             <% if (locals.active === "successCase"){%> class="blueColor" <% }%>
         >提分案例</a></li>
         <li><a class="moreNav" data-nav="more">更多</a></li>

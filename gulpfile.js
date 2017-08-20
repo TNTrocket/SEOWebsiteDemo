@@ -12,23 +12,24 @@ let autoprefixer = require('autoprefixer')
 let uglify = require("gulp-uglify")
 let pump = require("pump")
 // let sourcemap = require("gulp-sourcemaps")
-
-
+// let pro = process.env.NODE_ENV
+// console.log('process=====',process)
 
 gulp.task('mobile:less', (cb) => {
   let processors = [px2rem({ remUnit: 100 }), autoprefixer()];
-  gulp.src('./public/css/mobile/style.less')
+  gulp.src('./public/mobile/css/style.less')
     .pipe(less())
     .on('error', function(err) {
       console.log(err);
       this.emit('end');
     })
     .pipe(postcss(processors))
-    .pipe(gulp.dest('./public/build/')).on('end', cb);
+    .pipe(gulp.dest('./public/build')).on('end', cb);
 })
+
 gulp.task('pc:less', (cb) => {
   let processors = [autoprefixer()];
-  gulp.src('./public/css/pc/pc.less')
+  gulp.src('./public/pc/css/pc.less')
     .pipe(less())
     .on('error', function(err) {
       console.log(err);
@@ -44,13 +45,13 @@ gulp.task('less', (callback) => {
     callback);
 })
 gulp.task('watch:less', (cb) => {
-  gulp.watch('./public/css/**/*.less', ['less']).on('end', cb)
+  gulp.watch('./public/**/*.less', ['less']).on('end', cb)
 })
 gulp.task('watch:js', (cb) => {
-    gulp.watch('./public/module/**/*.js', ['scripts']).on('end', cb)
+    gulp.watch('./public/module/**/*.js', ['scripts:mobile']).on('end', cb)
 })
 
-gulp.task('compress:js', (cb) => {
+gulp.task('compress:mobile', (cb) => {
   pump([
       gulp.src('./public/build/main.js'),
       uglify(),
@@ -58,44 +59,80 @@ gulp.task('compress:js', (cb) => {
     ],
     cb)
 })
+gulp.task('compress:pc', (cb) => {
+  pump([
+      gulp.src('./public/build/pcMain.js'),
+      uglify(),
+      gulp.dest('./public/build')
+    ],
+    cb)
+})
 
-gulp.task('babel', (cb) => {
-  gulp.src(['public/module/*.js', 'public/module/**/*.js'])
+gulp.task('babel:mobile', (cb) => {
+  gulp.src(['public/mobile/module/*.js', 'public/mobile/module/**/*.js'])
     // .pipe(sourcemap.init())
     .pipe(babel({
       presets: ['es2015']
     }))
     // .pipe(sourcemap.write('../build'))
-    .pipe(gulp.dest('./public/temp/')).on('end', cb)
+    .pipe(gulp.dest('./public/mobile/temp/')).on('end', cb)
 })
 gulp.task('countRem', (cb) => {
-    gulp.src('./public/temp/countRem.js')
+    gulp.src('./public/mobile/temp/countRem.js')
         .pipe(gulp.dest('./public/build/')).on('end', cb)
 })
-gulp.task('browserify', (cb) => {
-    gulp.src('./public/temp/main.js')
+gulp.task('browserify:mobile', (cb) => {
+    gulp.src('./public/mobile/temp/main.js')
         .pipe(browserify({
           insertGlobals: true
         }))
         .pipe(gulp.dest('./public/build/')).on('end', cb)
 })
-gulp.task('scripts',(cb) => {
-    runSequence('babel','browserify','countRem','temp-clean',cb);
+gulp.task('scripts:mobile',(cb) => {
+    runSequence('babel:mobile','browserify:mobile','countRem','temp-clean',cb);
 })
-gulp.task("node:sever", ['scripts', 'less'], () => {
+gulp.task("node:sever", ['scripts:mobile', 'less', 'scripts:pc'], () => {
   nodemon({
     script: './src/app.js',
-    ignore: ['.idea', 'node_modules', 'build','temp'],
-    tasks: ['scripts'],
-    env: { 'NODE_ENV': 'development' }
+    ignore: ['.idea', 'node_modules', 'public/build','public/mobile/temp','public/pc/temp'],
+    tasks: ['scripts:mobile','scripts:pc'],
+    env: { 'NODE_ENV': process.env.NODE_ENV }
   })
 })
 gulp.task("build-clean", () => {
   return del("./public/build")
 })
 gulp.task("temp-clean", () => {
-    return del("./public/temp")
+    return del("./public/mobile/temp")
 })
+
+//pc端打包
+gulp.task("temp-clean:pc", () => {
+  return del("./public/pc/temp")
+})
+gulp.task("scripts:pc",(cb)=>{
+  runSequence('babel:pc','browserify:pc','temp-clean:pc',cb);
+})
+gulp.task("babel:pc",(cb)=>{
+  gulp.src(['public/pc/module/*.js', 'public/pc/module/**/*.js'])
+  // .pipe(sourcemap.init())
+    .pipe(babel({
+      presets: ['es2015']
+    }))
+    // .pipe(sourcemap.write('../build'))
+    .pipe(gulp.dest('./public/pc/temp/')).on('end', cb)
+})
+gulp.task("browserify:pc",(cb)=>{
+  gulp.src('./public/pc/temp/pcMain.js')
+    .pipe(browserify({
+      insertGlobals: true
+    }))
+    .pipe(gulp.dest('./public/build/')).on('end', cb)
+})
+
+
+
+
 gulp.task('dev', (callback) => {
   runSequence(
     "build-clean",
@@ -106,8 +143,10 @@ gulp.task('dev', (callback) => {
 gulp.task('build', (callback) => {
     runSequence(
         "build-clean",
-        "scripts",
+        "scripts:mobile",
+        "scripts:pc",
         "less",
-        "compress:js",
+        "compress:mobile",
+        "compress:pc",
         callback);
 });

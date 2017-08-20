@@ -5,8 +5,7 @@ export  default  class selectTeacherAlert extends modal{
     constructor(option) {
         super(option);
         let self = this;
-        self.dom = option.html || ""
-        console.log(self.dom)
+        self.dom = option.html || "";
         self.init();
     }
     hide(){

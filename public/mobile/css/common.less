@@ -18,7 +18,7 @@
   font-size: @font-size;/*no*/
 }
 .backgroundPic(@name){
-  background: url("/img/@{name}");
+  background: url("/img/mobile/@{name}");
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -69,10 +69,13 @@ ul{
     background: #ffffff;
     border-bottom: 1px solid @line-border-color; /*no*/
     .schoolName{
-      width: 160px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      a{
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+      }
     }
     nav{
       padding: 20px 20px;
@@ -103,7 +106,7 @@ ul{
         }
         &.teacherName{
          a{
-           width:240px;
+           max-width:240px;
            overflow: hidden;
            white-space: nowrap;
            text-overflow: ellipsis;
@@ -295,8 +298,6 @@ ul{
     }
     .swiper-slide{
       flex: 1;
-      //float: left;
-      //width: 25%!important;
       img{
         width: 750px;
         height: 380px;
